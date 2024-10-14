@@ -1,0 +1,81 @@
+*{
+    background-color: #FEF6EE;
+}
+header {
+    display: flex; /* Ativa o layout flexbox */
+    align-items: center; /* Alinha os itens verticalmente ao centro */
+}
+.logo {
+    margin-right: 300px; /* Espaçamento entre o logo e o campo de pesquisa */
+}
+
+/* Estilo geral do formulário */
+.search-form {
+    display: flex;
+    align-items: center;
+    background-color: #C56126; /* Cor de fundo semelhante à imagem */
+    border-radius: 25px; /* Bordas arredondadas */
+    padding: 10px 20px; /* Espaçamento interno */
+    width: 100%; /* Ajuste conforme necessário */
+    max-width: 600px; /* Largura máxima */
+}
+
+/* Estilo do campo de entrada (input) */
+.search-input {
+    flex-grow: 1; /* O input ocupa o máximo de espaço disponível */
+    border: none; /* Remove bordas padrão */
+    background-color: transparent; /* Torna o fundo do input transparente */
+    color: #fff; /* Cor do texto branco */
+    font-size: 16px; /* Tamanho da fonte */
+    outline: none; /* Remove o contorno ao focar */
+    padding-right: 10px; /* Espaçamento entre o texto e o ícone */
+}
+
+/* Estilo do botão (com ícone de lupa) */
+.search-button {
+    background: #ffffff; /* Cor de fundo do botão */
+    border: none; /* Remove as bordas */
+    border-radius: 50%; /* Faz o botão arredondado */
+    width: 30px; /* Largura do botão */
+    height: 30px; /* Altura do botão */
+    display: flex; /* Flexbox para centralizar o ícone */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    cursor: pointer; /* Mostra o cursor de mão ao passar o mouse */
+    margin-left: 10px; /* Espaçamento entre o input e o ícone */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra sutil para o botão */
+}
+
+.search-button i {
+    font-size: 18px; 
+    color: #2a2a2a; 
+}
+
+a {
+    text-decoration: none;
+    
+  }
+
+  .menu__link {
+    color: #000000;
+    line-height: 2;
+    position: relative;
+    margin-left: 90px; 
+  }
+  
+  .menu__link::before {
+    content: '';
+    width: 0;
+    height: 2px;
+    border-radius: 2px;
+    background-color: #000000;
+    position: absolute;
+    bottom: -.25rem;
+    right: 0;
+    transition: right .4s, width .4s, left .4s;
+  }
+  
+  .menu__link:hover::before {
+    width: 100%;
+    left: 0;
+  }
