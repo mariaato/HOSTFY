@@ -4,6 +4,7 @@
 header {
     display: flex; /* Ativa o layout flexbox */
     align-items: center; /* Alinha os itens verticalmente ao centro */
+    margin-top: auto;
 }
 .logo {
     margin-right: 300px; /* Espaçamento entre o logo e o campo de pesquisa */
@@ -20,7 +21,6 @@ header {
     max-width: 600px; /* Largura máxima */
 }
 
-/* Estilo do campo de entrada (input) */
 .search-input {
     flex-grow: 1; /* O input ocupa o máximo de espaço disponível */
     border: none; /* Remove bordas padrão */
@@ -31,9 +31,8 @@ header {
     padding-right: 10px; /* Espaçamento entre o texto e o ícone */
 }
 
-/* Estilo do botão (com ícone de lupa) */
 .search-button {
-    background: #ffffff; /* Cor de fundo do botão */
+    background: #C56126; /* Cor de fundo do botão */
     border: none; /* Remove as bordas */
     border-radius: 50%; /* Faz o botão arredondado */
     width: 30px; /* Largura do botão */
@@ -48,7 +47,7 @@ header {
 
 .search-button i {
     font-size: 18px; 
-    color: #2a2a2a; 
+    color: #000000; 
 }
 
 a {
