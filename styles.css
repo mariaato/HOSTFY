@@ -104,10 +104,14 @@ header {
 }
 
 
+.search-button {
+    background: none; /* Remove fundo */
+    border: none; /* Remove borda */
+    cursor: pointer; /* Muda o cursor para indicar que é clicável */
+}
 
 .search-button i {
-    font-size: 18px; 
-    color: #000000; 
+    font-size: 24px; /* Ajuste o tamanho do ícone conforme necessário */
 }
 
 a {

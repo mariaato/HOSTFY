@@ -1,23 +1,27 @@
+
 <?php
-$servidor = "localhost";
-$usuario = "root";
-$senha ="";
-$dbname = "hostfy";
-
-$conexao = mysqli_connect($servidor, $usuario, $senha, $dbname);
-
+include("conexao.php");
 
 $pesquisar = $_POST['pesquisar'];
-$resultado = "SELECT * FROM anuncios WHERE proprietario LIKE '%$pesquisar%' LIMIT 5";
-$resultado_anuncio=mysqli_query($conexao, $resultado);
+$resultado = "SELECT * FROM imovel WHERE 
+    Nome_imovel LIKE '%$pesquisar%' OR 
+    Valor LIKE '%$pesquisar%' OR 
+    Cidade LIKE '%$pesquisar%' OR 
+    Descrição LIKE '%$pesquisar%' OR
+    Bairro LIKE '%$pesquisar%' OR 
+    UF LIKE '%$pesquisar%' OR 
+    Numero_pessoas LIKE '%$pesquisar%' 
+    LIMIT 5";
 
-if ($rows_anuncio=mysqli_fetch_array($resultado_anuncio)){
-    echo "Proprietario: ".$rows_anuncio['proprietario']."<br>";
-    echo "Valor: ".$rows_anuncio['valor']."<br>";
-    echo "Cidade: ".$rows_anuncio['cidade']."<br>";
-    echo "<br>";
-}else{
-    echo "ERRO";
+$resultado_anuncio = mysqli_query($conexao, $resultado);
+
+if (mysqli_num_rows($resultado_anuncio) > 0) {
+    while ($rows_anuncio = mysqli_fetch_array($resultado_anuncio)) {
+        echo "Valor: " . $rows_anuncio['Valor'] . "<br>";
+        echo "Cidade: " . $rows_anuncio['Cidade'] . "<br>";
+        echo "<br>";
+    }
+} else {
+    echo "Nenhum resultado encontrado.";
 }
-
 ?>
