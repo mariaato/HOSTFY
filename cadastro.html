@@ -10,16 +10,7 @@
 </head>
 <body>
     <header>
-        <button class="menu-icon" id="menu-toggle">
-            <i class='bx bx-menu'></i>
-        </button>
         <img src="logoHostfy.png" alt="logo" class="logo" />
-        <form method="post" action="pesquisar.php" class="search-form">
-            <input type="text" name="pesquisar" placeholder="Encontre seu lugar ideal..." class="search-input">
-            <span><a href="#"> <i class='bx bx-search'></i></a></span>
-        </form>
-        <a href="#" class="menu__link">Login</a>
-        <a href="cadastro.html" class="menu__link">Cadastre-se</a>
     </header>
 
     <div class="sidebar" id="sidebar">
@@ -32,7 +23,7 @@
     <div class="overlay" id="overlay"></div>
 
     <div class="main-content" id="main-content">
-        <form action="cadastro_usuario.php" method="POST">
+        <form id="registerForm" action="cadastro_usuario.php" method="POST">
             <div class="container">
                 <div class="card card-register mx-auto col-8 px-0">
                     <div class="card-header">Cadastro de Usuário</div>
@@ -48,7 +39,7 @@
                                     <input type="text" name="cpf" class="form-control" placeholder="Digite seu CPF" required>
                                 </div>
                                 <div class="col-12">
-                                    <label for="data_nascimento">Data de Nascimento (AAAA-MM-DD)</label>
+                                    <label for="data_nascimento">Data de Nascimento</label>
                                     <input type="date" name="data_nascimento" class="form-control" required>
                                 </div>
                                 <div class="col-12">
@@ -81,9 +72,14 @@
                                     <label for="senha">Senha:</label><br>
                                     <input type="password" id="senha" name="senha" class="form-control" required minlength="8" placeholder="Mínimo de 8 caracteres"><br>
                                 </div>
+                                <div class="col-12">
+                                    <label for="confirmar_senha">Confirme a Senha:</label><br>
+                                    <input type="password" id="confirmar_senha" name="confirmar_senha" placeholder="Confirme sua senha" required>
+                                </div>
                             </div>
                         </div>
-                        <button class="btn btn-primary btn-block">Cadastrar</button>
+                        <button type="submit" class="btn btn-primary btn-block">Cadastrar</button>
+                        <br>
                         <div class="text-center">
                             <a href="index.html" class="btn btn-primary btn-block">Página inicial</a>
                         </div>
@@ -94,28 +90,30 @@
     </div>
 
     <script>
-        const menuToggle = document.getElementById('menu-toggle');
-        const sidebar = document.getElementById('sidebar');
-        const mainContent = document.getElementById('main-content');
-        const overlay = document.getElementById('overlay');
-
-        menuToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('sidebar-active');
-            mainContent.classList.toggle('content-shift');
-            overlay.classList.toggle('overlay-active');
-        });
-
-        overlay.addEventListener('click', () => {
-            sidebar.classList.remove('sidebar-active');
-            mainContent.classList.remove('content-shift');
-            overlay.classList.remove('overlay-active');
-        });
-
-        document.querySelector('form').addEventListener('submit', function(event) {
+        // Função para validar senhas ao tentar enviar o formulário
+        document.querySelector('form').addEventListener('submit', function(e) {
             const senha = document.getElementById('senha').value;
-            if (senha.length < 8) {
-                alert('A senha precisa ter no mínimo 8 caracteres.');
-                event.preventDefault();
+            const confirmarSenha = document.getElementById('confirmar_senha').value;
+
+            // Limpa qualquer mensagem de erro anterior
+            document.getElementById('confirmar_senha').setCustomValidity('');
+
+            // Verifica se as senhas são diferentes
+            if (senha !== confirmarSenha) {
+                // Define a mensagem de erro no campo "confirmar senha"
+                document.getElementById('confirmar_senha').setCustomValidity('As senhas não coincidem. Tente novamente.');
+                e.preventDefault(); // Impede o envio do formulário
+                document.getElementById('confirmar_senha').reportValidity(); // Exibe o tooltip de erro
+            }
+        });
+
+        // Função para reiniciar a validação sempre que o campo de confirmação de senha for alterado
+        document.getElementById('confirmar_senha').addEventListener('input', function() {
+            const senha = document.getElementById('senha').value;
+            const confirmarSenha = document.getElementById('confirmar_senha').value;
+
+            if (senha === confirmarSenha) {
+                document.getElementById('confirmar_senha').setCustomValidity(''); // Limpa o erro quando as senhas coincidem
             }
         });
     </script>

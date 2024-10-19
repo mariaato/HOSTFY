@@ -18,13 +18,28 @@ $row_banido = mysqli_fetch_assoc($result_banido);
 
 if ($row_banido && $row_banido['banido'] == 1) {
     echo "Erro: Este CPF está banido.";
-} else {
+}else
+    // Verificação de CPF já cadastrado
+    $sql_cpf = "SELECT cpf FROM usuario WHERE cpf = '$cpf'";
+    $result_cpf = mysqli_query($conexao, $sql_cpf);
+
+    if (mysqli_num_rows($result_cpf) > 0) {
+        echo "Erro: Este CPF já está cadastrado.";
+        echo "<br>";
+        echo "Faça seu login";
+        echo "<br>";
+        echo "<a href='login.html' class='btn btn-primary btn-block'>Login</a>";
+    }  else {
     // Verificação de e-mail já cadastrado
     $sql_email = "SELECT email FROM usuario WHERE email = '$email'";
     $result_email = mysqli_query($conexao, $sql_email);
 
     if (mysqli_num_rows($result_email) > 0) {
         echo "Erro: Este e-mail já está cadastrado.";
+        echo "<br>";
+        echo "Faça seu login";
+        echo "<br>";
+        echo "<a href='login.html' class='btn btn-primary btn-block'>Login</a>";
     } else {
         // Validação de idade mínima (18 anos)
         $data_atual = new DateTime();
@@ -64,3 +79,4 @@ mysqli_close($conexao);
    // banido TINYINT(1) DEFAULT 0 // banimento true 1 e false 0 , em cima faz a verifcação, se for true nao deixa fazer novo cadastro naquele cpf
 //);
 ?>
+
