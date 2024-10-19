@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Novo Usuário</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="styles.css"> 
+</head>
+<body>
+    <header>
+        <button class="menu-icon" id="menu-toggle">
+            <i class='bx bx-menu'></i>
+        </button>
+        <img src="logoHostfy.png" alt="logo" class="logo" />
+        <form method="post" action="pesquisar.php" class="search-form">
+            <input type="text" name="pesquisar" placeholder="Encontre seu lugar ideal..." class="search-input">
+            <span><a href="#"> <i class='bx bx-search'></i></a></span>
+        </form>
+        <a href="#" class="menu__link">Login</a>
+        <a href="cadastro.html" class="menu__link">Cadastre-se</a>
+    </header>
+
+    <div class="sidebar" id="sidebar">
+        <a href="#">Quem Somos</a>
+        <a href="#">Seus Aluguéis</a>
+        <a href="#">Perfil</a>
+        <a href="#">Configurações</a>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="main-content" id="main-content">
+        <form action="cadastro_usuario.php" method="POST">
+            <div class="container">
+                <div class="card card-register mx-auto col-8 px-0">
+                    <div class="card-header">Cadastro de Usuário</div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-12">
+                                    <label for="nome">Nome completo</label>
+                                    <input type="text" name="nome" class="form-control" placeholder="Digite seu nome completo" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="cpf">CPF</label>
+                                    <input type="text" name="cpf" class="form-control" placeholder="Digite seu CPF" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="data_nascimento">Data de Nascimento (AAAA-MM-DD)</label>
+                                    <input type="date" name="data_nascimento" class="form-control" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="endereco">Endereço</label>
+                                    <input type="text" name="endereco" class="form-control" placeholder="Digite seu endereço" required>
+                                </div>
+                                <div class="col-6">
+                                    <label for="cidade">Cidade</label>
+                                    <input type="text" name="cidade" class="form-control" placeholder="Digite sua cidade" required>
+                                </div>
+                                <div class="col-6">
+                                    <label for="estado">Estado</label>
+                                    <select name="estado" class="form-control" required>
+                                        <option value="">Selecione um estado</option>
+                                        <option value="SC">Santa Catarina</option>
+                                        <option value="PR">Paraná</option>
+                                        <option value="SP">São Paulo</option>
+                                        <option value="RJ">Rio de Janeiro</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <label for="telefone">Telefone</label>
+                                    <input type="text" name="telefone" class="form-control" placeholder="Digite seu telefone" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="email">E-mail</label>
+                                    <input type="email" id="email" name="email" class="form-control" placeholder="Digite seu E-mail" required> 
+                                </div>
+                                <div class="col-6">
+                                    <label for="senha">Senha:</label><br>
+                                    <input type="password" id="senha" name="senha" class="form-control" required minlength="8" placeholder="Mínimo de 8 caracteres"><br>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary btn-block">Cadastrar</button>
+                        <div class="text-center">
+                            <a href="index.html" class="btn btn-primary btn-block">Página inicial</a>
+                        </div>
+                    </div>
+                </div>
+            </div>       
+        </form>
+    </div>
+
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('main-content');
+        const overlay = document.getElementById('overlay');
+
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('sidebar-active');
+            mainContent.classList.toggle('content-shift');
+            overlay.classList.toggle('overlay-active');
+        });
+
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('sidebar-active');
+            mainContent.classList.remove('content-shift');
+            overlay.classList.remove('overlay-active');
+        });
+
+        document.querySelector('form').addEventListener('submit', function(event) {
+            const senha = document.getElementById('senha').value;
+            if (senha.length < 8) {
+                alert('A senha precisa ter no mínimo 8 caracteres.');
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -138,3 +138,41 @@ a {
     width: 100%;
     left: 0;
 }
+
+
+
+
+
+
+.card-header {
+    background-color: #C56126; /* Laranja */
+    color: white; /* Texto branco */
+}
+
+.btn-primary {
+    background-color: #C56126; /* Laranja */
+    border-color: #C56126; /* Laranja */
+}
+
+.btn-primary:hover {
+    background-color: #C56126; /* Laranja mais escura para hover */
+    border-color: #C56126;
+}
+
+.form-control {
+    border: 1px solid #C56126; /* Borda laranja */
+    background-color: #FFF5E6; /* Fundo claro combinando com laranja */
+}
+
+.form-control:focus {
+    border-color: #C56126; /* Borda laranja mais escura ao focar */
+    box-shadow: none; /* Remove a sombra padrão ao focar */
+}
+
+.card {
+    border: 1px solid #C56126; /* Borda laranja ao redor do card */
+}
+
+
+
+
