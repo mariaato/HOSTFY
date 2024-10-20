@@ -28,7 +28,7 @@ if ($row_banido && $row_banido['banido'] == 1) {
         echo "<br>";
         echo "Faça seu login";
         echo "<br>";
-        echo "<a href='login.html' class='btn btn-primary btn-block'>Login</a>";
+        echo "<a href='login.php' class='btn btn-primary btn-block'>Login</a>";
     }  else {
     // Verificação de e-mail já cadastrado
     $sql_email = "SELECT email FROM usuario WHERE email = '$email'";
@@ -39,7 +39,7 @@ if ($row_banido && $row_banido['banido'] == 1) {
         echo "<br>";
         echo "Faça seu login";
         echo "<br>";
-        echo "<a href='login.html' class='btn btn-primary btn-block'>Login</a>";
+        echo "<a href='login.php' class='btn btn-primary btn-block'>Login</a>";
     } else {
         // Validação de idade mínima (18 anos)
         $data_atual = new DateTime();
