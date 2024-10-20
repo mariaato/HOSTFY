@@ -47,7 +47,16 @@
         <p>Aqui estão os imóveis em destaque para você.</p>
         <!-- Mais conteúdo pode ser adicionado aqui -->
     </div>
+<?php
+include("funçaoAnuncio.php");
 
+    $imagem = "casa.jpg";
+    $titulo = "Apartamento Ingleses";
+    $avaliacao = 4.25;
+    $tags = ["Churrasqueira", "Ar condicionado", "Pet Friendly"];
+
+    echo gerarAnuncio($imagem, $titulo, $avaliacao, $tags);
+?>
     <script>
         // Função para alternar o menu lateral
         const menuToggle = document.getElementById('menu-toggle');
