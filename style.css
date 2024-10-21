@@ -6,11 +6,232 @@
 }
 
 body {
-    background-color: #F7F3EE;
-    display: flex;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #FEF6EE;
+    box-sizing: border-box;
+    display: flex; /* Adicionar esta linha */
     justify-content: center;
     align-items: center;
     height: 100vh;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #FEF6EE;
+    padding: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    width: 120px;
+}
+
+/* Ícone do menu */
+.menu-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 30px;
+    color: #333;
+}
+
+/* Menu lateral (sidebar) */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -250px; /* Inicialmente fora da tela */
+    width: 250px;
+    height: 100%;
+    background-color: #2b3a4e; /* Cor do menu lateral */
+    padding-top: 60px;
+    transition: 0.3s; /* Transição suave */
+    z-index: 1000;
+}
+
+.sidebar a {
+    padding: 15px 25px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #fff;
+    display: block;
+    transition: 0.2s;
+}
+
+.sidebar a:hover {
+    background-color: #4c5b72;
+}
+
+/* Conteúdo principal */
+.main-content {
+    margin-left: 0;
+    transition: 0.3s; /* Transição suave para o conteúdo também */
+}
+
+/* Quando o menu estiver ativo */
+.sidebar-active {
+    left: 0;
+}
+
+.content-shift {
+    margin-left: 250px;
+}
+
+/* Overlay escuro para focar no menu */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo escurecido */
+    z-index: 999;
+}
+
+.overlay-active {
+    display: block;
+}
+.search-form {
+    display: flex;
+    align-items: center;
+    background-color: #C56126; /* Cor de fundo semelhante à imagem */
+    border-radius: 25px; /* Bordas arredondadas */
+    padding: 10px 20px; /* Espaçamento interno */
+    width: 100%; /* Ajuste conforme necessário */
+    max-width: 600px; /* Largura máxima */
+    }
+
+.search-input {
+    flex-grow: 1; /* O input ocupa o máximo de espaço disponível */
+    border: none; /* Remove bordas padrão */
+    background-color: transparent; /* Torna o fundo do input transparente */
+    color: #fff; /* Cor do texto branco */
+    font-size: 16px; /* Tamanho da fonte */
+    outline: none; /* Remove o contorno ao focar */
+}
+
+
+.search-button {
+    background: none; /* Remove fundo */
+    border: none; /* Remove borda */
+    cursor: pointer; /* Muda o cursor para indicar que é clicável */
+}
+
+.search-button i {
+    font-size: 24px; /* Ajuste o tamanho do ícone conforme necessário */
+}
+
+a {
+    text-decoration: none;
+    
+}
+
+.menu__link {
+    color: #000000;
+    line-height: 2;
+    position: relative;
+    margin-left: 90px; 
+}
+
+.menu__link::before {
+    content: '';
+    width: 0;
+    height: 2px;
+    border-radius: 2px;
+    background-color: #000000;
+    position: absolute;
+    bottom: -.25rem;
+    right: 0;
+    transition: right .4s, width .4s, left .4s;
+}
+
+.menu__link:hover::before {
+    width: 100%;
+    left: 0;
+}
+
+
+
+
+
+
+.card-header {
+    background-color: #C56126; /* Laranja */
+    color: white; /* Texto branco */
+}
+
+.btn-primary {
+    background-color: #C56126; /* Laranja */
+    border-color: #C56126; /* Laranja */
+}
+
+.btn-primary:hover {
+    background-color: #C56126; /* Laranja mais escura para hover */
+    border-color: #C56126;
+}
+
+.form-control {
+    border: 1px solid #C56126; /* Borda laranja */
+    background-color: #FFF5E6; /* Fundo claro combinando com laranja */
+}
+
+.form-control:focus {
+    border-color: #C56126; /* Borda laranja mais escura ao focar */
+    box-shadow: none; /* Remove a sombra padrão ao focar */
+}
+
+.card {
+    border: 1px solid #C56126; /* Borda laranja ao redor do card */
+}
+
+
+
+
+.anuncio-card {
+    background-color: #fef6ee;
+    border-radius: 10px;
+    padding: 15px;
+    width: 300px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: 10px;
+}
+
+.anuncio-imagem {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.anuncio-titulo {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #333;
+}
+
+.anuncio-avaliacao {
+    margin-top: 5px;
+    font-size: 16px;
+    color: #f9a825;
+}
+
+.anuncio-tags {
+    margin-top: 10px;
+}
+
+.tag {
+    display: inline-block;
+    background-color: #ff7043;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    margin: 3px;
+    font-size: 12px;
 }
 
 .container {
