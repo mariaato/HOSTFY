@@ -28,7 +28,7 @@ if (isset($_POST['email']) || isset($_POST['senha'])) {
                 $_SESSION['nome'] = $usuario['nome'];
 
                 header("Location: inicio.html");
-                exit(); // É uma boa prática usar exit após header
+                exit(); 
             } else {
                 echo "Falha ao logar! E-mail ou senha incorretos";
             }
@@ -44,23 +44,34 @@ if (isset($_POST['email']) || isset($_POST['senha'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+
+
 </head>
 <body>
-    <h1>Acesse sua conta</h1>
-    <form action="" method="POST">
-        <p>
-            <label>E-mail</label>
-            <input type="text" name="email">
-        </p>
-        <p>
-            <label>Senha</label>
-            <input type="password" name="senha">
-        </p>
-        <p>
-            <button type="submit">Entrar</button>
-        </p>
-    </form>
+    <div class="container">
+        <h1>Acesse sua conta</h1>
+        <form action="" method="POST">
+            <div class="form-group">
+            <i class='bx bx-at'></i>
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email" placeholder="Digite seu email...">
+            </div>
+            <div class="form-group">
+            <i class='bx bxs-lock'></i>
+                <label for="senha">Senha</label>
+                
+                <input type="password" id="senha" name="senha" placeholder="Digite sua senha...">
+            </div>
+            <a href="#" class="forgot-password">Esqueceu sua senha?</a>
+            <button type="submit" class="submit-btn">Entrar</button>
+        </form>
+        <div class="logo">
+            <img src="logoHostfy.png" alt="logo" class="logo">
+        </div>
+    </div>
+
 </body>
 </html>

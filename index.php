@@ -46,8 +46,7 @@
         <h1>Destaques</h1>
         <p>Aqui estão os imóveis em destaque para você.</p>
         <!-- Mais conteúdo pode ser adicionado aqui -->
-    </div>
-<?php
+        <?php
 include("funçaoAnuncio.php");
 
     $imagem = "casa.jpg";
@@ -57,6 +56,8 @@ include("funçaoAnuncio.php");
 
     echo gerarAnuncio($imagem, $titulo, $avaliacao, $tags);
 ?>
+    </div>
+
     <script>
         // Função para alternar o menu lateral
         const menuToggle = document.getElementById('menu-toggle');
