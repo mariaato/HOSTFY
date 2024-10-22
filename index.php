@@ -35,7 +35,6 @@
     <div class="sidebar" id="sidebar">
         <a href="#">Quem Somos</a>
         <a href="#">Dúvidas</a>
-        <a href="perfil.html">Meu perfil</a>
     </div>
 
     <!-- Overlay para quando o menu estiver aberto -->
