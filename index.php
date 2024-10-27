@@ -33,7 +33,7 @@
 
     <!-- Menu lateral (sidebar) -->
     <div class="sidebar" id="sidebar">
-        <a href="#">Quem Somos</a>
+        <a href="quemsomos.html">Quem Somos</a>
         <a href="#">Dúvidas</a>
     </div>
 
