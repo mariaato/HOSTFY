@@ -12,7 +12,7 @@ if (!isset($_SESSION['id'])) {
 include("conexao.php");
 
 // Buscar as informações do usuário no banco de dados
-$sql = "SELECT nome, telefone, email, senha FROM usuario WHERE id = ?";
+$sql = "SELECT nome, telefone, email, endereco, cidade, estado, senha FROM usuario WHERE id = ?";
 $stmt = $conexao->prepare($sql);
 $stmt->bind_param('i', $_SESSION['id']);
 $stmt->execute();
@@ -25,8 +25,11 @@ if ($result->num_rows > 0) {
     exit();
 }
 
-// Processamento da alteração de senha
+// Processamento da alteração de dados
 $senha_alterada = false; // Flag para verificar se a senha foi alterada
+$telefone_alterado = false; // Flag para verificar se o telefone foi alterado
+$endereco_alterado = false; // Flag para verificar se o endereço foi alterado
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Alterar Senha
     if (isset($_POST['acao']) && $_POST['acao'] === 'alterar_senha') {
@@ -73,6 +76,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         $stmt->close();
     }
+
+    // Alterar Endereço, Cidade e Estado
+    if (isset($_POST['acao']) && $_POST['acao'] === 'alterar_endereco') {
+        $novo_endereco = $_POST['novo_endereco'];
+        $nova_cidade = $_POST['nova_cidade'];
+        $novo_estado = $_POST['novo_estado'];
+
+        // Atualizar o endereço no banco de dados
+        $sql = "UPDATE usuario SET endereco = ?, cidade = ?, estado = ? WHERE id = ?";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bind_param('sssi', $novo_endereco, $nova_cidade, $novo_estado, $_SESSION['id']);
+        
+        if ($stmt->execute()) {
+            $endereco_alterado = true; // Define que o endereço foi alterado
+        } else {
+            $msg_erro = "Erro ao atualizar o endereço.";
+        }
+        $stmt->close();
+    }
 }
 
 // Fechar a conexão
@@ -89,28 +111,34 @@ $conexao->close();
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            margin: 0;
-            padding: 20px;
-        }
+            background-color: #FEF6EE;
+            height: 100vh;
+            display: flex;
 
+        }
+        .header {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
         .container {
-            max-width: 600px;
-            margin: auto;
-            background: #fff;
+            background-color: #1E2A38;
+            border-radius: 15px;
             padding: 20px;
+            width: 350px;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         h1 {
-            font-size: 24px;
+            color: white;
             margin-bottom: 20px;
+            font-size: 24px;
         }
 
         p {
             margin: 10px 0;
+            color: white;
         }
 
         input[type="password"],
@@ -123,25 +151,27 @@ $conexao->close();
             border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 16px;
+            
         }
 
         button {
-            background-color: #5cb85c;
-            color: white;
+            background-color:  #C56126;
+            color: write;
             border: none;
         }
 
-        button:hover {
-            background-color: #4cae4c;
+        button:hover { 
+            background-color: #ff7043;
+            
         }
 
-        .alterar-senha, .alterar-telefone {
+        .alterar-senha, .alterar-telefone, .alterar-endereco {
             display: none; /* Inicialmente oculto */
             margin-top: 20px;
         }
 
         .mensagem-sucesso {
-            color: green;
+            color: #C56126 ;
             margin-top: 20px;
         }
 
@@ -163,6 +193,9 @@ $conexao->close();
         <p><strong>Nome:</strong> <?php echo htmlspecialchars($usuario['nome']); ?></p>
         <p><strong>Telefone:</strong> <?php echo htmlspecialchars($usuario['telefone']); ?></p>
         <p><strong>Email:</strong> <?php echo htmlspecialchars($usuario['email']); ?></p>
+        <p><strong>Endereço:</strong> <?php echo htmlspecialchars($usuario['endereco']); ?></p>
+        <p><strong>Cidade:</strong> <?php echo htmlspecialchars($usuario['cidade']); ?></p>
+        <p><strong>Estado:</strong> <?php echo htmlspecialchars($usuario['estado']); ?></p>
 
         <button onclick="toggleForm('alterar-senha-form')">Alterar Senha</button>
         <div id="alterar-senha-form" class="alterar-senha">
@@ -199,17 +232,43 @@ $conexao->close();
             </form>
         </div>
 
-        <?php if (isset($telefone_alterado) && $telefone_alterado): ?>
-            <p class="mensagem-sucesso">Telefone alterado com sucesso!</p>
-        <?php endif; ?>
+        <button onclick="toggleForm('alterar-endereco-form')">Alterar Endereço</button>
+        <div id="alterar-endereco-form" class="alterar-endereco">
+            <h2>Alterar Endereço</h2>
+            <form action="" method="post">
+                <input type="hidden" name="acao" value="alterar_endereco">
+                <label for="novo_endereco">Novo Endereço:</label>
+                <input type="text" name="novo_endereco" id="novo_endereco" required><br>
 
-        <?php if ($senha_alterada): ?>
-            <p class="mensagem-sucesso">Senha alterada com sucesso!</p>
-        <?php endif; ?>
+                <label for="nova_cidade">Nova Cidade:</label>
+                <input type="text" name="nova_cidade" id="nova_cidade" required><br>
 
-        <form action="inicio.html">
+                <label for="novo_estado">Novo Estado:</label>
+                <input type="text" name="novo_estado" id="novo_estado" required><br>
+
+                <input type="submit" value="Alterar Endereço">
+            </form>
+        </div>
+
+        <?php
+        if ($senha_alterada) {
+            echo "<p class='mensagem-sucesso'>Senha alterada com sucesso!</p>";
+        }
+        if ($telefone_alterado) {
+            echo "<p class='mensagem-sucesso'>Telefone alterado com sucesso!</p>";
+        }
+        if ($endereco_alterado) {
+            echo "<p class='mensagem-sucesso'>Endereço alterado com sucesso!</p>";
+        }
+        ?>
+                <form action="inicio.html">
             <input type="submit" value="Voltar ao Menu Inicial">
         </form>
     </div>
+    
 </body>
 </html>
+
+
+
+

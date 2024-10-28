@@ -125,8 +125,7 @@ header {
 }
 
 a {
-    text-decoration: none;
-    
+    text-decoration: none;  
 }
 
 .menu__link {
@@ -152,11 +151,6 @@ a {
     width: 100%;
     left: 0;
 }
-
-
-
-
-
 
 .card-header {
     background-color: #C56126; /* Laranja */
@@ -186,9 +180,6 @@ a {
 .card {
     border: 1px solid #C56126; /* Borda laranja ao redor do card */
 }
-
-
-
 
 .anuncio-card {
     background-color: #fef6ee;
@@ -232,3 +223,34 @@ a {
     margin: 3px;
     font-size: 12px;
 }
+/* teste */
+
+
+.section {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: wrap;
+    width: 100vw;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+.equipe-box { 
+    
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; 
+    gap: 20px;    
+}
+ .equipe {
+    width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    text-align: center;
+    padding: 20px;  
+  }
+   

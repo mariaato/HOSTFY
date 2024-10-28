@@ -27,13 +27,13 @@
             </span>
         </form>
 
-        <a href="login.html" class="menu__link">Login</a>
+        <a href="login.php" class="menu__link">Login</a>
         <a href="cadastro.html" class="menu__link">Cadastre-se</a>
     </header>
 
     <!-- Menu lateral (sidebar) -->
     <div class="sidebar" id="sidebar">
-        <a href="#">Quem Somos</a>
+        <a href="quemsomos.html">Quem Somos</a>
         <a href="#">Dúvidas</a>
     </div>
 

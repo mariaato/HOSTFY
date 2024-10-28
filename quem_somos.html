@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOSTFY</title>
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-flow: wrap;
+            width: 100vw;
+            height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .equipe-box {
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+            gap: 150px;
+        }
+        .equipe {
+            width: 100%;
+            height: auto;
+            border: 1px solid #FFF5E6;
+            border-radius: 10px;
+            background-color: #C56126;
+            text-align: center;
+            padding: 20px;
+        }
+        /* Estilos para o sidebar e overlay */
+        .sidebar {
+            display: none; /* Inicialmente escondido */
+            /* Adicione mais estilos aqui para o sidebar */
+        }
+        .sidebar-active {
+            display: block; /* Exibido quando o botão é clicado */
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+        .overlay-active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button class="menu-icon" id="menu-toggle">
+            <i class='bx bx-menu'></i>
+        </button>
+        <img src="logoHostfy.png" alt="logo" class="logo" />
+        <form method="post" action="pesquisar.php" class="search-form">
+            <input type="text" name="pesquisar" placeholder="Encontre seu lugar ideal..." class="search-input">
+            <span>
+                <button type="submit" class="search-button">
+                    <i class='bx bx-search'></i>
+                </button>
+            </span>
+        </form>
+    </header>
+
+    <div class="sidebar" id="sidebar">
+        <a href="index.php">Área inicial </a>
+        <a href="quemsomos.html">Quem Somos</a>
+        <a href="#">Dúvidas</a>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="section">
+        <div class="equipe-box">
+            <div class="equipe">
+                <img src="byanca.png" alt="Foto de Perfil" style="width:300px; height:300px;border-radius: 15px;">
+                <h2>Byanca Furlan</h2>
+                <a href="mailto:byancafurlanarq@gmail.com">E-mail</a><br/>
+                <a href="https://br.linkedin.com/in/byanca-furlan">Linkedin</a>
+            </div>
+            <div class="equipe">
+                <img src="ma.png" alt="Foto de Perfil" style="width:300px; height:300px;border-radius: 15px;">
+                <h2>Maria Antônia</h2>
+                <a href="mailto: ma@gmail.com">E-mail</a><br/>
+                <a href="https://br.linkedin.com/in/">Linkedin</a>
+            </div>
+            <div class="equipe">
+                <img src="ri.png" alt="Foto de Perfil" style="width:300px; height:300px;border-radius: 15px;">
+                <h2>Rithiely</h2>
+                <a href="mailto: ri@gmail.com">E-mail</a><br/>
+                <a href="https://br.linkedin.com/in/">Linkedin</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('sidebar-active');
+            overlay.classList.toggle('overlay-active');
+        });
+
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('sidebar-active');
+            overlay.classList.remove('overlay-active');
+        });
+    </script>
+</body>
+</html>
