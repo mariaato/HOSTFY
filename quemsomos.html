@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOSTFY</title>
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+    <body>
+    
+
+        <header>
+            <!-- Botão do ícone de menu -->
+            <button class="menu-icon" id="menu-toggle">
+                <i class='bx bx-menu'></i>
+            </button>
+    
+            <img src="logoHostfy.png" alt="logo" class="logo" />
+    
+            <!-- Campo de pesquisa -->
+            <form method="post" action="pesquisar.php" class="search-form">
+                <input type="text" name="pesquisar" placeholder="Encontre seu lugar ideal..." class="search-input">
+                <span>
+                    <button type="submit" class="search-button">
+                        <i class='bx bx-search'></i>
+                    </button>
+                </span>
+            </form>
+    
+            
+        </header>
+            
+        
+        <!-- Menu lateral (sidebar) -->
+        <div class="sidebar" id="sidebar">
+            <a href="index.php">Área inicial </a>
+            <a href="quemsomos.html">Quem Somos</a>
+            <a href="#">Dúvidas</a>
+        </div>
+   
+   
+        <!-- Overlay para quando o menu estiver aberto -->
+        <div class="overlay" id="overlay"></div>
+        <!-- Conteúdo principal -->
+
+        <div id="main-content">
+            <section class="direita">
+          <br/>
+            <br/>
+            <img id="profile-image" src="byanca.png" alt="Foto de Perfil"width="300" height="300" class="h6">
+            <h2>Contato</h2>
+            <p>(48) 9 9941-4351<br />
+            <a href="mailto:byancafurlanarq@gmail.com">byancafurlaarq@gmail.com</a>
+            <a href="https://br.linkedin.com/in/byanca-furlan-469b56102">www.linkedin.com/in/byancafurlan</a>
+            <br/>
+            <br/>
+       
+            
+            </section>
+        </div>
+        <script>
+            // Função para alternar o menu lateral
+            const menuToggle = document.getElementById('menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('main-content');
+            const overlay = document.getElementById('overlay');
+        
+            // Função de alternância para abrir/fechar o menu e o overlay
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('sidebar-active');
+                mainContent.classList.toggle('content-shift');
+                overlay.classList.toggle('overlay-active');
+            });
+        
+            // Função para fechar o menu se clicar fora (no overlay)
+            overlay.addEventListener('click', () => {
+                sidebar.classList.remove('sidebar-active');
+                mainContent.classList.remove('content-shift');
+                overlay.classList.remove('overlay-active');
+            });
+        </script>
+        </body>
+        </html>
+        
