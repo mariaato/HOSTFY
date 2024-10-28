@@ -6,18 +6,44 @@
     <title>HOSTFY</title>
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .section {
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-flow: wrap;
+        width: 100vw;
+        height: 100vh;
+        padding: 20px;
+        box-sizing: border-box;
+        }
+        .equipe-box { 
+
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        gap: 150px;    
+        }
+        .equipe {
+        width: 100%;
+        height: auto;
+        border: 1px solid #FFF5E6;
+        border-radius: 10px;
+        background-color: #C56126;
+        text-align: center;
+        padding: 20px;  
+        }
+    
+    </style>
 </head>
     <body>
-    
-
         <header>
             <!-- Botão do ícone de menu -->
             <button class="menu-icon" id="menu-toggle">
                 <i class='bx bx-menu'></i>
             </button>
-    
             <img src="logoHostfy.png" alt="logo" class="logo" />
-    
             <!-- Campo de pesquisa -->
             <form method="post" action="pesquisar.php" class="search-form">
                 <input type="text" name="pesquisar" placeholder="Encontre seu lugar ideal..." class="search-input">
@@ -44,21 +70,39 @@
         <div class="overlay" id="overlay"></div>
         <!-- Conteúdo principal -->
 
-        <div id="main-content">
-            <section class="direita">
+        
+            
           <br/>
             <br/>
-            <img id="profile-image" src="byanca.png" alt="Foto de Perfil"width="300" height="300" class="h6">
-            <h2>Contato</h2>
-            <p>(48) 9 9941-4351<br />
-            <a href="mailto:byancafurlanarq@gmail.com">byancafurlaarq@gmail.com</a>
-            <a href="https://br.linkedin.com/in/byanca-furlan-469b56102">www.linkedin.com/in/byancafurlan</a>
-            <br/>
-            <br/>
-       
             
-            </section>
-        </div>
+           <!-- <img id="profile-image"  src="byanca.png" onmouseover="this.src='byanca.png'" onmouseout="this.src='byancagray.png'" alt="Foto de Perfil" style="width:300px; height:300px;border-radius: 15px;"  >-->
+           <div class="section">  
+                <div class="equipe-box">
+                    <div class="equipe">
+                        <img src="byanca.png" alt="Foto de Perfil" style="width:300px; height:300px;border-radius: 15px;" > 
+                        <h2>Byanca Furlan</h2>
+                        <br/>
+                        <a href="mailto:byancafurlanarq@gmail.com">E-mail</a><br/>
+                        <a href="https://br.linkedin.com/in/byanca-furlan">Linkedin</a><br/>
+                    </div> 
+                        <div class="equipe">
+                        <img src="ma.png" alt="Foto de Perfil" style="width:300px; height:300px;border-radius: 15px; " >
+                        <h2>Maria Antônia</h2>
+                        <a href="mailto: ma@gmail.com">E-mail</a><br/>
+                        <a href="https://br.linkedin.com/in/">Linkedin</a>
+                    </div>
+                    <div class="equipe">
+                        <img src="ri.png" alt="Foto de Perfil" style="width:300px; height:300px;border-radius: 15px; " >
+                        <h2>Rithiely</h2>
+                        <a href="mailto: ri@gmail.com">E-mail</a><br/>
+                        <a href="https://br.linkedin.com/in/">Linkedin</a>
+                    </div>
+             </div>
+           </div>
+           
+           
+           
+        
         <script>
             // Função para alternar o menu lateral
             const menuToggle = document.getElementById('menu-toggle');
