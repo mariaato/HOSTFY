@@ -62,14 +62,14 @@ if (isset($_POST['email']) || isset($_POST['senha'])) {
                 // Senha incorreta, incrementar tentativas
                 $_SESSION['attempts'] += 1;
                 $_SESSION['last_attempt_time'] = time(); // Atualizar o tempo da última tentativa
-                $error_message = "Falha ao logar! E-mail ou senha incorretos. Tentativas restantes: " . ($max_attempts - $_SESSION['attempts']);
+                $error_message = "Falha ao logar! Senha incorreta. Tentativas restantes: " . ($max_attempts - $_SESSION['attempts']);
                 
                 if ($_SESSION['attempts'] >= $max_attempts) {
                     $error_message .= "<br>Conta bloqueada por 3 minutos.";
                 }
             }
         } else {
-            $error_message = "Falha ao logar! E-mail ou senha incorretos <br><br> <a href='cadastro.html' class='cadastro'>Não tem cadastro? Crie seu cadastro</a><br><br>";
+            $error_message = "Falha ao logar! E-mail incorreto <br><br> <a href='cadastro.html' class='cadastro'>Não tem cadastro? Crie seu cadastro</a><br><br>";
         }
     }
 }
