@@ -69,7 +69,7 @@ if (isset($_POST['email']) || isset($_POST['senha'])) {
                 }
             }
         } else {
-            $error_message = "Falha ao logar! E-mail ou senha incorretos";
+            $error_message = "Falha ao logar! E-mail ou senha incorretos <br><br> <a href='cadastro.html' class='cadastro'>Não tem cadastro? Crie seu cadastro</a><br><br>";
         }
     }
 }
@@ -114,6 +114,24 @@ if (isset($_POST['email']) || isset($_POST['senha'])) {
             border: none;
             font-size: 35px;
             cursor: pointer;
+        }
+
+        
+        .cadastro{
+            background-color: #D97C41;
+            border-radius: 5px;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+
+
+        }
+        .cadastro:hover{
+            background-color: #c96f36;
         }
 
         /* Centralizando o conteúdo principal */
