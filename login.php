@@ -69,7 +69,7 @@ if (isset($_POST['email']) || isset($_POST['senha'])) {
                 }
             }
         } else {
-            $error_message = "Falha ao logar! E-mail incorreto <br><br> <a href='cadastro.html' class='cadastro'>Não tem cadastro? Crie seu cadastro</a><br><br>";
+            $error_message = "Falha ao logar! E-mail incorreto <br><br> <a href='cadastro.php' class='cadastro'>Não tem cadastro? Crie seu cadastro</a><br><br>";
         }
     }
 }

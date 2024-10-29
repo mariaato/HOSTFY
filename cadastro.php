@@ -1,3 +1,74 @@
+<?php
+include("conexao.php");
+
+
+if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['nome']) || isset($_POST['cpf']) || isset($_POST['data_nascimento']) || isset($_POST['endereco']) || isset($_POST['cidade']) || isset($_POST['estado']) || isset($_POST['telefone'])) {
+    $nome = $_POST['nome'];
+    $cpf = $_POST['cpf'];
+    $data_nascimento = $_POST['data_nascimento']; // Formato: YYYY-MM-DD
+    $endereco = $_POST['endereco'];
+    $cidade = $_POST['cidade'];
+    $estado = $_POST['estado'];
+    $telefone = $_POST['telefone'];
+    $email = $_POST['email'];
+    $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
+
+    // Verificação de CPF banido
+    $sql_banido = "SELECT banido FROM usuario WHERE cpf = '$cpf'";
+    $result_banido = mysqli_query($conexao, $sql_banido);
+    $row_banido = mysqli_fetch_assoc($result_banido);
+
+    if ($row_banido && $row_banido['banido'] == 1) {
+        echo "Erro: Este CPF está banido.";
+    }else
+        // Verificação de CPF já cadastrado
+        $sql_cpf = "SELECT cpf FROM usuario WHERE cpf = '$cpf'";
+        $result_cpf = mysqli_query($conexao, $sql_cpf);
+
+        if (mysqli_num_rows($result_cpf) > 0) {
+            echo "Erro: Este CPF já está cadastrado.";
+            echo "<br>";
+            echo "Faça seu login";
+            echo "<br>";
+            echo "<a href='login.php' class='btn btn-primary btn-block'>Login</a>";
+        }  else {
+        // Verificação de e-mail já cadastrado
+        $sql_email = "SELECT email FROM usuario WHERE email = '$email'";
+        $result_email = mysqli_query($conexao, $sql_email);
+
+        if (mysqli_num_rows($result_email) > 0) {
+            echo "Erro: Este e-mail já está cadastrado.";
+            echo "<br>";
+            echo "Faça seu login";
+            echo "<br>";
+            echo "<a href='login.php' class='btn btn-primary btn-block'>Login</a>";
+        } else {
+            // Validação de idade mínima (18 anos)
+            $data_atual = new DateTime();
+            $data_nascimento_obj = new DateTime($data_nascimento);
+            $idade = $data_atual->diff($data_nascimento_obj)->y;
+
+            if ($idade < 18) {
+                echo "Erro: Você deve ter pelo menos 18 anos para se cadastrar.";
+            } else {
+                // Inserir novo usuário
+                $sql = "INSERT INTO usuario(nome, cpf, data_nascimento, endereco, cidade, estado, telefone, email, senha)
+                        VALUES ('$nome', '$cpf', '$data_nascimento', '$endereco', '$cidade', '$estado', '$telefone', '$email', '$senha')";
+
+                if (mysqli_query($conexao, $sql)) {
+                    echo "Cadastro efetuado com sucesso.";
+                    echo "Faça seu login";
+                    echo "<br>";
+                    echo "<a href='login.php' class='btn btn-primary btn-block'>Login</a>";
+
+                } else {
+                    echo "ERRO: " . mysqli_error($conexao);
+                }
+            }
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +94,7 @@
     <div class="overlay" id="overlay"></div>
 
     <div class="main-content" id="main-content">
-        <form id="registerForm" action="cadastro_usuario.php" method="POST">
+        <form id="registerForm" action="cadastro.php" method="POST">
             <div class="container">
                 <div class="card card-register mx-auto col-8 px-0">
                     <div class="card-header">Cadastro de Usuário</div>

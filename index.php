@@ -28,7 +28,7 @@
         </form>
 
         <a href="login.php" class="menu__link">Login</a>
-        <a href="cadastro.html" class="menu__link">Cadastre-se</a>
+        <a href="cadastro.php" class="menu__link">Cadastre-se</a>
     </header>
 
     <!-- Menu lateral (sidebar) -->
