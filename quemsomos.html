@@ -7,40 +7,43 @@
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="styles.css">
     <style>
-        a {
-    text-decoration: none;  
-}
+       .a {
+            text-decoration: none;  
+        }
         .section {
         display: flex;
-        align-items: center;
+        align-items: top;
         justify-content: center;
         flex-flow: wrap;
         width: 100vw;
-        height: 100vh;
+        height: 50vh;
         padding: 20px;
         box-sizing: border-box;
         }
         .section1 {
-        justify-content: center;
-        flex-direction: row;
-        gap: 20px;  
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-flow: wrap;
+            width: 100vw;
+            padding: 10px;
+            box-sizing: border-box;
         }
         .equipe-box { 
-        display: flex;
-        justify-content: center;
-        flex-direction: row;
-        gap: 20px;    
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+            gap: 20px;    
         }
         .equipe {
-        width: 100%;
-        height: auto;
-        border: 1px solid #FFF5E6;
-        border-radius: 10px;  
-        background-color: #C56126;
-        text-align: center;
-        padding: 20px;  
-        box-shadow: 10px 4px 10px rgba(0, 0, 0, 0.1);
-
+            width: 100%;
+            height: auto;
+            border: 1px solid #FFF5E6;
+            border-radius: 10px;  
+            background-color: #C56126;
+            text-align: center;
+            padding: 20px;  
+            box-shadow: 10px 4px 10px rgba(0, 0, 0, 0.1);
         }
         .img-perfil {
         width: 300px;
@@ -48,52 +51,62 @@
         border-radius: 15px;
         }
         .menu-icon {
-        background: none;
-        border: none;
-        cursor: pointer;
-        font-size: 30px;
-        color: #333;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 30px;
+            color: #333;
          }
         .search-form {
-        display: flex;
-        align-items: center;
-        background-color: #C56126; /* Cor de fundo semelhante à imagem */
-        border-radius: 25px; /* Bordas arredondadas */
-        padding: 10px 20px; /* Espaçamento interno */
-        width: 100%; /* Ajuste conforme necessário */
-        max-width: 600px; /* Largura máxima */
+            display: flex;
+            align-items: center;
+            background-color: #C56126; /* Cor de fundo semelhante à imagem */
+            border-radius: 25px; /* Bordas arredondadas */
+            padding: 10px 20px; /* Espaçamento interno */
+            width: 100%; /* Ajuste conforme necessário */
+            max-width: 600px; /* Largura máxima */
         }
         .texto {
             font-size: 30px;
             color: #2b3a4e; /* Cor do menu lateral */
             justify-content: center;
             width: 100%;
-        height: auto;
-    
-        text-align: center;
-        padding: 20px;  
+            height: auto;
+            text-align: center;
+            padding: 20px;  
         }
+        .rights {
+            padding: 10px 0;
+            text-align: center;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 500;
+            color: #9b9b9b;
+}
     </style>
 </head>
     <body>
         <header>
             <!-- Botão do ícone de menu -->
-            <button class="menu-icon" id="menu-toggle"aria-label="Abrir Menu">
-                <i class='bx bx-menu'></i>
-            </button>
-            <img src="logoHostfy.png" alt="logo" class="logo" />
-            <!-- Campo de pesquisa -->
-            <form method="post" action="pesquisar.php" class="search-form">
-                <input type="text" name="pesquisar" placeholder="Encontre seu lugar ideal..." class="search-input">
-                <span>
-                    <button type="submit" class="search-button"aria-label="Abrir Menu">
-                        <i class='bx bx-search'></i>
-                    </button>
-                </span>
-            </form>
+             <div class="section1">
+                <button class="menu-icon" id="menu-toggle"aria-label="Abrir Menu">
+                    <i class='bx bx-menu'></i>
+                </button>
+                <img src="logoHostfy.png" alt="logo" class="logo" />
+                <!-- Campo de pesquisa -->
+                <form method="post" action="pesquisar.php" class="search-form">
+                    <input type="text" name="pesquisar" placeholder="Encontre seu lugar ideal..." class="search-input">
+                    <span>
+                        <button type="submit" class="search-button"aria-label="Abrir Menu">
+                            <i class='bx bx-search'></i>
+                        </button>
+                    </span>
+                </form>
+                
+                <a href="login.php" class="menu__link">Login</a>
+                <a href="cadastro.php" class="menu__link">Cadastre-se</a>
             
-        <a href="login.php" class="menu__link">Login</a>
-        <a href="cadastro.php" class="menu__link">Cadastre-se</a>
+                </div>
     </header>
     
             
@@ -120,27 +133,36 @@
                     <div class="equipe">
                         <h2 class="texto">Product Owner</h2>
                         <img src="byanca.png" alt="Foto de Perfil" class="img-perfil" > 
-                        <h2>Byanca Furlan</h2>
+                        <h2>Byanca Campos Furlan</h2>
                         <br/>
-                        <a href="mailto:byancafurlanarq@gmail.com">E-mail</a><br/>
-                        <a href="https://br.linkedin.com/in/byanca-furlan"target="_blank">Linkedin</a><br/>
+                        <a href="mailto:byancafurlanarq@gmail.com"target="_blank">E-mail</a><br/>
+                        <a href="https://br.linkedin.com/in/byanca-furlan"target="_blank"rel="noopener">Linkedin</a><br/>
                     </div> 
                         <div class="equipe">
                             <h2 class="texto">Scrum Master</h2>
-                            <img src="ma.png" alt="Foto de Perfil" class="img-perfil" >
-                            <h2>Maria Antônia</h2>
-                            <a href="mailto: mariaaatonha@gmail.com">E-mail</a><br/>
-                            <a href="https://www.linkedin.com/in/maria-antônia-dos-santos"target="_blank">Linkedin</a>
+                            <img src="maria.jpeg" alt="Foto de Perfil" class="img-perfil" >
+                            <h2>Maria Antônia dos Santos</h2>
+                            <a href="mailto: mariaaatonha@gmail.com"target="_blank">E-mail</a><br/>
+                            <a href="https://www.linkedin.com/in/maria-antônia-dos-santos"target="_blank"rel="noopener">Linkedin</a>
                     </div>
                     <div class="equipe">
                         <h2 class="texto">Desenvolvedora</h2>
                         <img src="ri.png" alt="Foto de Perfil" class="img-perfil" >
                         <h2>Rithiely Schmitt</h2>
-                        <a href="mailto: ri@gmail.com">E-mail</a><br/>
-                        <a href="https://br.linkedin.com/in/"target="_blank">Linkedin</a>
+                        <a href="mailto: ri@gmail.com"target="_blank">E-mail</a><br/>
+                        <a href="https://br.linkedin.com/in/"target="_blank"rel="noopener">Linkedin</a>
                     </div>
              </div>
            </div>
+           <br>           <br>
+           <br>
+
+          <header>
+            
+          </header>
+           <footer>
+            <p class="rights"><span>&copy;&nbsp;<span id="copyright-year"></span> .Todos os direitos reservados. <span> por Byanca Campos Furlan, Maria Antonia dos Santos e Rithiely Schmitt.</a></span>
+        </footer>
         <script>
             // Função para alternar o menu lateral
             const menuToggle = document.getElementById('menu-toggle');
@@ -161,7 +183,14 @@
                 mainContent.classList.remove('content-shift');
                 overlay.classList.remove('overlay-active');
             });
+            
+    // Define o ano atual
+    
+          document.getElementById('copyright-year').textContent = new Date().getFullYear();
+
         </script>
+         
+
         </body>
         </html>
         

@@ -4,7 +4,9 @@
     box-sizing: border-box;
     font-family: Arial, sans-serif;
 }
-
+.filled {
+    background-color: #fef6ee; 
+}
 body {
     font-family: Arial, sans-serif;
     margin: 0;
