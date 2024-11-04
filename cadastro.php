@@ -115,13 +115,24 @@ if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['nome']) ||
                                 </div>
                                 <div class="col-12">
                                     <label for="endereco">Endereço</label>
-                                    <input type="text" name="endereco" class="form-control" placeholder="Digite seu endereço" required>
+                                    <input id = "endereco" type="text" name="endereco" class="form-control" placeholder="Digite seu endereço" required>
                                 </div>
                                 <div class="col-6">
+                                    <label for="txtCep">CEP</label>
+                                    <input id = "txtCep" type="text" name="cep" class="form-control" placeholder="Digite seu CEP" required>
+                                </div>
+                                <div class="col-6">
+                                    <label for="bairro">Bairro</label>
+                                    <input id = "bairro" type="text" name="bairro" class="form-control" placeholder="Digite sua cidade" required>
+                                </div> <div class="col-6">
                                     <label for="cidade">Cidade</label>
-                                    <input type="text" name="cidade" class="form-control" placeholder="Digite sua cidade" required>
+                                    <input id = "cidade" type="text" name="cidade" class="form-control" placeholder="Digite sua cidade" required>
                                 </div>
                                 <div class="col-6">
+                                    <label for="estado">Estado</label>
+                                    <input id = "estado" type="text" name="estado" class="form-control" placeholder="Digite sua cidade" required>
+                                </div>
+                           <!--     <div class="col-6">
                                     <label for="estado">Estado</label>
                                     <select name="estado" class="form-control" required>
                                         <option value="">Selecione um estado</option>
@@ -130,7 +141,7 @@ if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['nome']) ||
                                         <option value="SP">São Paulo</option>
                                         <option value="RJ">Rio de Janeiro</option>
                                     </select>
-                                </div>
+                                </div> -->
                                 <div class="col-12">
                                     <label for="telefone">Telefone</label>
                                     <input type="text" name="telefone" class="form-control" placeholder="Digite seu telefone" required>
@@ -187,6 +198,42 @@ if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['nome']) ||
                 document.getElementById('confirmar_senha').setCustomValidity(''); // Limpa o erro quando as senhas coincidem
             }
         });
+        // Função buscaCEP
+        function buscaCep(){
+            let cep = document.getElementById('txtCep').value;
+            if (cep!==""){
+                let url = "https://brasilapi.com.br/api/cep/v1/" + cep;
+                let req = new XMLHttpRequest();
+                req.open("GET", url);
+                req.send();
+
+                //tratar a resposta da requisição
+                req.onload = function(){
+                    if(req.status === 200){
+                        let endereco = JSON.parse(req.response);
+                        document.getElementById("endereco").value = endereco.street;
+                        document.getElementById("bairro").value = endereco.neighborhood;
+                        document.getElementById("cidade").value = endereco.city;
+                        document.getElementById("estado").value = endereco.state;
+                    }
+                    else if (req.status ===400){
+                        alert("CEP inválido");
+                    }
+                    else{
+                        alert("Erro ao fazer a requisição");
+                    }
+                }
+            }
+            else{
+                alert("Digite um CEP válido!");
+            }
+        }
+window.onload = function(){
+    let txtCep = document.getElementById('txtCep');
+    txtCep.addEventListener("blur", buscaCep);
+        }
     </script>
+
 </body>
+
 </html>

@@ -15,7 +15,9 @@ body {
     align-items: center;
     height: 100vh;
 }
-
+.img {
+    border-radius: 15px;
+}
 header {
     display: flex;
     justify-content: space-between;
@@ -223,7 +225,7 @@ a {
     margin: 3px;
     font-size: 12px;
 }
-/* teste */
+/* teste 
 
 
 .section {
@@ -253,4 +255,4 @@ a {
     text-align: center;
     padding: 20px;  
   }
-   
+   */
