@@ -28,7 +28,7 @@ if ($_SESSION['attempts'] >= $max_attempts) {
 }
 
 if ($_SESSION['attempts'] >= $max_attempts && !empty($error_message)) {
-    echo "<div class='error-message'><h1>$error_message</h1></div>"; // mensagem de bloqueio
+    echo "<div style='color: red; background-color: #fff3f3; border: 1px solid red; padding: 15px; border-radius: 8px; text-align: center;'><h1>$error_message</h1><p>Por favor, aguarde até que o tempo de bloqueio termine. Se você esqueceu sua senha, pode redefini-la <a href='novasenhalogin.php'>aqui</a>.</div>";
     exit;
 }
 
@@ -65,7 +65,7 @@ if (isset($_POST['email']) || isset($_POST['senha'])) {
                 $error_message = "Falha ao logar! Senha incorreta. Tentativas restantes: " . ($max_attempts - $_SESSION['attempts']);
                 
                 if ($_SESSION['attempts'] >= $max_attempts) {
-                    $error_message .= "<br>Conta bloqueada por 3 minutos.";
+                    $error_message = "<br>Conta bloqueada por 3 minutos.";
                 }
             }
         } else {
@@ -90,6 +90,7 @@ if (isset($_POST['email']) || isset($_POST['senha'])) {
             margin-bottom: 10px;
             font-size: 14px;
         }
+
         * {
             margin: 0;
             padding: 0;
