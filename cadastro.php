@@ -12,60 +12,75 @@ if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['nome']) ||
     $telefone = $_POST['telefone'];
     $email = $_POST['email'];
     $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
+    $num_cpf = str_split($cpf);
+    if (!isset($num_cpf[11])) {
+        $i = 0;
+        for ($i == 0; $i <= 10; $i++) {
+            $num_cpf[$i] = intval($num_cpf[$i]);
+        }
+        $digit_j = ($num_cpf[0] * 10 + $num_cpf[1] * 9 + $num_cpf[2] * 8 + $num_cpf[3] * 7 + $num_cpf[4] * 6 + $num_cpf[5] * 5 + $num_cpf[6] * 4 + $num_cpf[7] * 3 + $num_cpf[8] * 2)%11;
+        $digit_k = ($num_cpf[0] * 11 + $num_cpf[1] * 10 + $num_cpf[2] * 9 + $num_cpf[3] * 8 + $num_cpf[4] * 7 + $num_cpf[5] * 6 + $num_cpf[6] * 5 + $num_cpf[7] * 4 + $num_cpf[8] * 3 + $num_cpf[9] * 2)%11;
+        if (((($digit_j < 2 && $num_cpf[9] == 0)) || ($digit_j > 1 && ($num_cpf[9] == 11 - $digit_j))) && (($digit_k < 2 && ($num_cpf[10] == 0)) || ($digit_k > 1 && ($num_cpf[10] == 11 - $digit_k)))) {
 
-    // Verificação de CPF banido
-    $sql_banido = "SELECT banido FROM usuario WHERE cpf = '$cpf'";
-    $result_banido = mysqli_query($conexao, $sql_banido);
-    $row_banido = mysqli_fetch_assoc($result_banido);
+            // Verificação de CPF banido
+            $sql_banido = "SELECT banido FROM usuario WHERE cpf = '$cpf'";
+            $result_banido = mysqli_query($conexao, $sql_banido);
+            $row_banido = mysqli_fetch_assoc($result_banido);
 
-    if ($row_banido && $row_banido['banido'] == 1) {
-        echo "Erro: Este CPF está banido.";
-    }else
-        // Verificação de CPF já cadastrado
-        $sql_cpf = "SELECT cpf FROM usuario WHERE cpf = '$cpf'";
-        $result_cpf = mysqli_query($conexao, $sql_cpf);
+            if ($row_banido && $row_banido['banido'] == 1) {
+                echo "Erro: Este CPF está banido.";
+            }else
+                // Verificação de CPF já cadastrado
+                $sql_cpf = "SELECT cpf FROM usuario WHERE cpf = '$cpf'";
+                $result_cpf = mysqli_query($conexao, $sql_cpf);
 
-        if (mysqli_num_rows($result_cpf) > 0) {
-            echo "Erro: Este CPF já está cadastrado.";
-            echo "<br>";
-            echo "Faça seu login";
-            echo "<br>";
-            echo "<a href='login.php' class='btn btn-primary btn-block'>Login</a>";
-        }  else {
-        // Verificação de e-mail já cadastrado
-        $sql_email = "SELECT email FROM usuario WHERE email = '$email'";
-        $result_email = mysqli_query($conexao, $sql_email);
-
-        if (mysqli_num_rows($result_email) > 0) {
-            echo "Erro: Este e-mail já está cadastrado.";
-            echo "<br>";
-            echo "Faça seu login";
-            echo "<br>";
-            echo "<a href='login.php' class='btn btn-primary btn-block'>Login</a>";
-        } else {
-            // Validação de idade mínima (18 anos)
-            $data_atual = new DateTime();
-            $data_nascimento_obj = new DateTime($data_nascimento);
-            $idade = $data_atual->diff($data_nascimento_obj)->y;
-
-            if ($idade < 18) {
-                echo "Erro: Você deve ter pelo menos 18 anos para se cadastrar.";
-            } else {
-                // Inserir novo usuário
-                $sql = "INSERT INTO usuario(nome, cpf, data_nascimento, endereco, cidade, estado, telefone, email, senha)
-                        VALUES ('$nome', '$cpf', '$data_nascimento', '$endereco', '$cidade', '$estado', '$telefone', '$email', '$senha')";
-
-                if (mysqli_query($conexao, $sql)) {
-                    echo "Cadastro efetuado com sucesso.";
+                if (mysqli_num_rows($result_cpf) > 0) {
+                    echo "Erro: Este CPF já está cadastrado.";
+                    echo "<br>";
                     echo "Faça seu login";
                     echo "<br>";
                     echo "<a href='login.php' class='btn btn-primary btn-block'>Login</a>";
+                }  else {
+                // Verificação de e-mail já cadastrado
+                $sql_email = "SELECT email FROM usuario WHERE email = '$email'";
+                $result_email = mysqli_query($conexao, $sql_email);
 
+                if (mysqli_num_rows($result_email) > 0) {
+                    echo "Erro: Este e-mail já está cadastrado.";
+                    echo "<br>";
+                    echo "Faça seu login";
+                    echo "<br>";
+                    echo "<a href='login.php' class='btn btn-primary btn-block'>Login</a>";
                 } else {
-                    echo "ERRO: " . mysqli_error($conexao);
+                    // Validação de idade mínima (18 anos)
+                    $data_atual = new DateTime();
+                    $data_nascimento_obj = new DateTime($data_nascimento);
+                    $idade = $data_atual->diff($data_nascimento_obj)->y;
+
+                    if ($idade < 18) {
+                        echo "Erro: Você deve ter pelo menos 18 anos para se cadastrar.";
+                    } else {
+                        // Inserir novo usuário
+                        $sql = "INSERT INTO usuario(nome, cpf, data_nascimento, endereco, cidade, estado, telefone, email, senha)
+                                VALUES ('$nome', '$cpf', '$data_nascimento', '$endereco', '$cidade', '$estado', '$telefone', '$email', '$senha')";
+
+                        if (mysqli_query($conexao, $sql)) {
+                            echo "Cadastro efetuado com sucesso.";
+                            echo "Faça seu login";
+                            echo "<br>";
+                            echo "<a href='login.php' class='btn btn-primary btn-block'>Login</a>";
+
+                        } else {
+                            echo "ERRO: " . mysqli_error($conexao);
+                        }
+                    }
                 }
             }
+        } else {
+            $erro = 'CPF inválido.';
         }
+    } else {
+        $erro = "CPF contem mais que 11 caracteres. Remova '.' e '-' se houver.";
     }
 }
 ?>
@@ -102,6 +117,9 @@ if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['nome']) ||
                     <div class="card-body">
                         <div class="form-group">
                             <div class="form-row">
+                                <div>
+                                    <?php if (isset($erro)) {echo $erro;} ?>
+                                </div>
                                 <div class="col-12">
                                     <label for="nome">Nome completo</label>
                                     <input type="text" name="nome" class="form-control" placeholder="Digite seu nome completo" required>
