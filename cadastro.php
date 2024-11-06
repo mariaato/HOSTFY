@@ -96,11 +96,54 @@ if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['nome']) ||
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="styles.css"> 
+    <style>   
+         .section1 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-flow: wrap;
+            width: 100vw;
+            padding: 10px;
+            box-sizing: border-box;
+            
+        }
+        
+        </style>
 </head>
 <body>
     <header>
+    <div class="section1"> 
+        <!-- Botão do ícone de menu -->
+        <button class="menu-icon" id="menu-toggle">
+            <i class='bx bx-menu'></i>
+        </button>
+
         <img src="logoHostfy.png" alt="logo" class="logo" />
+
+        <!-- Campo de pesquisa -->
+        <form method="post" action="pesquisar.php" class="search-form">
+            <input type="text" name="pesquisar" placeholder="Encontre seu lugar ideal..." class="search-input">
+            <span>
+                <button type="submit" class="search-button">
+                    <i class='bx bx-search'></i>
+                </button>
+            </span>
+        </form>
+
+        <a href="login.php" class="menu__link">Login</a>
+        <a href="cadastro.php" class="menu__link">Cadastre-se</a>
+        </div>
     </header>
+
+    <!-- Menu lateral (sidebar) -->
+    <div class="sidebar" id="sidebar">
+        <a href="quemsomos.html">Quem Somos</a>
+        <a href="#">Dúvidas</a>
+    </div>
+
+    <!-- Overlay para quando o menu estiver aberto -->
+    <div class="overlay" id="overlay"></div>
+    
 
     <div class="sidebar" id="sidebar">
         <a href="quemsomos.html">Quem Somos</a>
@@ -110,7 +153,7 @@ if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['nome']) ||
     </div>
 
     <div class="overlay" id="overlay"></div>
-
+        <div class="section">
     <div class="main-content" id="main-content">
         <form id="registerForm" action="cadastro.php" method="POST">
             <div class="container">
@@ -193,7 +236,7 @@ if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['nome']) ||
             </div>       
         </form>
     </div>
-
+        </div>
     <script>
         // Função para validar senhas ao tentar enviar o formulário
         document.querySelector('form').addEventListener('submit', function(e) {
