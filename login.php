@@ -53,10 +53,16 @@ if (isset($_POST['email']) || isset($_POST['senha'])) {
                 // Login bem-sucedido, resetar tentativas
                 $_SESSION['attempts'] = 0;
 
-                $_SESSION['id'] = $usuario['id'];
-                $_SESSION['nome'] = $usuario['nome'];
+                //checa pelo admin
+                if ($usuario['id'] == 0) {
+                    $_SESSION['id'] = $usuario['id'];
+                    header("Location: admin.php");
+                } else {
+                    $_SESSION['id'] = $usuario['id'];
+                    $_SESSION['nome'] = $usuario['nome'];
 
-                header("Location: inicio.html");
+                    header("Location: index.php");
+                }
                 exit;
             } else {
                 // Senha incorreta, incrementar tentativas

@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,8 +11,8 @@
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
+
     <header>
         <!-- Botão do ícone de menu -->
         <button class="menu-icon" id="menu-toggle">
@@ -27,9 +30,13 @@
                 </button>
             </span>
         </form>
-
-        <a href="login.php" class="menu__link">Login</a>
-        <a href="cadastro.php" class="menu__link">Cadastre-se</a>
+        <div id="deslogado">
+            <a href="login.php" class="menu__link">Login</a>
+            <a href="cadastro.php" class="menu__link">Cadastre-se</a>
+        </div>
+        <div id="logado">
+            <a href="logout.php" class="menu__link">Sair</a>
+        </div>
     </header>
 
     <!-- Menu lateral (sidebar) -->
@@ -48,15 +55,15 @@
         <p>Aqui estão os imóveis em destaque para você.</p>
         <!-- Mais conteúdo pode ser adicionado aqui -->
         <?php
-include("funçaoAnuncio.php");
+            include("funçaoAnuncio.php");
 
-    $imagem = "casa.jpg";
-    $titulo = "Apartamento Ingleses";
-    $avaliacao = 4.25;
-    $tags = ["Churrasqueira", "Ar condicionado", "Pet Friendly"];
+            $imagem = "casa.jpg";
+            $titulo = "Apartamento Ingleses";
+            $avaliacao = 4.25;
+            $tags = ["Churrasqueira", "Ar condicionado", "Pet Friendly"];
 
-    echo gerarAnuncio($imagem, $titulo, $avaliacao, $tags);
-?>
+            echo gerarAnuncio($imagem, $titulo, $avaliacao, $tags);
+        ?>
     </div>
 
     <script>
@@ -80,5 +87,27 @@ include("funçaoAnuncio.php");
             overlay.classList.remove('overlay-active');
         });
     </script>
+
+    <script>    
+        //fução para a index do usuario logado
+        function logado() {
+            document.getElementById('logado').style.display='';
+            document.getElementById('deslogado').style.display='none';
+        }
+        //função para o usuario deslogado
+        function deslogado() {
+            document.getElementById('logado').style.display='none';
+            document.getElementById('deslogado').style.display='';
+        }
+    </script>
+
+    <?php
+        //verifica o login e muda o index
+        if (isset($_SESSION['id'])) {
+            echo '<script> logado() </script>';
+        } else {
+            echo '<script> deslogado() </script>';
+        }
+    ?>
 </body>
 </html>
