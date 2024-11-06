@@ -12,60 +12,77 @@ if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['nome']) ||
     $telefone = $_POST['telefone'];
     $email = $_POST['email'];
     $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
+    
+    //checa se o cpf tem o tamanho adequado
+    $num_cpf = str_split($cpf);
+    if (count($num_cpf) == 11) {
 
-    // Verificação de CPF banido
-    $sql_banido = "SELECT banido FROM usuario WHERE cpf = '$cpf'";
-    $result_banido = mysqli_query($conexao, $sql_banido);
-    $row_banido = mysqli_fetch_assoc($result_banido);
+        //calcúlo para verificar que o cpf é válido
+        $i = 0;
+        for ($i == 0; $i <= 10; $i++) {
+            $num_cpf[$i] = intval($num_cpf[$i]);
+        }
+        $digit_j = ($num_cpf[0] * 10 + $num_cpf[1] * 9 + $num_cpf[2] * 8 + $num_cpf[3] * 7 + $num_cpf[4] * 6 + $num_cpf[5] * 5 + $num_cpf[6] * 4 + $num_cpf[7] * 3 + $num_cpf[8] * 2)%11;
+        $digit_k = ($num_cpf[0] * 11 + $num_cpf[1] * 10 + $num_cpf[2] * 9 + $num_cpf[3] * 8 + $num_cpf[4] * 7 + $num_cpf[5] * 6 + $num_cpf[6] * 5 + $num_cpf[7] * 4 + $num_cpf[8] * 3 + $num_cpf[9] * 2)%11;
+        if (((($digit_j < 2 && $num_cpf[9] == 0)) || ($digit_j > 1 && ($num_cpf[9] == 11 - $digit_j))) && (($digit_k < 2 && ($num_cpf[10] == 0)) || ($digit_k > 1 && ($num_cpf[10] == 11 - $digit_k)))) {
 
-    if ($row_banido && $row_banido['banido'] == 1) {
-        echo "Erro: Este CPF está banido.";
-    }else
-        // Verificação de CPF já cadastrado
-        $sql_cpf = "SELECT cpf FROM usuario WHERE cpf = '$cpf'";
-        $result_cpf = mysqli_query($conexao, $sql_cpf);
+            // Verificação de CPF banido
+            $sql_banido = "SELECT banido FROM usuario WHERE cpf = '$cpf'";
+            $result_banido = mysqli_query($conexao, $sql_banido);
+            $row_banido = mysqli_fetch_assoc($result_banido);
 
-        if (mysqli_num_rows($result_cpf) > 0) {
-            echo "Erro: Este CPF já está cadastrado.";
-            echo "<br>";
-            echo "Faça seu login";
-            echo "<br>";
-            echo "<a href='login.php' class='btn btn-primary btn-block'>Login</a>";
-        }  else {
-        // Verificação de e-mail já cadastrado
-        $sql_email = "SELECT email FROM usuario WHERE email = '$email'";
-        $result_email = mysqli_query($conexao, $sql_email);
+            if ($row_banido && $row_banido['banido'] == 1) {
+                $type_error = 'cpf';
+                $erro = " - Este CPF está banido.";
+            }else
+                // Verificação de CPF já cadastrado
+                $sql_cpf = "SELECT cpf FROM usuario WHERE cpf = '$cpf'";
+                $result_cpf = mysqli_query($conexao, $sql_cpf);
 
-        if (mysqli_num_rows($result_email) > 0) {
-            echo "Erro: Este e-mail já está cadastrado.";
-            echo "<br>";
-            echo "Faça seu login";
-            echo "<br>";
-            echo "<a href='login.php' class='btn btn-primary btn-block'>Login</a>";
-        } else {
-            // Validação de idade mínima (18 anos)
-            $data_atual = new DateTime();
-            $data_nascimento_obj = new DateTime($data_nascimento);
-            $idade = $data_atual->diff($data_nascimento_obj)->y;
+                if (mysqli_num_rows($result_cpf) > 0) {
+                    $type_error = 'cpf';
+                    $erro = " - Este CPF já está cadastrado. Faça seu <a href='login.php'>login aqui!</a>";
+                }  else {
+                // Verificação de e-mail já cadastrado
+                $sql_email = "SELECT email FROM usuario WHERE email = '$email'";
+                $result_email = mysqli_query($conexao, $sql_email);
 
-            if ($idade < 18) {
-                echo "Erro: Você deve ter pelo menos 18 anos para se cadastrar.";
-            } else {
-                // Inserir novo usuário
-                $sql = "INSERT INTO usuario(nome, cpf, data_nascimento, endereco, cidade, estado, telefone, email, senha)
-                        VALUES ('$nome', '$cpf', '$data_nascimento', '$endereco', '$cidade', '$estado', '$telefone', '$email', '$senha')";
-
-                if (mysqli_query($conexao, $sql)) {
-                    echo "Cadastro efetuado com sucesso.";
-                    echo "Faça seu login";
-                    echo "<br>";
-                    echo "<a href='login.php' class='btn btn-primary btn-block'>Login</a>";
-
+                if (mysqli_num_rows($result_email) > 0) {
+                    $type_error = 'email';
+                    $erro = " - Este e-mail já está cadastrado. Faça seu login <a href='login.php'>login aqui!</a>";
                 } else {
-                    echo "ERRO: " . mysqli_error($conexao);
+                    // Validação de idade mínima (18 anos)
+                    $data_atual = new DateTime();
+                    $data_nascimento_obj = new DateTime($data_nascimento);
+                    $idade = $data_atual->diff($data_nascimento_obj)->y;
+
+                    if ($idade < 18) {
+                        $type_error = 'idade';
+                        $erro = " - Você deve ter pelo menos 18 anos para se cadastrar.";
+                    } else {
+                        // Inserir novo usuário
+                        $sql = "INSERT INTO usuario(nome, cpf, data_nascimento, endereco, cidade, estado, telefone, email, senha)
+                                VALUES ('$nome', '$cpf', '$data_nascimento', '$endereco', '$cidade', '$estado', '$telefone', '$email', '$senha')";
+
+                        if (mysqli_query($conexao, $sql)) {
+                            echo "Cadastro efetuado com sucesso.";
+                            echo "Faça seu login";
+                            echo "<br>";
+                            echo "<a href='login.php' class='btn btn-primary btn-block'>Login</a>";
+
+                        } else {
+                            echo "ERRO: " . mysqli_error($conexao);
+                        }
+                    }
                 }
             }
+        } else {
+            $type_error = 'cpf';
+            $erro = ' - CPF inválido.';
         }
+    } else {
+        $type_error = 'cpf';
+        $erro = " - CPF contem mais ou menos que 11 caracteres. Remova '.' e '-' se houver.";
     }
 }
 ?>
@@ -75,6 +92,7 @@ if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['nome']) ||
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Novo Usuário</title>
+    <link rel="shortcut icon" href="logoHostfy.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="styles.css"> 
@@ -144,16 +162,19 @@ if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['nome']) ||
                     <div class="card-body">
                         <div class="form-group">
                             <div class="form-row">
+                                <div>
+                                </div>
                                 <div class="col-12">
                                     <label for="nome">Nome completo</label>
                                     <input type="text" name="nome" class="form-control" placeholder="Digite seu nome completo" required>
                                 </div>
                                 <div class="col-12">
-                                    <label for="cpf">CPF</label>
+                                    <label for="cpf">CPF<span style="color: red;"><?php if (isset($erro) && $type_error == 'cpf') {echo $erro;} ?></span></label>
                                     <input type="text" name="cpf" class="form-control" placeholder="Digite seu CPF" required>
                                 </div>
+
                                 <div class="col-12">
-                                    <label for="data_nascimento">Data de Nascimento</label>
+                                    <label for="data_nascimento">Data de Nascimento<span style="color: red;"><?php if (isset($erro) && $type_error == 'idade') {echo $erro;} ?></span></label>
                                     <input type="date" name="data_nascimento" class="form-control" required>
                                 </div>
                                 <div class="col-12">
@@ -175,7 +196,8 @@ if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['nome']) ||
                                     <label for="estado">Estado</label>
                                     <input id = "estado" type="text" name="estado" class="form-control" placeholder="Digite sua cidade" required>
                                 </div>
-                           <!--     <div class="col-6">
+                                <!--     
+                                <div class="col-6">
                                     <label for="estado">Estado</label>
                                     <select name="estado" class="form-control" required>
                                         <option value="">Selecione um estado</option>
@@ -184,13 +206,14 @@ if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['nome']) ||
                                         <option value="SP">São Paulo</option>
                                         <option value="RJ">Rio de Janeiro</option>
                                     </select>
-                                </div> -->
+                                </div> 
+                                -->
                                 <div class="col-12">
                                     <label for="telefone">Telefone</label>
                                     <input type="text" name="telefone" class="form-control" placeholder="Digite seu telefone" required>
                                 </div>
                                 <div class="col-12">
-                                    <label for="email">E-mail</label>
+                                    <label for="email">E-mail<span style="color: red;"><?php if (isset($erro) && $type_error == 'email') {echo $erro;} ?></span></label>
                                     <input type="email" id="email" name="email" class="form-control" placeholder="Digite seu E-mail" required> 
                                 </div>
                                 <div class="col-6">
