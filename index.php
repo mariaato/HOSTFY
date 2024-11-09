@@ -33,6 +33,8 @@
         <div id="deslogado">
             <a href="login.php" class="menu__link">Login</a>
             <a href="cadastro.php" class="menu__link">Cadastre-se</a>
+
+
         </div>
         <div id="logado">
             <a href="logout.php" class="menu__link">Sair</a>
@@ -43,6 +45,7 @@
     <div class="sidebar" id="sidebar">
         <a href="quemsomos.html">Quem Somos</a>
         <a href="#">Dúvidas</a>
+        <a href="imoveis.php" >Cadastre seu imóvel</a>
     </div>
 
     <!-- Overlay para quando o menu estiver aberto -->

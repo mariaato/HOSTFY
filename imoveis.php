@@ -1,0 +1,225 @@
+<?php
+include("conexao.php");
+
+// Inicia a sessão, se não tiver sido iniciada
+session_start();
+
+// Verifica se o usuário está logado
+if (isset($_SESSION['id'])) {
+    $id_proprietario = $_SESSION['id'];
+} else {
+    echo "<p>Você precisa estar logado para cadastrar um imóvel.</p>";
+    exit;
+}
+
+// Verifica se o formulário foi enviado
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Obtém os dados do formulário
+    $cep = $_POST['cep'];
+    $nome_imovel = $_POST['nome_imovel'];
+    $endereco = $_POST['endereco'];
+    $numero = $_POST['numero'];
+    $bairro = $_POST['bairro'];
+    $cidade = $_POST['cidade'];
+    $estado = $_POST['estado'];
+    $valor = $_POST['valor'];
+    $descricao = $_POST['descricao'];
+    $categoria = $_POST['categoria'];
+    $numero_pessoas = $_POST['numero_pessoas'];
+    $caracteristicas = isset($_POST['caracteristicas']) ? implode(", ", $_POST['caracteristicas']) : "";
+
+    // Insere os dados no banco de dados com o id_proprietario definido automaticamente
+    $sql = "INSERT INTO imoveis (cep, nome_imovel, endereco, numero, bairro, cidade, estado, id_proprietario, valor, descricao, categoria, numero_pessoas, caracteristicas)
+            VALUES ('$cep', '$nome_imovel', '$endereco', '$numero', '$bairro', '$cidade', '$estado', '$id_proprietario', '$valor', '$descricao', '$categoria', '$numero_pessoas', '$caracteristicas')";
+
+    if ($conexao->query($sql) === TRUE) {
+        echo "Imóvel cadastrado com sucesso!</p>";
+    } else {
+        echo "<p>Erro ao cadastrar imóvel: " . $conexao->error . "</p>";
+    }
+}
+
+// Fecha a conexão com o banco de dados
+$conexao->close();
+?>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Novo Imóvel</title>
+    <link rel="shortcut icon" href="logoHostfy.png">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="styles.css"> 
+    <style> 
+        .filled {
+    background-color: #f2dcc659; 
+}
+    </style>
+</head>
+<body>
+    <header>
+        <img src="logoHostfy.png" alt="logo" class="logo" />
+    </header>
+
+    <div class="sidebar" id="sidebar">
+        <a href="quemsomos.html">Quem Somos</a>
+        <a href="#">Seus Aluguéis</a>
+        <a href="perfilhtml.php">Perfil</a>
+        <a href="#">Configurações</a>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="main-content" id="main-content">
+        <form id="registerForm" action="imoveis.php" method="POST">
+            <div class="container">
+                <div class="card card-register mx-auto col-8 px-0">
+                    <div class="card-header">Cadastro de Imóvel</div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-12">
+                                    <label for="nome_imovel">Nome do Imóvel</label>
+                                    <input type="text" name="nome_imovel" class="form-control" placeholder="Digite o nome do imóvel" maxlength="50"oninput="changeColor(this)" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="txtCep">CEP</label>
+                                    <input id="txtCep"  type="text" name="cep" class="form-control" placeholder="Digite seu CEP" maxlength="8" oninput="changeColor(this)" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="endereco">Rua</label>
+                                    <input id = "endereco" type="text" name="endereco"  class="form-control" placeholder="Digite a rua" maxlength="50" oninput="changeColor(this)" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="numero">Número</label>
+                                    <input type="number" name="numero" class="form-control" placeholder="Digite o número" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="bairro">Bairro</label>
+                                    <input id="bairro" type="text" name="bairro"  class="form-control" placeholder="Digite o bairro" maxlength="50"oninput="changeColor(this)" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="cidade">Cidade</label>
+                                    <input id="cidade" type="text" name="cidade"  class="form-control" placeholder="Digite a cidade" maxlength="50"oninput="changeColor(this)" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="estado">UF</label>
+                                    <input type="text" name="estado" id="estado" class="form-control" placeholder="Digite a UF" oninput="changeColor(this)" required>
+                                <div class="col-12">
+                                    <label for="valor">Valor Diária</label>
+                                    <input type="number" name="valor" class="form-control" placeholder="Digite o valor do imóvel" step="0.01"oninput="changeColor(this)" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="numero_pessoas">Número de Pessoas</label>
+                                    <input type="number" name="numero_pessoas" class="form-control" placeholder="Digite o número de pessoas" oninput="changeColor(this)" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="descricao">Descrição</label>
+                                    <textarea name="descricao" class="form-control" placeholder="Digite uma descrição" maxlength="500" oninput="changeColor(this)" required></textarea>
+                                </div>
+
+                                <div class="col-12">
+                                    <label>Categoria do Imóvel </label>
+                                    <div class="form-check">
+                                        <input type="radio" class="form-check-input" name="categoria" value="casa" required>
+                                        <label class="form-check-label" for="casa">Casa</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input type="radio" class="form-check-input" name="categoria" value="apartamento">
+                                        <label class="form-check-label" for="apartamento">Apartamento</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input type="radio" class="form-check-input" name="categoria" value="sitio">
+                                        <label class="form-check-label" for="sitio">Sítio</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <label>Características do Imóvel</label>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="garagem">
+                                        <label class="form-check-label" for="garagem">Garagem</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="bicicleta">
+                                        <label class="form-check-label" for="bicicleta">Bicicleta</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="pet_friendly">
+                                        <label class="form-check-label" for="pet_friendly">Pet Friendly</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="churrasqueira">
+                                        <label class="form-check-label" for="churrasqueira">Churrasqueira</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="piscina">
+                                        <label class="form-check-label" for="piscina">Piscina</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="sauna">
+                                        <label class="form-check-label" for="sauna">Sauna</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="quadra_poliesportiva">
+                                        <label class="form-check-label" for="quadra_poliesportiva">Quadra Poliesportiva</label>
+                                    </div>
+
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Cadastrar Imóvel</button>
+                            <a href="index.php" class="btn btn-primary btn-block">Página inicial</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+    // Função buscaCEP
+    function buscaCep(){
+        let cep = document.getElementById('txtCep').value;
+        if (cep!==""){
+            let url = "https://brasilapi.com.br/api/cep/v1/" + cep;
+            let req = new XMLHttpRequest();
+            req.open("GET", url);
+            req.send();
+
+            //tratar a resposta da requisição
+            req.onload = function(){
+                if(req.status === 200){
+                    let endereco = JSON.parse(req.response);
+                    document.getElementById("endereco").value = endereco.street;
+                    document.getElementById("bairro").value = endereco.neighborhood;
+                    document.getElementById("cidade").value = endereco.city;
+                    document.getElementById("estado").value = endereco.state;
+                }
+                else if (req.status ===400){
+                    alert("CEP inválido");
+                }
+                else{
+                    alert("Erro ao fazer a requisição");
+                }
+            }
+        }
+        else{
+            alert("Digite um CEP válido!");
+        }
+    }
+window.onload = function(){
+let txtCep = document.getElementById('txtCep');
+txtCep.addEventListener("blur", buscaCep);
+    }
+
+    function changeColor(input) {
+            if (input.value.trim() !== "") {
+                input.classList.add('filled'); // Adiciona a classe 'filled'
+            } else {
+                input.classList.remove('filled'); // Remove a classe 'filled'
+            }
+        }
+</script>
+</body>
+</html>

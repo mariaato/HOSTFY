@@ -121,8 +121,17 @@
         <i class='bx bx-menu'></i>
     </button>
 </div>
+    <!-- Menu lateral (sidebar) NAO TA FUNCIONANDO-->
+<div class="sidebar" id="sidebar">
+    <a href="index.php">Área inicial </a>
+    <a href="quemsomos.html">Quem Somos</a>
+    <a href="#">Dúvidas</a>
+</div>
 
+<div class="overlay" id="overlay"></div>
 <div id="main-content">
+
+
     <div class="container">
         <h1>Troque sua senha</h1>
         
