@@ -49,7 +49,7 @@ if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['nome']) ||
 
                 if (mysqli_num_rows($result_email) > 0) {
                     $type_error = 'email';
-                    $erro = " - Este e-mail já está cadastrado. Faça seu login <a href='login.php'>login aqui!</a>";
+                    $erro = " - Este e-mail já está cadastrado. Faça seu <a href='login.php'>login aqui!</a>";
                 } else {
                     // Validação de idade mínima (18 anos)
                     $data_atual = new DateTime();
@@ -64,15 +64,21 @@ if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['nome']) ||
                         $sql = "INSERT INTO usuario(nome, cpf, data_nascimento, endereco, cidade, estado, telefone, email, senha)
                                 VALUES ('$nome', '$cpf', '$data_nascimento', '$endereco', '$cidade', '$estado', '$telefone', '$email', '$senha')";
 
-                        if (mysqli_query($conexao, $sql)) {
-                            echo "Cadastro efetuado com sucesso.";
-                            echo "Faça seu login";
-                            echo "<br>";
-                            echo "<a href='login.php' class='btn btn-primary btn-block'>Login</a>";
 
-                        } else {
-                            echo "ERRO: " . mysqli_error($conexao);
-                        }
+                            if (mysqli_query($conexao, $sql)) {
+                                echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>
+                                        Cadastro efetuado com sucesso. 
+                                        <a href='login.php' class='btn btn-primary btn-sm ml-2'>Faça seu login</a>
+                                        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                            <span aria-hidden='true'>&times;</span>
+                                        </button>
+                                    </div>";
+                            } else {
+                                echo "<div class='alert alert-danger' role='alert'>
+                                        ERRO: " . mysqli_error($conexao) . "
+                                    </div>";
+                            }
+
                     }
                 }
             }
@@ -95,48 +101,34 @@ if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['nome']) ||
     <link rel="shortcut icon" href="logoHostfy.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-    <link rel="stylesheet" href="styles.css"> 
-    <style>   
-         .section1 {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-flow: wrap;
-            width: 100vw;
-            padding: 10px;
-            box-sizing: border-box;
-            
+    <link rel="stylesheet" href="estilo.css"> 
+    <style>
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #black;
+            margin: 0;
         }
-        
-        </style>
+
+    </style>
+
 </head>
 <body>
     <header>
-    <div class="section1"> 
         <!-- Botão do ícone de menu -->
         <button class="menu-icon" id="menu-toggle">
             <i class='bx bx-menu'></i>
         </button>
 
         <img src="logoHostfy.png" alt="logo" class="logo" />
-
-        <!-- Campo de pesquisa -->
-        <form method="post" action="pesquisar.php" class="search-form">
-            <input type="text" name="pesquisar" placeholder="Encontre seu lugar ideal..." class="search-input">
-            <span>
-                <button type="submit" class="search-button">
-                    <i class='bx bx-search'></i>
-                </button>
-            </span>
-        </form>
+        <h1>Bem-vindo ao HOSTFY</h1>
 
         <a href="login.php" class="menu__link">Login</a>
-        <a href="cadastro.php" class="menu__link">Cadastre-se</a>
-        </div>
     </header>
 
     <!-- Menu lateral (sidebar) -->
     <div class="sidebar" id="sidebar">
+        <a href="index.php">Área inicial </a>
         <a href="quemsomos.html">Quem Somos</a>
         <a href="#">Dúvidas</a>
     </div>
@@ -145,57 +137,48 @@ if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['nome']) ||
     <div class="overlay" id="overlay"></div>
     
 
-    <div class="sidebar" id="sidebar">
-        <a href="quemsomos.html">Quem Somos</a>
-        <a href="#">Seus Aluguéis</a>
-        <a href="#">Perfil</a>
-        <a href="#">Configurações</a>
-    </div>
-
-    <div class="overlay" id="overlay"></div>
-        <div class="section">
     <div class="main-content" id="main-content">
         <form id="registerForm" action="cadastro.php" method="POST">
-            <div class="container">
-                <div class="card card-register mx-auto col-8 px-0">
-                    <div class="card-header">Cadastro de Usuário</div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div>
-                                </div>
-                                <div class="col-12">
-                                    <label for="nome">Nome completo</label>
-                                    <input type="text" name="nome" class="form-control" placeholder="Digite seu nome completo" required>
-                                </div>
-                                <div class="col-12">
-                                    <label for="cpf">CPF<span style="color: red;"><?php if (isset($erro) && $type_error == 'cpf') {echo $erro;} ?></span></label>
-                                    <input type="text" name="cpf" class="form-control" placeholder="Digite seu CPF" required>
-                                </div>
-
-                                <div class="col-12">
-                                    <label for="data_nascimento">Data de Nascimento<span style="color: red;"><?php if (isset($erro) && $type_error == 'idade') {echo $erro;} ?></span></label>
-                                    <input type="date" name="data_nascimento" class="form-control" required>
-                                </div>
-                                <div class="col-12">
-                                    <label for="endereco">Endereço</label>
-                                    <input id = "endereco" type="text" name="endereco" class="form-control" placeholder="Digite seu endereço" required>
-                                </div>
-                                <div class="col-6">
-                                    <label for="txtCep">CEP</label>
-                                    <input id = "txtCep" type="text" name="cep" class="form-control" placeholder="Digite seu CEP" required>
-                                </div>
-                                <div class="col-6">
-                                    <label for="bairro">Bairro</label>
-                                    <input id = "bairro" type="text" name="bairro" class="form-control" placeholder="Digite sua cidade" required>
-                                </div> <div class="col-6">
-                                    <label for="cidade">Cidade</label>
-                                    <input id = "cidade" type="text" name="cidade" class="form-control" placeholder="Digite sua cidade" required>
-                                </div>
-                                <div class="col-6">
-                                    <label for="estado">Estado</label>
-                                    <input id = "estado" type="text" name="estado" class="form-control" placeholder="Digite sua cidade" required>
-                                </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="nome">Nome completo</label>
+                    <input type="text" name="nome" class="form-control" placeholder="Digite seu nome completo" required>
+                </div>
+                <div class="form-group">
+                    <label for="cpf">CPF<span style="color: red;"><?php if (isset($erro) && $type_error == 'cpf') {echo $erro;} ?></span></label>
+                    <input type="text" name="cpf" class="form-control" placeholder="Digite seu CPF" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="data_nascimento">Data de Nascimento<span style="color: red;"><?php if (isset($erro) && $type_error == 'idade') {echo $erro;} ?></span></label>
+                    <input type="date" name="data_nascimento" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="endereco">Endereço</label>
+                    <input id = "endereco" type="text" name="endereco" class="form-control" placeholder="Digite seu endereço" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="txtCep">CEP</label>
+                    <input id = "txtCep" type="text" name="cep" class="form-control" placeholder="Digite seu CEP" required>
+                </div>
+                <div class="form-group">
+                    <label for="bairro">Bairro</label>
+                    <input id = "bairro" type="text" name="bairro" class="form-control" placeholder="Digite sua cidade" required>
+                </div> 
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="cidade">Cidade</label>
+                    <input id = "cidade" type="text" name="cidade" class="form-control" placeholder="Digite sua cidade" required>
+                </div>
+                <div class="form-group">
+                    <label for="estado">Estado</label>
+                    <input id = "estado" type="text" name="estado" class="form-control" placeholder="Digite sua cidade" required>
+                </div>
+            </div>
                                 <!--     
                                 <div class="col-6">
                                     <label for="estado">Estado</label>
@@ -208,35 +191,35 @@ if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['nome']) ||
                                     </select>
                                 </div> 
                                 -->
-                                <div class="col-12">
-                                    <label for="telefone">Telefone</label>
-                                    <input type="text" name="telefone" class="form-control" placeholder="Digite seu telefone" required>
-                                </div>
-                                <div class="col-12">
-                                    <label for="email">E-mail<span style="color: red;"><?php if (isset($erro) && $type_error == 'email') {echo $erro;} ?></span></label>
-                                    <input type="email" id="email" name="email" class="form-control" placeholder="Digite seu E-mail" required> 
-                                </div>
-                                <div class="col-6">
-                                    <label for="senha">Senha:</label><br>
-                                    <input type="password" id="senha" name="senha" class="form-control" required minlength="8" placeholder="Mínimo de 8 caracteres"><br>
-                                </div>
-                                <div class="col-12">
-                                    <label for="confirmar_senha">Confirme a Senha:</label><br>
-                                    <input type="password" id="confirmar_senha" name="confirmar_senha" class="form-control" placeholder="Confirme sua senha" required>
-                                </div>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-block">Cadastrar</button>
-                        <br>
-                        <div class="text-center">
-                            <a href="index.php" class="btn btn-primary btn-block">Página inicial</a>
-                        </div>
-                    </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="telefone">Telefone</label>
+                    <input type="text" name="telefone" class="form-control" placeholder="Digite seu telefone" required>
                 </div>
-            </div>       
+                <div class="form-group">
+                    <label for="email">E-mail<span style="color: red;"><?php if (isset($erro) && $type_error == 'email') {echo $erro;} ?></span></label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Digite seu E-mail" required> 
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="senha">Senha:</label>
+                    <input type="password" id="senha" name="senha" class="form-control" required minlength="8" placeholder="Mínimo de 8 caracteres"><br>
+                </div>
+                <div class="form-group">
+                    <label for="confirmar_senha">Confirme a Senha:</label>
+                    <input type="password" id="confirmar_senha" name="confirmar_senha" class="form-control" placeholder="Confirme sua senha" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Cadastrar</button>
+            <br>
+            <div class="text-center">
+                <a href="index.php" class="btn btn-primary btn-block">Página inicial</a>
+            </div>
         </form>
     </div>
-        </div>
+
+
     <script>
         // Função para validar senhas ao tentar enviar o formulário
         document.querySelector('form').addEventListener('submit', function(e) {
@@ -298,6 +281,26 @@ window.onload = function(){
     let txtCep = document.getElementById('txtCep');
     txtCep.addEventListener("blur", buscaCep);
         }
+
+         // Função para alternar o menu lateral
+         const menuToggle = document.getElementById('menu-toggle');
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('main-content');
+        const overlay = document.getElementById('overlay');
+
+        // Função de alternância para abrir/fechar o menu e o overlay
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('sidebar-active');
+            mainContent.classList.toggle('content-shift');
+            overlay.classList.toggle('overlay-active');
+        });
+
+        // Função para fechar o menu se clicar fora (no overlay)
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('sidebar-active');
+            mainContent.classList.remove('content-shift');
+            overlay.classList.remove('overlay-active');
+        });
     </script>
 
 </body>
