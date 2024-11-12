@@ -43,6 +43,7 @@
             background-color: #C56126;
             text-align: center;
             padding: 20px;  
+            color: #2b3a4e;
             box-shadow: 10px 4px 10px rgba(0, 0, 0, 0.1);
         }
         .img-perfil {
@@ -67,7 +68,16 @@
             max-width: 600px; /* Largura máxima */
         }
         .texto {
-            font-size: 30px;
+            font-size: 20px;
+            color: #2b3a4e; /* Cor do menu lateral */
+            justify-content: center;
+            width: 100%;
+            height: auto;
+            text-align: center;
+            padding: 20px;  
+        }
+        .texto1 {
+            font-size: 15px;
             color: #2b3a4e; /* Cor do menu lateral */
             justify-content: center;
             width: 100%;
@@ -101,12 +111,19 @@
                             <i class='bx bx-search'></i>
                         </button>
                     </span>
-                </form>
-                
-                <a href="login.php" class="menu__link">Login</a>
-                <a href="cadastro.php" class="menu__link">Cadastre-se</a>
-            
                 </div>
+                <div id="deslogado">
+                    <a href="login.php" class="menu__link">Login</a>
+                    <a href="cadastro.php" class="menu__link">Cadastre-se</a>
+        
+        
+                </div>
+                <div id="logado">
+                    <a href="logout.php" class="menu__link">Sair</a>
+                </div>
+                </form>
+               
+         
     </header>
     
             
@@ -124,9 +141,17 @@
         <div class="overlay" id="overlay"></div>
         <!-- Conteúdo principal -->
           <br/> 
-                <h2 class="equipe">Projeto Integrador</h2>
+            <div class="section1">
+               
+                <h2 class="equipe">Projeto Integrador</h2></div>
+                <br><div class="texto1">
+                <a>Somos uma plataforma dedicada a conectar locatários e proprietários de maneira rápida, direta e prática.</a><br><br>
+                <a>Com o objetivo de oferecer uma experiência de viagem que combina conforto e custo-benefício.</a><br><br>
+                <a> Um sistema intuitivo que facilita o processo de reserva, criando um ambiente acolhedor e eficiente para quem busca uma estadia temporária com o aconchego e a sensação de estar em casa, mesmo longe. </a><br><br>
+                <a>Nossa missão é simplificar cada etapa da locação, garantindo que cada viagem seja uma experiência única, memorável e agradável.</a>  <br><br>
             <br>
-            <h2 class="texto" >  Apresentação do time:</h2><br>
+        </div>
+            <h2 class="equipe" >  Apresentação do time:</h2><br>
            <!-- <img id="profile-image"  src="byanca.png" onmouseover="this.src='byanca.png'" onmouseout="this.src='byancagray.png'" alt="Foto de Perfil" style="width:300px; height:300px;border-radius: 15px;"  >-->
            <div class="section">  
                 <div class="equipe-box">
