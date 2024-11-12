@@ -44,7 +44,7 @@
 
     <!-- Menu lateral (sidebar) -->
     <div class="sidebar" id="sidebar">
-        <a href="quemsomos.html">Quem Somos</a>
+        <a href="quemsomos.php">Quem Somos</a>
         <a href="#">Dúvidas</a>
         <a href="imoveis.php" >Cadastre seu imóvel</a>
     </div>
