@@ -158,61 +158,28 @@
         <!-- Overlay para quando o menu estiver aberto -->
         <div class="overlay" id="overlay"></div>
         <!-- Conteúdo principal -->
-          <br/> 
+        <br/> 
             <div class="section1">
                
-                <h2 class="equipe">Projeto Integrador</h2></div>
-                <br><div class="texto1">
-                <a>Somos uma plataforma dedicada a conectar locatários e proprietários de maneira rápida, direta e prática.</a><br><br>
-                <a>Com o objetivo de oferecer uma experiência de viagem que combina conforto e custo-benefício.</a><br><br>
-                <a> Um sistema intuitivo que facilita o processo de reserva, criando um ambiente acolhedor e eficiente para quem busca uma estadia temporária com o aconchego e a sensação de estar em casa, mesmo longe. </a><br><br>
-                <a>Nossa missão é simplificar cada etapa da locação, garantindo que cada viagem seja uma experiência única, memorável e agradável.</a>  <br><br>
-            <br>
-        </div>
-            <h2 class="equipe" >  Apresentação do time:</h2><br>
-           <!-- <img id="profile-image"  src="byanca.png" onmouseover="this.src='byanca.png'" onmouseout="this.src='byancagray.png'" alt="Foto de Perfil" style="width:300px; height:300px;border-radius: 15px;"  >-->
-           <div class="section">  
-                <div class="equipe-box">
-                    <div class="equipe">
-                        <h2 class="texto">Product Owner</h2>
-                        <img src="byanca.png" alt="Foto de Perfil" class="img-perfil" > 
-                        <h2>Byanca Campos Furlan</h2>
-                        <br/>
-                        <a href="mailto:byancafurlanarq@gmail.com"target="_blank">E-mail</a><br/>
-                        <a href="https://br.linkedin.com/in/byanca-furlan"target="_blank"rel="noopener">Linkedin</a><br/>
-                    </div> 
-                        <div class="equipe">
-                            <h2 class="texto">Scrum Master</h2>
-                            <img src="maria.jpeg" alt="Foto de Perfil" class="img-perfil" >
-                            <h2>Maria Antônia dos Santos</h2>
-                            <a href="mailto: mariaaatonha@gmail.com"target="_blank">E-mail</a><br/>
-                            <a href="https://www.linkedin.com/in/maria-antônia-dos-santos"target="_blank"rel="noopener">Linkedin</a>
-                    </div>
-                    <div class="equipe">
-                        <h2 class="texto">Desenvolvedora</h2>
-                        <img src="ri.png" alt="Foto de Perfil" class="img-perfil" >
-                        <h2>Rithiely Schmitt</h2>
-                        <a href="mailto: rithiely_ph@hotmail.com"target="_blank">E-mail</a><br/>
-                        <a href="https://br.linkedin.com/in/rithiély-schmitt-100b92326/"target="_blank"rel="noopener">Linkedin</a>
-                    </div>
-                    <div class="equipe">
-                        <h2 class="texto">Desenvolvedor</h2>
-                        <img src="ri.png" alt="Foto de Perfil" class="img-perfil" >
-                        <h2>Igor Miguel Raimundo</h2>
-                        <a href="mailto: ri@gmail.com"target="_blank">E-mail</a><br/>
-                        <a href="https://br.linkedin.com/in//"target="_blank"rel="noopener">Linkedin</a>
-                    </div>
-             </div>
-             </div>
-           </div>
-           <br>           
-           <br>
-           <br>
+                <h2 class="equipe">Dúvidas Frequentes</h2></div>
 
-          <header>
-            
-          </header>
-           <footer><ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <footer><ul>
             <p class="rights"><span>&copy;&nbsp;<span id="copyright-year"></span> .Todos os direitos reservados. <span> por Byanca Campos Furlan, Igor Miguel Raimundo, Maria Antonia dos Santos e Rithiely Schmitt.</a></span>
     </ul>
         </footer>

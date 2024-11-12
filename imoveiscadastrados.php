@@ -11,9 +11,42 @@ if (!isset($_SESSION['id'])) {
 // Conectar ao banco de dados
 include("conexao.php");
 
-// Buscar as informações do usuário no banco de dados
-$sql = "SELECT nome, telefone, email, endereco, cidade, estado, senha FROM usuario WHERE id = ?";
-$stmt = $conexao->prepare($sql);
+// Buscar as informações do imovel no banco de dados
+$sql = "SELECT cep, nome_imovel, rua, numero, bairro, cidade, uf, valor, descrição, id_categoria, numero_pessoas, id_checklist, imagens FROM imovel WHERE id = ?";
+$resultado = mysqli_query($strcon,$sql);
+
+while($registro = mysqli_fetch_array($resultado))
+{ 
+    $cep = $_POST['cep'];
+    $nome_imovel = $_POST['nome_imovel'];
+    $endereco = $_POST['endereco'];
+    $numero = $_POST['numero'];
+    $bairro = $_POST['bairro'];
+    $cidade = $_POST['cidade'];
+    $estado = $_POST['estado'];
+    $valor = $_POST['valor'];
+    $descricao = $_POST['descricao'];
+    $categoria = $_POST['categoria'];
+    $numero_pessoas = $_POST['numero_pessoas'];
+    $caracteristicas = isset($_POST['caracteristicas']) ? implode(", ", $_POST['caracteristicas']) : "";
+    echo "<tr>";
+    echo "<td>".$nome_imovel . "</td>";
+    echo "<td>".$endereco . "</td>";
+    echo "<td>".$numero . "</td>";
+    echo "<td>".$bairro . "</td>";
+    echo "<td>".$cidade . "</td>";
+    echo "<td>".$estado . "</td>";
+    echo "<td>".$valor . "</td>";
+    echo "<td>".$descricao . "</td>";
+    echo "<td>".$categoria . "</td>";
+    echo "<td>".$numero_pessoas . "</td>";
+    echo "<td>".$caracteristicas . "</td>";
+    echo "</tr>";
+    
+}
+
+
+/*$stmt = $conexao->prepare($sql);
 $stmt->bind_param('i', $_SESSION['id']);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -25,66 +58,14 @@ if ($result->num_rows > 0) {
     exit();
 }
 
-// Processamento da alteração de dados
-$senha_alterada = false; // Flag para verificar se a senha foi alterada
-$telefone_alterado = false; // Flag para verificar se o telefone foi alterado
-$endereco_alterado = false; // Flag para verificar se o endereço foi alterado
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Alterar Senha
-    if (isset($_POST['acao']) && $_POST['acao'] === 'alterar_senha') {
-        $senha_atual = $_POST['senha_atual'];
-        $nova_senha = $_POST['nova_senha'];
-        $confirmar_senha = $_POST['confirmar_senha'];
-
-        // Verificar se a senha atual está correta
-        if (password_verify($senha_atual, $usuario['senha'])) {
-            if ($nova_senha === $confirmar_senha && strlen($nova_senha) >= 8) {
-                // Atualizar a senha no banco de dados com hash seguro
-                $nova_senha_hash = password_hash($nova_senha, PASSWORD_DEFAULT);
-                $sql = "UPDATE usuario SET senha = ? WHERE id = ?";
-                $stmt = $conexao->prepare($sql);
-                $stmt->bind_param('si', $nova_senha_hash, $_SESSION['id']);
-                
-                if ($stmt->execute()) {
-                    $senha_alterada = true; // Define que a senha foi alterada
-                } else {
-                    $msg_erro = "Erro ao atualizar a senha.";
-                }
-                $stmt->close();
-            } else {
-                $msg_erro = "As senhas não coincidem ou a nova senha é muito curta.";
-            }
-        } else {
-            $msg_erro = "Senha atual incorreta.";
-        }
-    }
-
-    // Alterar Telefone
-    if (isset($_POST['acao']) && $_POST['acao'] === 'alterar_telefone') {
-        $novo_telefone = $_POST['novo_telefone'];
-
-        // Atualizar o telefone no banco de dados
-        $sql = "UPDATE usuario SET telefone = ? WHERE id = ?";
-        $stmt = $conexao->prepare($sql);
-        $stmt->bind_param('si', $novo_telefone, $_SESSION['id']);
-        
-        if ($stmt->execute()) {
-            $telefone_alterado = true; // Define que o telefone foi alterado
-        } else {
-            $msg_erro = "Erro ao atualizar o telefone.";
-        }
-        $stmt->close();
-    }
-
     // Alterar Endereço, Cidade e Estado
-    if (isset($_POST['acao']) && $_POST['acao'] === 'alterar_endereco') {
+    if (isset($_POST['acao']) && $_POST['acao'] === 'alterar_imovel') {
         $novo_endereco = $_POST['novo_endereco'];
         $nova_cidade = $_POST['nova_cidade'];
         $novo_estado = $_POST['novo_estado'];
 
         // Atualizar o endereço no banco de dados
-        $sql = "UPDATE usuario SET endereco = ?, cidade = ?, estado = ? WHERE id = ?";
+        $sql = "UPDATE imovel SET endereco = ?, cidade = ?, estado = ? WHERE id = ?";
         $stmt = $conexao->prepare($sql);
         $stmt->bind_param('sssi', $novo_endereco, $nova_cidade, $novo_estado, $_SESSION['id']);
         
@@ -95,8 +76,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         $stmt->close();
     }
-}
 
+*/
 // Fechar a conexão
 $conexao->close();
 ?>
@@ -188,15 +169,19 @@ $conexao->close();
     </script>
 </head>
 <body>
-    <div class="container">
-        <h1>Perfil do Usuário</h1>
-        <p><strong>Nome:</strong> <?php echo htmlspecialchars($usuario['nome']); ?></p>
-        <p><strong>Telefone:</strong> <?php echo htmlspecialchars($usuario['telefone']); ?></p>
-        <p><strong>Email:</strong> <?php echo htmlspecialchars($usuario['email']); ?></p>
-        <p><strong>Endereço:</strong> <?php echo htmlspecialchars($usuario['endereco']); ?></p>
-        <p><strong>Cidade:</strong> <?php echo htmlspecialchars($usuario['cidade']); ?></p>
-        <p><strong>Estado:</strong> <?php echo htmlspecialchars($usuario['estado']); ?></p>
 
+    <table class="container">
+        <h1>Imóveis cadastrados</h1>
+        <tr>
+            <th> NOME </th>
+            <th> ENDEREÇO </th>
+            <th> CATEGORIA </th>
+        </tr>
+            
+
+
+        <p><strong>Nome:</strong> <?php echo htmlspecialchars($usuario['nome']); ?></p>
+    
         <button onclick="toggleForm('alterar-senha-form')">Alterar Senha</button>
         <div id="alterar-senha-form" class="alterar-senha">
             <h2>Alterar Senha</h2>
@@ -250,7 +235,14 @@ $conexao->close();
             </form>
         </div>
 
-            <?php
+        <div class="container">
+        <h1>Imóveis Cadastrados</h1>
+        <p><strong>Nome do imóvel:</strong> <?php echo htmlspecialchars($imovel['nome_imovel']); ?></p>
+        
+
+
+
+        <?php
         if ($senha_alterada) {
             echo "<p class='mensagem-sucesso'>Senha alterada com sucesso!</p>";
         }

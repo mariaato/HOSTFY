@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $destinos_bd = implode(", ", $destinos);
 
             // Insere os dados no banco de dados com o id_proprietario definido automaticamente
-            $sql = "INSERT INTO imovel (cep, nome_imovel, rua, numero, bairro, cidade, uf, id_proprietario, valor, descrição, id_categoria, numero_pessoas, id_checklist, imagens)
+            $sql = "INSERT INTO imovel (cep, nome_imovel, rua, numero, bairro, cidade, uf, id_proprietario, valor, descricao, id_categoria, numero_pessoas, id_checklist, imagens)
             VALUES ('$cep', '$nome_imovel', '$endereco', '$numero', '$bairro', '$cidade', '$estado', '$id_proprietario', '$valor', '$descricao', '$categoria', '$numero_pessoas', '$caracteristicas', '$destinos_bd')";
 
             if ($conexao->query($sql) === TRUE) {
@@ -123,7 +123,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="sidebar" id="sidebar">
         <a href="index.php">Área inicial </a>
         <a href="quemsomos.php">Quem Somos</a>
-        <a href="#">Dúvidas</a>
+        <a href="duvidas.php">Dúvidas</a>
     </div>
 
     <!-- Overlay para quando o menu estiver aberto -->
