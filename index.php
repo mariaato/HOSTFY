@@ -37,6 +37,7 @@
 
         </div>
         <div id="logado">
+        <?php if(isset($_SESSION['id'])) {echo '<a  href="perfilhtml.php" class="menu__link">Perfil</a>';}?>
             <a href="logout.php" class="menu__link">Sair</a>
         </div>
     </header>
