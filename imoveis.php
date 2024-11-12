@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $destinos_bd = implode(", ", $destinos);
 
             // Insere os dados no banco de dados com o id_proprietario definido automaticamente
-            $sql = "INSERT INTO imovel (cep, nome_imovel, rua, numero, bairro, cidade, uf, id_proprietario, valor, descricao, id_categoria, numero_pessoas, id_checklist, imagens)
+            $sql = "INSERT INTO imovel (cep, nome_imovel, rua, numero, bairro, cidade, uf, id_proprietario, valor, descrição, id_categoria, numero_pessoas, id_checklist, imagens)
             VALUES ('$cep', '$nome_imovel', '$endereco', '$numero', '$bairro', '$cidade', '$estado', '$id_proprietario', '$valor', '$descricao', '$categoria', '$numero_pessoas', '$caracteristicas', '$destinos_bd')";
 
             if ($conexao->query($sql) === TRUE) {
@@ -183,11 +183,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <label class="form-check-label" for="casa">Casa</label>
                     </div>
                     <div class="form-check">
-                        <input type="radio" class="form-check-input" name="categoria" value="apartamento">
+                        <input type="radio" class="form-check-input" name="categoria" value="2">
                         <label class="form-check-label" for="apartamento">Apartamento</label>
                     </div>
                     <div class="form-check">
-                        <input type="radio" class="form-check-input" name="categoria" value="sitio">
+                        <input type="radio" class="form-check-input" name="categoria" value="3">
                         <label class="form-check-label" for="sitio">Sítio</label>
                     </div>
                 </div>
@@ -198,32 +198,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <label class="form-check-label" for="garagem">Garagem</label>
                     </div>
                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="bicicleta">
+                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="2">
                         <label class="form-check-label" for="bicicleta">Bicicleta</label>
                     </div>
                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="pet_friendly">
+                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="3">
                         <label class="form-check-label" for="pet_friendly">Pet Friendly</label>
                     </div>
                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="churrasqueira">
+                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="4">
                         <label class="form-check-label" for="churrasqueira">Churrasqueira</label>
                     </div>
                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="piscina">
+                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="5">
                         <label class="form-check-label" for="piscina">Piscina</label>
                     </div>
                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="sauna">
+                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="6">
                         <label class="form-check-label" for="sauna">Sauna</label>
                     </div>
                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="quadra_poliesportiva">
+                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="7">
                         <label class="form-check-label" for="quadra_poliesportiva">Quadra Poliesportiva</label>
                     </div>
                     <div class="form-group">
                         <!-- o label está chamando o input, qualquer estilização feita deve ser aplicada ao label -->
-                        <label for="imagem">fotos do arquivo<?php if(isset($erro) && $erro_tipo = 'img') {echo $erro;} ?></label>
+                        <label for="imagem">Fotos do imóvel<?php if(isset($erro) && $erro_tipo = 'img') {echo $erro;} ?></label>
                         <input style="display: none;" id="imagem"  type="file" name="imagem[]" required multiple>
                     </div>
 
