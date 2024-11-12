@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $destinos_bd = implode(", ", $destinos);
 
             // Insere os dados no banco de dados com o id_proprietario definido automaticamente
-            $sql = "INSERT INTO imovel (cep, nome_imovel, rua, numero, bairro, cidade, uf, id_proprietario, valor, descricao, id_categoria, numero_pessoas, id_checklist, imagens)
+            $sql = "INSERT INTO imovel (cep, nome_imovel, rua, numero, bairro, cidade, uf, id_proprietario, valor, descrição, id_categoria, numero_pessoas, id_checklist, imagens)
             VALUES ('$cep', '$nome_imovel', '$endereco', '$numero', '$bairro', '$cidade', '$estado', '$id_proprietario', '$valor', '$descricao', '$categoria', '$numero_pessoas', '$caracteristicas', '$destinos_bd')";
 
             if ($conexao->query($sql) === TRUE) {
@@ -130,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="overlay" id="overlay"></div>
 
     <div class="main-content" id="main-content">
-        <form id="registerForm" action="imoveis.php" method="POST">
+        <form id="registerForm" action="imoveis.php" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="nome_imovel">Nome do Imóvel</label>
                 <input type="text" name="nome_imovel" class="form-control" placeholder="Digite o nome do imóvel" maxlength="50"oninput="changeColor(this)" required>
@@ -175,7 +175,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="form-group">
                     <label>Categoria do Imóvel </label>
                     <div class="form-check">
-                        <input type="radio" class="form-check-input" name="categoria" value="casa" required>
+                        <input type="radio" class="form-check-input" name="categoria" value="1" required>
                         <label class="form-check-label" for="casa">Casa</label>
                     </div>
                     <div class="form-check">
@@ -190,7 +190,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="form-group">
                     <label>Características do Imóvel</label>
                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="garagem">
+                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="1">
                         <label class="form-check-label" for="garagem">Garagem</label>
                     </div>
                     <div class="form-check">
@@ -274,7 +274,6 @@ txtCep.addEventListener("blur", buscaCep);
             }
         }
 
-<<<<<<< HEAD
     //limita o número de arquivos a 20
     document.getElementById('imagem').addEventListener('change', function(e) {
     if (e.target.files.length > 20) {
@@ -283,7 +282,6 @@ txtCep.addEventListener("blur", buscaCep);
         }
     });
 
-=======
          // Função para alternar o menu lateral
          const menuToggle = document.getElementById('menu-toggle');
         const sidebar = document.getElementById('sidebar');
@@ -303,7 +301,7 @@ txtCep.addEventListener("blur", buscaCep);
             mainContent.classList.remove('content-shift');
             overlay.classList.remove('overlay-active');
         });
->>>>>>> 0f4d560121d245be2914b57fc847629b8c2c19a5
+        
 </script>
 </body>
 </html>
