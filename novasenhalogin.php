@@ -124,7 +124,7 @@
     <!-- Menu lateral (sidebar) NAO TA FUNCIONANDO-->
 <div class="sidebar" id="sidebar">
     <a href="index.php">Área inicial </a>
-    <a href="quemsomos.html">Quem Somos</a>
+    <a href="quemsomos.php">Quem Somos</a>
     <a href="#">Dúvidas</a>
 </div>
 
