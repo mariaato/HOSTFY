@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -223,7 +226,27 @@
           document.getElementById('copyright-year').textContent = new Date().getFullYear();
 
         </script>
-         
+        <script>    
+            //fução para a index do usuario logado
+            function logado() {
+                document.getElementById('logado').style.display='';
+                document.getElementById('deslogado').style.display='none';
+            }
+            //função para o usuario deslogado
+            function deslogado() {
+                document.getElementById('logado').style.display='none';
+                document.getElementById('deslogado').style.display='';
+            }
+        </script>
+
+        <?php
+            //verifica o login e muda o index
+            if (isset($_SESSION['id'])) {
+                echo '<script> logado() </script>';
+            } else {
+                echo '<script> deslogado() </script>';
+            }
+        ?> 
 
         </body>
         </html>
