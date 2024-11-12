@@ -9,7 +9,7 @@
     <title>HOSTFY</title>
     <link rel="shortcut icon" href="logoHostfy.png">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
 
@@ -53,7 +53,6 @@
     <div class="overlay" id="overlay"></div>
 
     <!-- Conteúdo principal -->
-    <div class="main-content" id="main-content">
         <!-- Conteúdo da página -->
         <h1>Destaques</h1>
         <p>Aqui estão os imóveis em destaque para você.</p>
@@ -68,7 +67,6 @@
 
             echo gerarAnuncio($imagem, $titulo, $avaliacao, $tags);
         ?>
-    </div>
 
     <script>
         // Função para alternar o menu lateral

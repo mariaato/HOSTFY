@@ -17,6 +17,7 @@ body {
     align-items: center;
     height: 100vh;
 }
+
 .img {
     border-radius: 15px;
 }
@@ -107,7 +108,9 @@ header {
     padding: 10px 20px; /* Espaçamento interno */
     width: 100%; /* Ajuste conforme necessário */
     max-width: 600px; /* Largura máxima */
-    }
+    margin-top: 10px;
+    margin-left: 20px;
+}
 
 .search-input {
     flex-grow: 1; /* O input ocupa o máximo de espaço disponível */
