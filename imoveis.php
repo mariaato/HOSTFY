@@ -52,130 +52,139 @@ $conexao->close();
     <link rel="shortcut icon" href="logoHostfy.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-    <link rel="stylesheet" href="styles.css"> 
-    <style> 
-        .filled {
-    background-color: #f2dcc659; 
-}
+    <link rel="stylesheet" href="estilo.css"> 
+    <style>
+          h1 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #black;
+            margin: 0;
+        }
+
+        #main-content {
+        
+            padding-top: 500px;
+
+        }
     </style>
-</head>
+    
 <body>
-    <header>
+<header>
+        <!-- Botão do ícone de menu -->
+        <button class="menu-icon" id="menu-toggle">
+            <i class='bx bx-menu'></i>
+        </button>
         <img src="logoHostfy.png" alt="logo" class="logo" />
+
+        <h1>Cadastro de Imóvel</h1>
+
     </header>
 
+    <!-- Menu lateral (sidebar) -->
     <div class="sidebar" id="sidebar">
+        <a href="index.php">Área inicial </a>
         <a href="quemsomos.html">Quem Somos</a>
-        <a href="#">Seus Aluguéis</a>
-        <a href="perfilhtml.php">Perfil</a>
-        <a href="#">Configurações</a>
+        <a href="#">Dúvidas</a>
     </div>
 
+    <!-- Overlay para quando o menu estiver aberto -->
     <div class="overlay" id="overlay"></div>
 
     <div class="main-content" id="main-content">
         <form id="registerForm" action="imoveis.php" method="POST">
-            <div class="container">
-                <div class="card card-register mx-auto col-8 px-0">
-                    <div class="card-header">Cadastro de Imóvel</div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div class="col-12">
-                                    <label for="nome_imovel">Nome do Imóvel</label>
-                                    <input type="text" name="nome_imovel" class="form-control" placeholder="Digite o nome do imóvel" maxlength="50"oninput="changeColor(this)" required>
-                                </div>
-                                <div class="col-12">
-                                    <label for="txtCep">CEP</label>
-                                    <input id="txtCep"  type="text" name="cep" class="form-control" placeholder="Digite seu CEP" maxlength="8" oninput="changeColor(this)" required>
-                                </div>
-                                <div class="col-12">
-                                    <label for="endereco">Rua</label>
-                                    <input id = "endereco" type="text" name="endereco"  class="form-control" placeholder="Digite a rua" maxlength="50" oninput="changeColor(this)" required>
-                                </div>
-                                <div class="col-12">
-                                    <label for="numero">Número</label>
-                                    <input type="number" name="numero" class="form-control" placeholder="Digite o número" required>
-                                </div>
-                                <div class="col-12">
-                                    <label for="bairro">Bairro</label>
-                                    <input id="bairro" type="text" name="bairro"  class="form-control" placeholder="Digite o bairro" maxlength="50"oninput="changeColor(this)" required>
-                                </div>
-                                <div class="col-12">
-                                    <label for="cidade">Cidade</label>
-                                    <input id="cidade" type="text" name="cidade"  class="form-control" placeholder="Digite a cidade" maxlength="50"oninput="changeColor(this)" required>
-                                </div>
-                                <div class="col-12">
-                                    <label for="estado">UF</label>
-                                    <input type="text" name="estado" id="estado" class="form-control" placeholder="Digite a UF" oninput="changeColor(this)" required>
-                                <div class="col-12">
-                                    <label for="valor">Valor Diária</label>
-                                    <input type="number" name="valor" class="form-control" placeholder="Digite o valor do imóvel" step="0.01"oninput="changeColor(this)" required>
-                                </div>
-                                <div class="col-12">
-                                    <label for="numero_pessoas">Número de Pessoas</label>
-                                    <input type="number" name="numero_pessoas" class="form-control" placeholder="Digite o número de pessoas" oninput="changeColor(this)" required>
-                                </div>
-                                <div class="col-12">
-                                    <label for="descricao">Descrição</label>
-                                    <textarea name="descricao" class="form-control" placeholder="Digite uma descrição" maxlength="500" oninput="changeColor(this)" required></textarea>
-                                </div>
+            <div class="form-group">
+                <label for="nome_imovel">Nome do Imóvel</label>
+                <input type="text" name="nome_imovel" class="form-control" placeholder="Digite o nome do imóvel" maxlength="50"oninput="changeColor(this)" required>
+            </div>
+            <div class="form-group">
+                <label for="txtCep">CEP</label>
+                <input id="txtCep"  type="text" name="cep" class="form-control" placeholder="Digite seu CEP" maxlength="8" oninput="changeColor(this)" required>
+            </div>
+                <div class="form-group">
+                    <label for="endereco">Rua</label>
+                    <input id = "endereco" type="text" name="endereco"  class="form-control" placeholder="Digite a rua" maxlength="50" oninput="changeColor(this)" required>
+                </div>
+                <div class="form-group">
+                    <label for="numero">Número</label>
+                    <input type="number" name="numero" class="form-control" placeholder="Digite o número" required>
+                </div>
+                <div class="form-group">
+                    <label for="bairro">Bairro</label>
+                    <input id="bairro" type="text" name="bairro"  class="form-control" placeholder="Digite o bairro" maxlength="50"oninput="changeColor(this)" required>
+                </div>
+                <div class="form-group">
+                    <label for="cidade">Cidade</label>
+                    <input id="cidade" type="text" name="cidade"  class="form-control" placeholder="Digite a cidade" maxlength="50"oninput="changeColor(this)" required>
+                </div>
+                <div class="form-group">
+                    <label for="estado">UF</label>
+                    <input type="text" name="estado" id="estado" class="form-control" placeholder="Digite a UF" oninput="changeColor(this)" required>
+                </div>
+                <div class="form-group">
+                    <label for="valor">Valor Diária</label>
+                    <input type="number" name="valor" class="form-control" placeholder="Digite o valor do imóvel" step="0.01"oninput="changeColor(this)" required>
+                </div>
+                <div class="form-group">
+                    <label for="numero_pessoas">Número de Pessoas</label>
+                    <input type="number" name="numero_pessoas" class="form-control" placeholder="Digite o número de pessoas" oninput="changeColor(this)" required>
+                </div>
+                <div class="form-group">
+                    <label for="descricao">Descrição</label>
+                    <textarea name="descricao" class="form-control" placeholder="Digite uma descrição" maxlength="500" oninput="changeColor(this)" required></textarea>
+                </div>
 
-                                <div class="col-12">
-                                    <label>Categoria do Imóvel </label>
-                                    <div class="form-check">
-                                        <input type="radio" class="form-check-input" name="categoria" value="casa" required>
-                                        <label class="form-check-label" for="casa">Casa</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="radio" class="form-check-input" name="categoria" value="apartamento">
-                                        <label class="form-check-label" for="apartamento">Apartamento</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="radio" class="form-check-input" name="categoria" value="sitio">
-                                        <label class="form-check-label" for="sitio">Sítio</label>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <label>Características do Imóvel</label>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="garagem">
-                                        <label class="form-check-label" for="garagem">Garagem</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="bicicleta">
-                                        <label class="form-check-label" for="bicicleta">Bicicleta</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="pet_friendly">
-                                        <label class="form-check-label" for="pet_friendly">Pet Friendly</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="churrasqueira">
-                                        <label class="form-check-label" for="churrasqueira">Churrasqueira</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="piscina">
-                                        <label class="form-check-label" for="piscina">Piscina</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="sauna">
-                                        <label class="form-check-label" for="sauna">Sauna</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="quadra_poliesportiva">
-                                        <label class="form-check-label" for="quadra_poliesportiva">Quadra Poliesportiva</label>
-                                    </div>
-
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-block">Cadastrar Imóvel</button>
-                            <a href="index.php" class="btn btn-primary btn-block">Página inicial</a>
-                        </div>
+                <div class="form-group">
+                    <label>Categoria do Imóvel </label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="categoria" value="casa" required>
+                        <label class="form-check-label" for="casa">Casa</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="categoria" value="apartamento">
+                        <label class="form-check-label" for="apartamento">Apartamento</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="categoria" value="sitio">
+                        <label class="form-check-label" for="sitio">Sítio</label>
                     </div>
                 </div>
-            </div>
+                <div class="form-group">
+                    <label>Características do Imóvel</label>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="garagem">
+                        <label class="form-check-label" for="garagem">Garagem</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="bicicleta">
+                        <label class="form-check-label" for="bicicleta">Bicicleta</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="pet_friendly">
+                        <label class="form-check-label" for="pet_friendly">Pet Friendly</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="churrasqueira">
+                        <label class="form-check-label" for="churrasqueira">Churrasqueira</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="piscina">
+                        <label class="form-check-label" for="piscina">Piscina</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="sauna">
+                        <label class="form-check-label" for="sauna">Sauna</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="quadra_poliesportiva">
+                        <label class="form-check-label" for="quadra_poliesportiva">Quadra Poliesportiva</label>
+                    </div>
+
+        </div>
+            <button type="submit" class="btn btn-primary btn-block">Cadastrar Imóvel</button>
+            <a href="index.php" class="btn btn-primary btn-block">Página inicial</a>
+        
         </form>
+        
     </div>
     <script>
     // Função buscaCEP
@@ -220,6 +229,26 @@ txtCep.addEventListener("blur", buscaCep);
                 input.classList.remove('filled'); // Remove a classe 'filled'
             }
         }
+
+         // Função para alternar o menu lateral
+         const menuToggle = document.getElementById('menu-toggle');
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('main-content');
+        const overlay = document.getElementById('overlay');
+
+        // Função de alternância para abrir/fechar o menu e o overlay
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('sidebar-active');
+            mainContent.classList.toggle('content-shift');
+            overlay.classList.toggle('overlay-active');
+        });
+
+        // Função para fechar o menu se clicar fora (no overlay)
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('sidebar-active');
+            mainContent.classList.remove('content-shift');
+            overlay.classList.remove('overlay-active');
+        });
 </script>
 </body>
 </html>
