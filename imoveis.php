@@ -1,4 +1,9 @@
 <?php
+//gera um nome de 32 caracteres em hexadecimal
+function nome_images($t = 16) {
+    return bin2hex(random_bytes($t));
+}
+
 include("conexao.php");
 
 // Inicia a sessão, se não tiver sido iniciada
@@ -28,19 +33,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $numero_pessoas = $_POST['numero_pessoas'];
     $caracteristicas = isset($_POST['caracteristicas']) ? implode(", ", $_POST['caracteristicas']) : "";
 
-    // Insere os dados no banco de dados com o id_proprietario definido automaticamente
-    $sql = "INSERT INTO imoveis (cep, nome_imovel, endereco, numero, bairro, cidade, estado, id_proprietario, valor, descricao, categoria, numero_pessoas, caracteristicas)
+    //envio das imagens
+    //ALTER TABLE `imovel` ADD `imagens` VARCHAR(1500) NOT NULL AFTER `Numero_pessoas`;
+    if (isset($_FILES['imagem'])) {    
+        foreach ($_FILES['imagem']['name'] as $arquivo => $nome) {
+            if ($_FILES['imagem']['type'][$arquivo] == 'image/png' || $_FILES['imagem']['type'][$arquivo] == 'image/jpeg') {   
+                if ($_FILES['imagem']['type'][$arquivo] == 'image/png') {
+                    $caminho = nome_images($t = 16) . '.png';
+                } elseif ($_FILES['imagem']['type'][$arquivo] == 'image/jpeg') {
+                    $caminho = nome_images($t = 16) . '.jpg';
+                } 
+                $temporario = $_FILES['imagem']['tmp_name'][$arquivo];
+                $caminho = './uploads/' . $caminho;
+                $destinos[] = $caminho;
+
+                move_uploaded_file($temporario, $caminho);
+                $ver = 1;
+            } else {
+                $erro = ' - tipo de arquivo invalido.';
+                $erro_tipo = 'img';
+                $ver = 0;
+            }
+        }
+
+        if ($ver == 1) {
+
+            $destinos_bd = implode(", ", $destinos);
+
+            // Insere os dados no banco de dados com o id_proprietario definido automaticamente
+            $sql = "INSERT INTO imoveil (cep, nome_imovel, rua, numero, bairro, cidade, uf, id_proprietario, valor, descricao, id_categoria, numero_pessoas, id_checklist)
             VALUES ('$cep', '$nome_imovel', '$endereco', '$numero', '$bairro', '$cidade', '$estado', '$id_proprietario', '$valor', '$descricao', '$categoria', '$numero_pessoas', '$caracteristicas')";
 
-    if ($conexao->query($sql) === TRUE) {
-        echo "Imóvel cadastrado com sucesso!</p>";
+            if ($conexao->query($sql) === TRUE) {
+                    $final = "Imóvel cadastrado com sucesso!</p>";
+                } else {
+                    $final = "Erro ao cadastrar imóvel: " . $conexao->error;
+            }
+
+            // Fecha a conexão com o banco de dados
+            $conexao->close();
+        }
     } else {
-        echo "<p>Erro ao cadastrar imóvel: " . $conexao->error . "</p>";
+        $erro = ' - falha ao enviar as imagens';
+        $erro_tipo = 'img';
     }
 }
-
-// Fecha a conexão com o banco de dados
-$conexao->close();
 ?>
 
 <!DOCTYPE html>
@@ -62,6 +99,7 @@ $conexao->close();
 <body>
     <header>
         <img src="logoHostfy.png" alt="logo" class="logo" />
+        <p><?php if (isset($final)) {echo $final;} ?></p>
     </header>
 
     <div class="sidebar" id="sidebar">
@@ -74,7 +112,7 @@ $conexao->close();
     <div class="overlay" id="overlay"></div>
 
     <div class="main-content" id="main-content">
-        <form id="registerForm" action="imoveis.php" method="POST">
+        <form id="registerForm" action="imoveis.php" method="POST" enctype="multipart/form-data">
             <div class="container">
                 <div class="card card-register mx-auto col-8 px-0">
                     <div class="card-header">Cadastro de Imóvel</div>
@@ -166,6 +204,11 @@ $conexao->close();
                                         <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="quadra_poliesportiva">
                                         <label class="form-check-label" for="quadra_poliesportiva">Quadra Poliesportiva</label>
                                     </div>
+                                    <div class="col-12">
+                                        <!-- o label está chamando o input, qualquer estilização feita deve ser aplicada ao label -->
+                                        <label for="imagem">fotos do arquivo<?php if(isset($erro) && $erro_tipo = 'img') {echo $erro;} ?></label>
+                                        <input style="display: none;" id="imagem"  type="file" name="imagem[]" required multiple>
+                                    </div>
 
                             </div>
                         </div>
@@ -220,6 +263,15 @@ txtCep.addEventListener("blur", buscaCep);
                 input.classList.remove('filled'); // Remove a classe 'filled'
             }
         }
+
+    //limita o número de arquivos a 20
+    document.getElementById('imagem').addEventListener('change', function(e) {
+    if (e.target.files.length > 20) {
+        alert("Você só pode enviar até 20 arquivos.");
+        e.target.value = "";
+        }
+    });
+
 </script>
 </body>
 </html>
