@@ -161,11 +161,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <div class="form-group">
                     <label for="valor">Valor Diária</label>
-                    <input type="number" name="valor" class="form-control" placeholder="Digite o valor do imóvel" step="0.01"oninput="changeColor(this)" required>
+                    <input type="number" name="valor" class="form-control" placeholder="Digite o valor do imóvel"   min="100.00" step="1.00"oninput="changeColor(this)" required>
                 </div>
                 <div class="form-group">
                     <label for="numero_pessoas">Número de Pessoas</label>
-                    <input type="number" name="numero_pessoas" class="form-control" placeholder="Digite o número de pessoas" oninput="changeColor(this)" required>
+                    <input type="number" name="numero_pessoas" class="form-control" placeholder="Digite o número de pessoas"  min="0" oninput="changeColor(this)" required>
                 </div>
                 <div class="form-group">
                     <label for="descricao">Descrição</label>
