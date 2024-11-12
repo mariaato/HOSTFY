@@ -108,6 +108,7 @@ $conexao->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil do Usuário</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="logoHostfy.png">
     <style>
         body {
             font-family: Arial, sans-serif;

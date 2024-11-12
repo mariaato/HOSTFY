@@ -28,7 +28,8 @@ if ($_SESSION['attempts'] >= $max_attempts) {
 }
 
 if ($_SESSION['attempts'] >= $max_attempts && !empty($error_message)) {
-    echo "<div style='color: red; background-color: #fff3f3; border: 1px solid red; padding: 15px; border-radius: 8px; text-align: center;'><h1>$error_message</h1><p>Por favor, aguarde até que o tempo de bloqueio termine. Se você esqueceu sua senha, pode redefini-la <a href='novasenhalogin.php'>aqui</a>.</div>";
+    echo "<br>";
+    echo " <style> *{ background-color:#FEF6EE;  color: #C56126; align-items: center; justify-content: center; } .logo {width: 120px; position: fixed; left: 50px; top: 35px;} a{text-decoration: none; color: #5b2c12;</style><div style='color: #C56126; background-color: #fff3f3; border: 1px solid red; padding: 15px; border-radius: 8px; text-align: center;'><img src='logoHostfy.png' alt='logo' class='logo'/><h1>$error_message</h1><p>Por favor, aguarde até que o tempo de bloqueio termine. Se você esqueceu sua senha, pode redefini-la <a href='novasenhalogin.php'>aqui</a>.</div>";
     exit;
 }
 

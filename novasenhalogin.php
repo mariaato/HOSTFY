@@ -7,6 +7,8 @@
     <title>Trocar Senha</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="shortcut icon" href="logoHostfy.png">
+
     <style>
         * {
             margin: 0;
@@ -205,6 +207,26 @@
         <img src="logoHostfy.png" alt="logo" class="logo">
     </div>
 </div>
+<script>
+        // Função para alternar o menu lateral
+        const menuToggle = document.getElementById('menu-toggle');
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('main-content');
+        const overlay = document.getElementById('overlay');
 
+        // Função de alternância para abrir/fechar o menu e o overlay
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('sidebar-active');
+            mainContent.classList.toggle('content-shift');
+            overlay.classList.toggle('overlay-active');
+        });
+
+        // Função para fechar o menu se clicar fora (no overlay)
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('sidebar-active');
+            mainContent.classList.remove('content-shift');
+            overlay.classList.remove('overlay-active');
+        });
+    </script>
 </body>
 </html>
