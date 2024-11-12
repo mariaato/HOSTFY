@@ -261,7 +261,7 @@ a {
     margin-top: 50px;
 }
 
-#main-content {
+/* #main-content {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -269,7 +269,7 @@ a {
     width: 100%;
     background-color: #FEF6EE;
 
-}
+} */
 
 .form-row {
     display: flex;

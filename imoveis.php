@@ -100,10 +100,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             margin: 0;
         }
 
-        #main-content {
-        
+        #main-content {   
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+            background-color: #FEF6EE;
             padding-top: 500px;
-
         }
     </style>
     

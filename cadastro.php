@@ -109,7 +109,15 @@ if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['nome']) ||
             color: #black;
             margin: 0;
         }
+        #main-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+            background-color: #FEF6EE;
 
+        }
     </style>
 
 </head>
