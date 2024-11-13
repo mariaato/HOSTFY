@@ -265,6 +265,7 @@ $conexao->close();
                 <form action="index.php">
             <input type="submit" value="Voltar ao Menu Inicial">
         </form>
+    <button onclick="window.location.href='meus_imoveis.php'">Meus Imóveis</button>
     </div>
     
 </body>
