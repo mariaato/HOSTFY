@@ -8,6 +8,12 @@ if (!isset($_SESSION['id'])) {
 
 include("conexao.php");
 
+// checa se algum imóvel foi alterado e atualiza o banco
+if (isset($_POST['id_imovel'])) {
+    $ps = $conexao->prepare("UPDATE imovel SET nome_imovel=?, numero=?, rua=?, bairro=?, uf=?, cidade=?, cep=?, valor=?, descrição=?, id_categoria=?, numero_pessoas=?, id_checklist=?  WHERE id_imovel = ?");
+    $ps->bind_param("sisssssdsiiii", $_POST['nome_imovel'],  $_POST['numero'], $_POST['rua'], $_POST['bairro'], $_POST['uf'], $_POST['cidade'], $_POST['cep'], $_POST['valor'], $_POST['descricao'], $_POST['id_categoria'], $_POST['numero_pessoas'], $_POST['id_checklist'], $_POST['id_imovel']);
+    $ps->execute();
+}
 
 // Seleciona os imóveis do usuário logado com a categoria
 $sql = "
@@ -171,7 +177,7 @@ $conexao->close();
                 
                 <div id="editar-<?php echo $imovel['id_imovel']; ?>" class="editar-form">
                     <form action="meus_imoveis.php" method="post">
-                        <input type="hidden" name="id_imovel" value="<?php echo $imovel['id_imovel']; ?>">
+                        <input type="hidden" name="id_imovel" value="39">
                         
                         <div class="form-group">
                         <label>Nome do Imóvel:</label>
