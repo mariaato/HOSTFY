@@ -154,10 +154,11 @@ $conexao->close();
     </script>
 </head>
 <body>
-    <div class="container">
+
         <h1>Meus Imóveis</h1>
         
         <?php foreach ($imoveis as $imovel): ?>
+        <div class="container">
             <div class="imovel">
                 <p><strong>ID do Imóvel:</strong> <?php echo htmlspecialchars($imovel['id_imovel']); ?></p>
                 <p><strong>Nome do Imóvel:</strong> <?php echo htmlspecialchars($imovel['nome_imovel']); ?></p>
@@ -177,62 +178,62 @@ $conexao->close();
                 
                 <div id="editar-<?php echo $imovel['id_imovel']; ?>" class="editar-form">
                     <form action="meus_imoveis.php" method="post">
-                        <input type="hidden" name="id_imovel" value="39">
+                        <input type="hidden" name="id_imovel" value="<?php echo $imovel['id_imovel']; ?>">
                         
                         <div class="form-group">
                         <label>Nome do Imóvel:</label>
                         <input type="text" name="nome_imovel" value="<?php echo htmlspecialchars($imovel['nome_imovel']); ?>" required>
-
+                        </div>
                         <div class="form-group">
                         <label>CEP:</label>
                         <input type="text" name="cep" id="txtCep" value="<?php echo htmlspecialchars($imovel['cep']); ?>" required>
-
+                        </div>
                         <div class="form-group">
                         <label>Rua:</label>
                         <input type="text" name="rua" value="<?php echo htmlspecialchars($imovel['rua']); ?>" required> 
-
+                        </div>
                         <div class="form-group">
                         <label>Número:</label>
                         <input type="text" name="numero" value="<?php echo htmlspecialchars($imovel['numero']); ?>" required>
-
+                        </div>
                         <div class="form-group">
                         <label>Bairro:</label>
                         <input type="text" name="bairro" value="<?php echo htmlspecialchars($imovel['bairro']); ?>" required>
-
+                        </div>
                         <div class="form-group">
                         <label>Cidade:</label>
                         <input type="text" name="cidade" value="<?php echo htmlspecialchars($imovel['cidade']); ?>" required>
-
+                        </div>
                         <div class="form-group">
                         <label>Estado:</label>
                         <input type="text" name="uf" value="<?php echo htmlspecialchars($imovel['uf']); ?>" required>
-
+                        </div>
                         <div class="form-group">
                         <label>Valor:</label>
                         <input type="text" name="valor" value="<?php echo htmlspecialchars($imovel['valor']); ?>" required>
-
+                        </div>
                         <div class="form-group">
                         <label>Descrição:</label>
                         <input type="text" name="descricao" value="<?php echo htmlspecialchars($imovel['descrição']); ?>" required>
-
+                        </div>
                         <div class="form-group">
                         <label>Categoria:</label>
                         <input type="text" name="id_categoria" value="<?php echo htmlspecialchars($imovel['id_categoria']); ?>" required>
-
+                        </div>
                         <div class="form-group">
                         <label>Número de Pessoas:</label>
                         <input type="text" name="numero_pessoas" value="<?php echo htmlspecialchars($imovel['numero_pessoas']); ?>" required>
-
+                        </div>
                         <div class="form-group">
                         <label>Características:</label>
                         <input type="text" name="id_checklist" value="<?php echo htmlspecialchars($imovel['id_checklist']); ?>" required>
-
+                        </div>
                         <input type="submit" value="Salvar Alterações">
                     </form>
                 </div>
             </div>
+        </div>
         <?php endforeach; ?>
-    </div>
     
 </body>
 </html>
