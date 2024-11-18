@@ -39,16 +39,6 @@ if (isset($_POST['email']) || isset($_POST['senha'])) {
         $error_message = "Preencha seu e-mail";
     } else if (strlen($_POST['senha']) == 0) {
         $error_message = "Preencha sua senha";
-    }else if{ // Verificação de CPF banido
-    $sql_banido = "SELECT banido FROM usuario WHERE cpf = '$cpf'";
-    $result_banido = mysqli_query($conexao, $sql_banido);
-    $row_banido = mysqli_fetch_assoc($result_banido);
-
-        if ($row_banido && $row_banido['banido'] == 1) {
-            $type_error = 'cpf';
-            $erro = " - Este CPF está banido.";
-        } 
-        
     }else {
         $email = $mysqli->real_escape_string($_POST['email']);
         $senha = $_POST['senha']; 
@@ -56,6 +46,17 @@ if (isset($_POST['email']) || isset($_POST['senha'])) {
         $sql_code = "SELECT * FROM usuario WHERE email = '$email'";
         $sql_query = $mysqli->query($sql_code) or die("Falha na execução do código SQL: " . $mysqli->error);
 
+         // Verificação de CPF banido
+            $sql_banido = "SELECT banido FROM usuario WHERE cpf = '$cpf'";
+            $result_banido = mysqli_query($conexao, $sql_banido);
+            $row_banido = mysqli_fetch_assoc($result_banido);
+        
+                if ($row_banido && $row_banido['banido'] == 1) {
+                    $type_error = 'cpf';
+                    $erro = " - Este CPF está banido.";
+                } 
+        
+            
         if ($sql_query->num_rows == 1) {
             $usuario = $sql_query->fetch_assoc();
 
