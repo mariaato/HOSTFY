@@ -163,6 +163,7 @@ a {
 .card-header {
     background-color: #C56126; /* Laranja */
     color: white; /* Texto branco */
+    
 }
 
 .btn-primary {
@@ -171,8 +172,8 @@ a {
 }
 
 .btn-primary:hover {
-    background-color: #C56126; /* Laranja mais escura para hover */
-    border-color: #C56126;
+    background-color: #4d240b; /* Laranja mais escura para hover */
+    border-color: #4d240b;
 }
 
 .card {
@@ -306,8 +307,10 @@ label {
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         animation: slide-down 0.4s ease-out;
     }
-
+    
     @keyframes slide-down {
         from { opacity: 0; transform: translateY(-20px); }
         to { opacity: 1; transform: translateY(0); }
     }
+
+    

@@ -107,34 +107,49 @@ $conexao->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil do Usuário</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="estilo.css">
     <link rel="shortcut icon" href="logoHostfy.png">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #FEF6EE;
-            height: 100vh;
-            display: flex;
+            header {
+                display: flex;
+                justify-content: center; /* Distribui os itens entre os extremos */
+                align-items: center;
+                text-align: center;
+                padding: 0px 500px;
+                background-color: #FEF6EE; 
+            }
 
-        }
-        .header {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-        }
-        .container {
-            background-color: #1E2A38;
-            border-radius: 15px;
-            padding: 20px;
-            width: 350px;
-            border-radius: 8px;
-            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
-        }
+            header img {
+                margin-right: 0px;
+            }
 
+            header h1 {
+                margin: 0;
+                font-size: 1.5em;
+            }
+
+            header a {
+                margin-left: auto;
+                text-decoration: none;
+                color: #000; /* Ajuste de cor */
+                padding: 5px 10px;
+            }
+
+            .container {
+                width: 100%;
+                max-width: 800px; /* Largura máxima para o conteúdo */
+                margin: 0 auto; /* Centraliza horizontalmente */
+                padding: 20px;
+                text-align: center;
+            }
+
+        
         h1 {
-            color: white;
-            margin-bottom: 20px;
             font-size: 24px;
+            font-weight: bold;
+            color: #black;
+            margin: 50px;
         }
 
         p {
@@ -142,6 +157,26 @@ $conexao->close();
             color: white;
         }
 
+        .profile-data {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adaptável */
+            gap: 20px; /* Espaço entre os cards */
+            margin-top: 20px;
+        }
+
+        .card {
+            padding: 20px;
+            background-color: #1a1e36;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card strong {
+            color: #D97C41; /* Destaque para os rótulos */
+            display: block;
+            margin-bottom: 8px;
+        }
         input[type="password"],
         input[type="text"],
         input[type="submit"],
@@ -155,20 +190,15 @@ $conexao->close();
             
         }
 
-        button {
-            background-color:  #C56126;
-            color: write;
-            border: none;
-        }
-
-        button:hover { 
-            background-color: #ff7043;
-            
-        }
-
+       
         .alterar-senha, .alterar-telefone, .alterar-endereco {
             display: none; /* Inicialmente oculto */
             margin-top: 20px;
+            width: 100%;
+            padding: 30px;
+            text-align: center;
+
+            
         }
 
         .mensagem-sucesso {
@@ -180,25 +210,102 @@ $conexao->close();
             color: red;
             margin-top: 20px;
         }
-    </style>
-    <script>
-        function toggleForm(id) {
-            const form = document.getElementById(id);
-            form.style.display = form.style.display === 'none' ? 'block' : 'none';
-        }
-    </script>
-</head>
-<body>
-    <div class="container">
-        <h1>Perfil do Usuário</h1>
-        <p><strong>Nome:</strong> <?php echo htmlspecialchars($usuario['nome']); ?></p>
-        <p><strong>Telefone:</strong> <?php echo htmlspecialchars($usuario['telefone']); ?></p>
-        <p><strong>Email:</strong> <?php echo htmlspecialchars($usuario['email']); ?></p>
-        <p><strong>Endereço:</strong> <?php echo htmlspecialchars($usuario['endereco']); ?></p>
-        <p><strong>Cidade:</strong> <?php echo htmlspecialchars($usuario['cidade']); ?></p>
-        <p><strong>Estado:</strong> <?php echo htmlspecialchars($usuario['estado']); ?></p>
 
-        <button onclick="toggleForm('alterar-senha-form')">Alterar Senha</button>
+        
+        .submit-btn {
+            background-color: #D97C41;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            
+        }
+
+        .submit-btn:hover {
+            background-color: #c96f36;
+        }
+        .rights {
+        padding: 10px 0;
+        text-align: center;
+        align-items: center;
+        font-size: 14px;
+        font-weight: 500;
+        color: #9b9b9b;
+       
+        overflow: auto;
+}
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    #footer {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    height: 2.5rem;            /* altura do rodapé */
+    }
+    </style>
+    
+</head>
+
+<body>
+    <header>
+            <!-- Botão do ícone de menu -->
+            <button class="menu-icon" id="menu-toggle">
+                <i class='bx bx-menu'></i>
+            </button>
+            <img src="logoHostfy.png" alt="logo" class="logo" />
+            <h1>Seu Perfil</h1>
+            <a href="logout.php" class="menu__link">Sair</a>
+
+    </header>
+
+    <div class="sidebar" id="sidebar">
+        <a href="index.php">Área inicial </a>
+        <a href="imoveis.php" >Cadastre seu imóvel</a>
+        <a href="imoveiscadastrados.php">Imóveis Cadastrados</a>
+        <a href="quemsomos.php">Quem Somos</a>
+        <a href="duvidas.php">Dúvidas</a>
+
+        
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+<div class="container">
+<div class="profile-data">
+        <div class="card">
+            <strong>Nome</strong>
+            <p><?php echo htmlspecialchars($usuario['nome']); ?></p>
+        </div>
+        <div class="card">
+            <strong>Telefone</strong>
+            <p><?php echo htmlspecialchars($usuario['telefone']); ?></p>
+        </div>
+        <div class="card">
+            <strong>Email</strong>
+            <p><?php echo htmlspecialchars($usuario['email']); ?></p>
+        </div>
+        <div class="card">
+            <strong>Endereço</strong>
+            <p><?php echo htmlspecialchars($usuario['endereco']); ?></p>
+        </div>
+        <div class="card">
+            <strong>Cidade</strong>
+            <p><?php echo htmlspecialchars($usuario['cidade']); ?></p>
+        </div>
+        <div class="card">
+            <strong>Estado</strong>
+            <p><?php echo htmlspecialchars($usuario['estado']); ?></p>
+        </div>
+    </div>  
+        <button onclick="toggleForm('alterar-senha-form')" class="submit-btn">Alterar Senha</button>
         <div id="alterar-senha-form" class="alterar-senha">
             <h2>Alterar Senha</h2>
             <form action="" method="post">
@@ -212,16 +319,16 @@ $conexao->close();
                 <label for="confirmar_senha">Confirmar Nova Senha:</label>
                 <input type="password" name="confirmar_senha" id="confirmar_senha" required><br>
 
-                <input type="submit" value="Alterar Senha">
+                <input type="submit" value="Alterar Senha" class="submit-btn">
             </form>
             <?php
             if (isset($msg_erro)) {
                 echo "<p class='mensagem-erro'>$msg_erro</p>";
             }
             ?>
-        </div>
-
-        <button onclick="toggleForm('alterar-telefone-form')">Alterar Telefone</button>
+    
+     </div>
+        <button onclick="toggleForm('alterar-telefone-form')" class="submit-btn">Alterar Telefone</button>
         <div id="alterar-telefone-form" class="alterar-telefone">
             <h2>Alterar Telefone</h2>
             <form action="" method="post">
@@ -229,11 +336,11 @@ $conexao->close();
                 <label for="novo_telefone">Novo Telefone:</label>
                 <input type="text" name="novo_telefone" id="novo_telefone" required><br>
 
-                <input type="submit" value="Alterar Telefone">
+                <input type="submit" value="Alterar Telefone" class="submit-btn">
             </form>
         </div>
 
-        <button onclick="toggleForm('alterar-endereco-form')">Alterar Endereço</button>
+        <button onclick="toggleForm('alterar-endereco-form')" class="submit-btn">Alterar Endereço</button>
         <div id="alterar-endereco-form" class="alterar-endereco">
             <h2>Alterar Endereço</h2>
             <form action="" method="post">
@@ -247,7 +354,7 @@ $conexao->close();
                 <label for="novo_estado">Novo Estado:</label>
                 <input type="text" name="novo_estado" id="novo_estado" required><br>
 
-                <input type="submit" value="Alterar Endereço">
+                <input type="submit" value="Alterar Endereço" class="submit-btn">
             </form>
         </div>
 
@@ -262,13 +369,41 @@ $conexao->close();
             echo "<p class='mensagem-sucesso'>Endereço alterado com sucesso!</p>";
         }
         ?>
-                <form action="index.php">
-            <input type="submit" value="Voltar ao Menu Inicial">
-        </form>
-    <button onclick="window.location.href='meus_imoveis.php'">Meus Imóveis</button>
+                
+    <button onclick="window.location.href='meus_imoveis.php'" class="submit-btn">Meus Imóveis</button>
     </div>
-    
+
+
+    <script>
+    const menuToggle = document.getElementById('menu-toggle');
+    const sidebar = document.getElementById('sidebar');
+    const mainContent = document.getElementById('main-content');
+    const overlay = document.getElementById('overlay');
+
+    menuToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('sidebar-active');
+        mainContent.classList.toggle('content-shift');
+        overlay.classList.toggle('overlay-active');
+    });
+
+    overlay.addEventListener('click', () => {
+        sidebar.classList.remove('sidebar-active');
+        mainContent.classList.remove('content-shift');
+        overlay.classList.remove('overlay-active');
+    });
+
+        function toggleForm(id) {
+            const form = document.getElementById(id);
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
 </body>
+
+<footer>
+    <ul>
+        <p class="rights"><span>&copy;&nbsp;<span id="copyright-year"></span> .Todos os direitos reservados. <span> por Byanca Campos Furlan, Igor Miguel Raimundo, Maria Antonia dos Santos e Rithiely Schmitt.</a></span>
+    </ul>
+</footer>
 </html>
 
 
