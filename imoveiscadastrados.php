@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $descricao = $_POST['descricao'];
     $id_categoria = $_POST['id_categoria'];
     $numero_pessoas = $_POST['numero_pessoas'];
-    $caracteristicas = $_POST['caracteristicas'];
+    $id_checklist= $_POST['caracteristicas'];
 
     // Atualiza as informações do imóvel no banco de dados
     $sql_update = " UPDATE imovel SET 
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             Descrição = ?, 
             id_categoria = ?, 
             Numero_pessoas = ?, 
-            caracteristicas = ?
+            id_checklist = ?
         WHERE ID_imovel = ? AND ID_proprietario = ? ";
     $stmt_update = mysqli_prepare($conexao, $sql_update);
     mysqli_stmt_bind_param($stmt_update, "ssssssssssssii", $cep, $nome_imovel, $rua, $numero, $bairro, $cidade, $uf, $valor, $descricao, $id_categoria, $numero_pessoas, $caracteristicas, $ID_imovel, $ID_proprietario);
@@ -75,7 +75,7 @@ $sql = "
         imovel.Descrição, 
         categoria.id_categoria AS categoria_nome,
         imovel.Numero_pessoas, 
-        imovel.caracteristicas
+        imovel.id_checklist
     FROM imovel
     JOIN Categoria AS categoria ON imovel.id_categoria = categoria.id_categoria
     WHERE imovel.ID_proprietario = ?";
@@ -314,7 +314,7 @@ if (isset($_GET['delete'])) {
                 echo "<td>" . htmlspecialchars($registro['Descrição']) . "</td>";
                 echo "<td>" . htmlspecialchars($registro['categoria_nome']) . "</td>";
                 echo "<td>" . htmlspecialchars($registro['Numero_pessoas']) . "</td>";
-                echo "<td>" . htmlspecialchars($registro['caracteristicas']) . "</td>";
+                echo "<td>" . htmlspecialchars($registro['id_checklist']) . "</td>";
                 echo "<td><a href='?edit=" . $registro['ID_imovel'] . "'>Editar</a></td>";
                 echo "<td><a href='?delete=" . $registro['ID_imovel'] . "'>Excluir</a></td>";
                 echo "</tr>";

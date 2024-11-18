@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $descricao = $_POST['descricao'];
     $categoria = $_POST['categoria'];
     $numero_pessoas = $_POST['numero_pessoas'];
-    $caracteristicas = isset($_POST['caracteristicas']) ? implode(", ", $_POST['caracteristicas']) : "";
+    $id_checklist = isset($_POST['caracteristicas']) ? implode(", ", $_POST['caracteristicas']) : "";
 
     //envio das imagens
     //ALTER TABLE `imovel` ADD `imagens` VARCHAR(1500) NOT NULL AFTER `Numero_pessoas`;
@@ -63,8 +63,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $destinos_bd = implode(", ", $destinos);
 
             // Insere os dados no banco de dados com o id_proprietario definido automaticamente
-            $sql = "INSERT INTO imovel (cep, nome_imovel, rua, numero, bairro, cidade, uf, id_proprietario, valor, descrição, id_categoria, numero_pessoas, caracteristicas, imagens)
-            VALUES ('$cep', '$nome_imovel', '$endereco', '$numero', '$bairro', '$cidade', '$estado', '$id_proprietario', '$valor', '$descricao', '$categoria', '$numero_pessoas', '$caracteristicas', '$destinos_bd')";
+            $sql = "INSERT INTO imovel (cep, nome_imovel, rua, numero, bairro, cidade, uf, id_proprietario, valor, descrição, id_categoria, numero_pessoas, id_checklist, imagens)
+            VALUES ('$cep', '$nome_imovel', '$endereco', '$numero', '$bairro', '$cidade', '$estado', '$id_proprietario', '$valor', '$descricao', '$categoria', '$numero_pessoas', '$id_checklist', '$destinos_bd')";
 
             if ($conexao->query($sql) === TRUE) {
                     $final = "Imóvel cadastrado com sucesso!</p>";

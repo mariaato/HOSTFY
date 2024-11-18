@@ -150,6 +150,7 @@ $conexao->close();
             font-weight: bold;
             color: #black;
             margin: 50px;
+            padding: 5px;
         }
 
         p {
@@ -261,7 +262,8 @@ $conexao->close();
                 <i class='bx bx-menu'></i>
             </button>
             <img src="logoHostfy.png" alt="logo" class="logo" />
-            <h1>Seu Perfil</h1>
+            <h1>Seu </h1>
+            <h1> Perfil</h1>
             <a href="logout.php" class="menu__link">Sair</a>
 
     </header>
