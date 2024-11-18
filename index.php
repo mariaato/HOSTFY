@@ -64,7 +64,7 @@
         <?php
             include("funçaoAnuncio.php");
 
-            $imagem = "casa.jpg";
+            $imagem = "uploads/casa.jpg";
             $titulo = "Apartamento Ingleses";
             $avaliacao = 4.25;
             $tags = ["Churrasqueira", "Ar condicionado", "Pet Friendly"];

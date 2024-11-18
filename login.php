@@ -39,7 +39,17 @@ if (isset($_POST['email']) || isset($_POST['senha'])) {
         $error_message = "Preencha seu e-mail";
     } else if (strlen($_POST['senha']) == 0) {
         $error_message = "Preencha sua senha";
-    } else {
+    }else if{ // Verificação de CPF banido
+    $sql_banido = "SELECT banido FROM usuario WHERE cpf = '$cpf'";
+    $result_banido = mysqli_query($conexao, $sql_banido);
+    $row_banido = mysqli_fetch_assoc($result_banido);
+
+        if ($row_banido && $row_banido['banido'] == 1) {
+            $type_error = 'cpf';
+            $erro = " - Este CPF está banido.";
+        } 
+        
+    }else {
         $email = $mysqli->real_escape_string($_POST['email']);
         $senha = $_POST['senha']; 
 
