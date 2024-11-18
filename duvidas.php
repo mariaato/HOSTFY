@@ -10,7 +10,47 @@
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="styles.css">
     <style>
-       .a {
+         body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #FEF6EE;
+        }
+
+        .texto1 h2 {
+            font-size: 25px;
+            cursor: pointer;
+            margin: 0;
+            padding: 10px;
+            border-radius: 8px;
+            position: relative;
+            justify-content: center;
+
+        }
+
+        .texto1 h2 i {
+            position: center;
+            right: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .texto1 h2 i.rotate {
+            transform: rotate(180deg);
+        }
+
+        .texto1 p {
+            font-size: 20px;
+            color: #333;
+            display: none;
+            padding: 10px;
+            margin: 0;
+            border-left: 4px solid #C56126;
+        }
+
+        .texto1.active p {
+            display: block;
+        }
+.a {
             text-decoration: none;  
         }
         .section {
@@ -22,6 +62,7 @@
         height: 50vh;
         padding: 20px;
         box-sizing: border-box;
+
         }
         .section1 {
             display: flex;
@@ -31,6 +72,8 @@
             width: 100vw;
             padding: 10px;
             box-sizing: border-box;
+            background-color: #FFF5E6;
+
         }
         .equipe-box { 
             display: flex;
@@ -163,6 +206,46 @@
                
                 <h2 class="equipe">Dúvidas Frequentes</h2></div>
 
+                <div class="texto1">
+                <h2>Como faço para cancelar minha reserva? <i class="bx bx-chevron-down"></i></h2>
+                <p>
+                Para cancelar sua reserva, acesse "Minhas Reservas" no site ou aplicativo, selecione a reserva e clique em "Cancelar".
+                Lembre-se de verificar as políticas de cancelamento da sua acomodação.
+            </p>
+        </div>
+
+        <div class="texto1">
+        <h2>Como altero as datas da minha reserva? <i class="bx bx-chevron-down"></i></h2>
+        <p>
+                Para alterar as datas, acesse "Minhas Reservas" e escolha a opção "Alterar Datas". 
+                Note que alterações dependem da disponibilidade da acomodação e das políticas de alteração.
+            </p>
+        </div>
+
+        <div class="texto1">
+        <h2>Quais métodos de pagamento são aceitos? <i class="bx bx-chevron-down"></i></h2>
+        <p>
+                Aceitamos cartões de crédito e débito das principais bandeiras, além de transferências bancárias e pagamentos via PIX.
+                Algumas propriedades também oferecem a opção de pagamento na chegada.
+            </p>
+        </div>
+
+        <div class="texto1">
+        <h2>Como posso entrar em contato com a propriedade? <i class="bx bx-chevron-down"></i></h2>
+        <p>
+                Após realizar sua reserva, você encontrará as informações de contato da propriedade na seção "Minhas Reservas".
+                Utilize essas informações para tirar dúvidas ou fazer solicitações específicas.
+            </p>
+        </div>
+
+        <div class="texto1">
+        <h2>Qual é a política de reembolso? <i class="bx bx-chevron-down"></i></h2>
+        <p>
+                O reembolso depende das condições da reserva. Verifique a política de cancelamento da sua acomodação na confirmação de reserva.
+                Em caso de dúvidas, entre em contato com o suporte.
+            </p>
+        </div>
+        </div>
 
 
 
@@ -231,8 +314,42 @@
             }
         ?> 
 
-        </body>
-        </html>
-        
+<script>
+        // Alternar visualização de FAQ
+        document.querySelectorAll('.texto1 h2').forEach(item => {
+            item.addEventListener('click', () => {
+                const parent = item.parentElement;
+                const icon = item.querySelector('i');
+
+                parent.classList.toggle('active');
+                icon.classList.toggle('rotate');
+            });
+        });
+
+        // Atualizar ano no rodapé
+        document.getElementById('copyright-year').textContent = new Date().getFullYear();
+
+        // Função para exibir/desexibir botões de login/logout
+        function logado() {
+            document.getElementById('logado').style.display = '';
+            document.getElementById('deslogado').style.display = 'none';
+        }
+
+        function deslogado() {
+            document.getElementById('logado').style.display = 'none';
+            document.getElementById('deslogado').style.display = '';
+        }
+
+        <?php
+        // Verifica o login e ajusta a exibição
+        if (isset($_SESSION['id'])) {
+            echo 'logado();';
+        } else {
+            echo 'deslogado();';
+        }
+        ?>
+    </script>
+</body>
+</html>
 
         
