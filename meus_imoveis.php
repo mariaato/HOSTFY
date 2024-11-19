@@ -46,6 +46,20 @@ while ($row = $result->fetch_assoc()) {
     $imoveis[] = $row;
 }
 
+if (isset($_GET['delete'])) {
+    $id_proprietario = $_SESSION['id'];
+
+    $id_imovel_delete = $_GET['delete'];
+    $sql_delete = "DELETE FROM imovel WHERE id_imovel = ? AND id_proprietario = ?";
+    $stmt_delete = mysqli_prepare($conexao, $sql_delete);
+    mysqli_stmt_bind_param($stmt_delete, "ii", $id_imovel_delete, $id_proprietario);
+    if (mysqli_stmt_execute($stmt_delete)) {
+        echo "<script>alert('Imóvel excluído com sucesso!');</script>";
+        echo "<script>window.location.href = 'perfilhtml.php';</script>"; // Redireciona após a exclusão
+    } else {
+        echo "<script>alert('Erro ao excluir o imóvel: " . mysqli_error($conexao) . "');</script>";
+    }
+}
 $conexao->close();
 
 ?>
@@ -175,6 +189,8 @@ $conexao->close();
                 <p><strong>Características:</strong> <?php echo htmlspecialchars($imovel['id_checklist']); ?></p>
 
                 <button onclick="toggleForm('editar-<?php echo $imovel['id_imovel']; ?>')">Editar Imóvel</button>
+                <button onclick="if (confirm('Tem certeza que deseja deletar este imóvel?')) { window.location.href='?delete=<?php echo $imovel['id_imovel']; ?>'; }">Deletar Imóvel</button>
+
                 
                 <div id="editar-<?php echo $imovel['id_imovel']; ?>" class="editar-form">
                     <form action="meus_imoveis.php" method="post">
