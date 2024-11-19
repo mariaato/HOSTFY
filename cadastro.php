@@ -66,7 +66,7 @@ if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['nome']) ||
 
 
                             if (mysqli_query($conexao, $sql)) {
-                                echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>
+                                $final = "<div class='alert alert-success alert-dismissible fade show' role='alert'>
                                         Cadastro efetuado com sucesso. 
                                         <a href='login.php' class='btn btn-primary btn-sm ml-2'>Faça seu login</a>
                                         <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
@@ -74,7 +74,7 @@ if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['nome']) ||
                                         </button>
                                     </div>";
                             } else {
-                                echo "<div class='alert alert-danger' role='alert'>
+                                $final = "<div class='alert alert-danger' role='alert'>
                                         ERRO: " . mysqli_error($conexao) . "
                                     </div>";
                             }
@@ -132,6 +132,8 @@ if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['nome']) ||
         <h1>Bem-vindo ao HOSTFY</h1>
 
         <a href="login.php" class="menu__link">Login</a>
+        <p><?php if (isset($final)) {echo $final;} ?></p>
+
     </header>
 
     <!-- Menu lateral (sidebar) -->
