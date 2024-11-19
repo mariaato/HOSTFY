@@ -4,6 +4,10 @@ include("conexao.php");
 
 session_start(); 
 
+
+
+
+
 $max_attempts = 3;
 $lockout_time = 180; // 3 minutos em segundos
 

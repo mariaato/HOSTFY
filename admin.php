@@ -291,7 +291,7 @@ $imovel = $imovel->get_result();
             <button onclick="voltar()">voltar</button>
             <form action="admin.php" method="post">
                 <input list="" type="text" id="barra_pesquisa" name="barra_pesquisa" required >
-                <button type="submit" name="botao_pesquisa" id="botao_pesquisa">Enviar</button>
+                <button style="display: none;" type="submit" name="botao_pesquisa" id="botao_pesquisa">Enviar</button>
                 <input id="tabela" name="tabela" style="display: none;">
             </form>
             
@@ -670,73 +670,87 @@ $imovel = $imovel->get_result();
             const pesquisa = document.getElementById('barra_pesquisa');
             pesquisa.setAttribute('list', 'nome_u');
             document.getElementById('botao_pesquisa').value='nome'
+            document.getElementById('botao_pesquisa').style.display=''
         }
 
         function cpf_u() {
             const pesquisa = document.getElementById('barra_pesquisa');
             pesquisa.setAttribute('list', 'cpf_u');
             document.getElementById('botao_pesquisa').value='cpf'
+            document.getElementById('botao_pesquisa').style.display=''
         }
 
         function endereco_u() {
             const pesquisa = document.getElementById('barra_pesquisa');
             pesquisa.setAttribute('list', 'endereco_u');
             document.getElementById('botao_pesquisa').value='endereco'
+            document.getElementById('botao_pesquisa').style.display=''
         }
         function cidade_u() {
             const pesquisa = document.getElementById('barra_pesquisa');
             pesquisa.setAttribute('list', 'cidade_u');
             document.getElementById('botao_pesquisa').value='cidade'
+            document.getElementById('botao_pesquisa').style.display=''
         }
         function uf_u() {
             const pesquisa = document.getElementById('barra_pesquisa');
             pesquisa.setAttribute('list', 'uf_u');
             document.getElementById('botao_pesquisa').value='estado'
+            document.getElementById('botao_pesquisa').style.display=''
         }
         function telefone_u() {
             const pesquisa = document.getElementById('barra_pesquisa');
             pesquisa.setAttribute('list', 'telefone_u');
             document.getElementById('botao_pesquisa').value='telefone'
+            document.getElementById('botao_pesquisa').style.display=''
         }
         function email_u() {
             const pesquisa = document.getElementById('barra_pesquisa');
             pesquisa.setAttribute('list', 'email_u');
             document.getElementById('botao_pesquisa').value='email'
+            document.getElementById('botao_pesquisa').style.display=''
         }
         function cep_i() {
             const pesquisa = document.getElementById('barra_pesquisa');
             pesquisa.setAttribute('list', 'cep_i');
             document.getElementById('botao_pesquisa').value='CEP'
+            document.getElementById('botao_pesquisa').style.display=''
         }
         function nome_i() {
             const pesquisa = document.getElementById('barra_pesquisa');
             pesquisa.setAttribute('list', 'nome_i');
             document.getElementById('botao_pesquisa').value='Nome_imovel'
+            document.getElementById('botao_pesquisa').style.display=''
         }
         function rua_i() {
             const pesquisa = document.getElementById('barra_pesquisa');
             pesquisa.setAttribute('list', 'rua_i');
             document.getElementById('botao_pesquisa').value='Rua'
+            document.getElementById('botao_pesquisa').style.display=''
         }
         function numero_i() {
             const pesquisa = document.getElementById('barra_pesquisa');
             pesquisa.setAttribute('list', 'numero_i');
-            document.getElementById('botao_pesquisa').value='Numerp'
+            document.getElementById('botao_pesquisa').value='Numero'
+            document.getElementById('botao_pesquisa').style.display=''
         }
         function bairro_i() {
             const pesquisa = document.getElementById('barra_pesquisa');
             pesquisa.setAttribute('list', 'bairro_i');
             document.getElementById('botao_pesquisa').value='Bairro'
+            document.getElementById('botao_pesquisa').style.display=''
         }
         function cidade_i() {
             const pesquisa = document.getElementById('barra_pesquisa');
             pesquisa.setAttribute('list', 'cidade_i');
             document.getElementById('botao_pesquisa').value='Cidade'
+            document.getElementById('botao_pesquisa').style.display=''
         }
         function uf_i() {
             const pesquisa = document.getElementById('barra_pesquisa');
             pesquisa.setAttribute('list', 'uf_i');
             document.getElementById('botao_pesquisa').value='UF'
+            document.getElementById('botao_pesquisa').style.display=''
         }
 
         function pesquisa_feita(){
