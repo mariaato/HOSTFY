@@ -67,9 +67,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES ('$cep', '$nome_imovel', '$endereco', '$numero', '$bairro', '$cidade', '$estado', '$id_proprietario', '$valor', '$descricao', '$categoria', '$numero_pessoas', '$id_checklist', '$destinos_bd')";
 
             if ($conexao->query($sql) === TRUE) {
-                    $final = "Imóvel cadastrado com sucesso!</p>";
+                
+                    $final = "<div class='alert alert-success alert-dismissible fade show' role='alert'>
+                                        Imóvel cadastrado com sucesso! 
+                                        <a href='meus_imoveis.php' class='btn btn-primary btn-sm ml-2'>Veja seus imóveis</a>
+                                        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                            <span aria-hidden='true'>&times;</span>
+                                        </button>
+                                    </div>";
                 } else {
-                    $final = "Erro ao cadastrar imóvel: " . $conexao->error;
+                    $final = "<div class='alert alert-danger' role='alert'>
+                                        Erro ao cadastrar imóvel:  " . mysqli_error($conexao) . "
+                                    </div>";
             }
 
             // Fecha a conexão com o banco de dados
