@@ -46,17 +46,6 @@ if (isset($_POST['email']) || isset($_POST['senha'])) {
 
         $sql_code = "SELECT * FROM usuario WHERE email = '$email'";
         $sql_query = $mysqli->query($sql_code) or die("Falha na execução do código SQL: " . $mysqli->error);
-
-         // Verificação de CPF banido
-            $sql_banido = "SELECT banido FROM usuario WHERE cpf = '$cpf'";
-            $result_banido = mysqli_query($conexao, $sql_banido);
-            $row_banido = mysqli_fetch_assoc($result_banido);
-        
-                if ($row_banido && $row_banido['banido'] == 1) {
-                    $type_error = 'cpf';
-                    $erro = " - Este CPF está banido.";
-                } 
-        
             
         if ($sql_query->num_rows == 1) {
             $usuario = $sql_query->fetch_assoc();
@@ -70,13 +59,16 @@ if (isset($_POST['email']) || isset($_POST['senha'])) {
                 if ($usuario['id'] == 0) {
                     $_SESSION['id'] = $usuario['id'];
                     header("Location: admin.php");
+                    exit;
+                } elseif ($usuario['banido'] == 1) {
+                    $error_message = "<br>Este usuário está banido.";
                 } else {
                     $_SESSION['id'] = $usuario['id'];
                     $_SESSION['nome'] = $usuario['nome'];
 
                     header("Location: index.php");
+                    exit;
                 }
-                exit;
             } else {
                 // Senha incorreta, incrementar tentativas
                 $_SESSION['attempts'] += 1;
