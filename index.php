@@ -10,6 +10,38 @@
     <link rel="shortcut icon" href="logoHostfy.png">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="estilo.css">
+    <style>
+        #main-content {
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+            background-color: #FEF6EE;
+
+        }
+        .rights {
+        padding: 10px 0;
+        text-align: center;
+        align-items: center;
+        font-size: 14px;
+        font-weight: 500;
+        color: #9b9b9b;
+       
+        overflow: auto;
+}
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    #footer {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    height: 2.5rem;            /* altura do rodapé */
+    }
+    </style>
    
 </head>
 <body>
@@ -117,4 +149,9 @@
         }
     ?>
 </body>
+<footer>
+    <ul>
+        <p class="rights"><span>&copy;&nbsp;<span id="copyright-year"></span> .Todos os direitos reservados. <span> por Byanca Campos Furlan, Igor Miguel Raimundo, Maria Antonia dos Santos e Rithiely Schmitt.</a></span>
+    </ul>
+</footer>
 </html>
