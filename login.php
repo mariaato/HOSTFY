@@ -4,10 +4,6 @@ include("conexao.php");
 
 session_start(); 
 
-
-
-
-
 $max_attempts = 3;
 $lockout_time = 180; // 3 minutos em segundos
 
@@ -62,6 +58,13 @@ if (isset($_POST['email']) || isset($_POST['senha'])) {
                 //checa pelo admin
                 if ($usuario['id'] == 0) {
                     $_SESSION['id'] = $usuario['id'];
+                    $_SESSION['nome'] = $usuario['nome'];
+                    $cookie_nome = $_SESSION['nome'];
+                    $cookie_id = $_SESSION['id'];
+                    setcookie('usuario', $cookie_nome, time() + 1800, '/');
+                    setcookie('id', $cookie_id, time() + 1800, '/');
+                    $_COOKIE['usuario'] = $_SESSION['nome'];
+                    $_COOKIE['id'] = $_SESSION['id'];
                     header("Location: admin.php");
                     exit;
                 } elseif ($usuario['banido'] == 1) {
@@ -69,7 +72,12 @@ if (isset($_POST['email']) || isset($_POST['senha'])) {
                 } else {
                     $_SESSION['id'] = $usuario['id'];
                     $_SESSION['nome'] = $usuario['nome'];
-
+                    $cookie_nome = $_SESSION['nome'];
+                    $cookie_id = $_SESSION['id'];
+                    setcookie('usuario', $cookie_nome, time() + 1800, '/');
+                    setcookie('id', $cookie_id, time() + 1800, '/');
+                    $_COOKIE['usuario'] = $_SESSION['nome'];
+                    $_COOKIE['id'] = $_SESSION['id'];
                     header("Location: index.php");
                     exit;
                 }

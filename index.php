@@ -1,5 +1,19 @@
 <?php
     session_start();
+
+    //cookies
+    if(isset($_SESSION['id']) && !isset($_COOKIE['usuario'])) {
+        $cookie_nome = $_SESSION['nome'];
+        $cookie_id = $_SESSION['id'];
+        setcookie('usuario', $cookie_nome, time() + 1800, '/');
+        setcookie('id', $cookie_id, time() + 1800, '/');
+        $_COOKIE['usuario'] = $_SESSION['nome'];
+        $_COOKIE['id'] = $_SESSION['id'];
+    } elseif (isset($_COOKIE['usuario']) && !isset($_SESSION['id'])) {
+        $_SESSION['nome'] = $_COOKIE['usuario'];
+        $_SESSION['id'] = $_COOKIE['id'];
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
