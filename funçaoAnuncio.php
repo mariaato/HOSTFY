@@ -11,7 +11,7 @@ function gerarAnuncio($imagem, $titulo, $avaliacao, $tags) {
     
     // Adiciona a avaliação com ícone de estrela
     $html .= '<div class="anuncio-avaliacao">';
-    $html .= '<i class="bx bxs-star"></i> ' . number_format($avaliacao, 2);
+    $html .= 'R$ ' . number_format($avaliacao, 2);
     $html .= '</div>';
     
     // Adiciona as tags de características
