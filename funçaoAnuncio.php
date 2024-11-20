@@ -1,8 +1,10 @@
 <?php
-function gerarAnuncio($imagem, $titulo, $avaliacao, $tags) {
+function gerarAnuncio($id, $imagem, $titulo, $avaliacao, $tags) {
     // Início do HTML do anúncio
     $html = '<div class="anuncio-card">';
     
+    $html .= '<a href="reserva.php?id=' . $id . '" class="anuncio-link">';
+
     // Adiciona a imagem do imóvel
     $html .= '<img src="' . $imagem . '" alt="' . $titulo . '" class="anuncio-imagem">';
     
@@ -22,6 +24,8 @@ function gerarAnuncio($imagem, $titulo, $avaliacao, $tags) {
         }
         $html .= '</div>';
     }
+    
+    $html .= '</a>';
     
     // Fechamento do HTML do anúncio
     $html .= '</div>';

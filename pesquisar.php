@@ -129,14 +129,14 @@ $resultado_anuncio = mysqli_query($conexao, $resultado);
     <?php
         if (mysqli_num_rows($resultado_anuncio) > 0) {
             while ($rows_anuncio = mysqli_fetch_array($resultado_anuncio)) {
-
+                $id = $rows_anuncio['ID_imovel'];
                 $imagem = $rows_anuncio['imagens'];
                 $titulo = $rows_anuncio['Nome_imovel'] . " - " . $rows_anuncio['Cidade'];
                 $valor = $rows_anuncio ['Valor']; 
                 $tags = [$rows_anuncio['Bairro'], $rows_anuncio['UF']];
 
                 // Chama a função gerarAnuncio com os dados
-                echo gerarAnuncio($imagem, $titulo, $valor, $tags);
+                echo gerarAnuncio($id, $imagem, $titulo, $valor, $tags);
 
             }
         } else {
