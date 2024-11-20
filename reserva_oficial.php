@@ -1,35 +1,37 @@
 <?php
-    session_start();
+session_start();
+require 'conexao.php';
 
-include("conexao.php");
-include("funçaoAnuncio.php");
+// Verifica se o ID foi passado na URL
+if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+    $id = intval($_GET['id']); // Converte o ID para inteiro
 
-$pesquisar = $_POST['pesquisar'];
-$resultado = "SELECT * FROM imovel WHERE 
-    Nome_imovel LIKE '%$pesquisar%' OR 
-    Valor LIKE '%$pesquisar%' OR 
-    Cidade LIKE '%$pesquisar%' OR 
-    Descrição LIKE '%$pesquisar%' OR
-    Rua LIKE '%$pesquisar%' OR
-    Bairro LIKE '%$pesquisar%' OR 
-    UF LIKE '%$pesquisar%' OR 
-    Numero_pessoas LIKE '%$pesquisar%' 
-    LIMIT 5";
+    // Busca os detalhes do imóvel no banco de dados
+    $sql = "SELECT * FROM imovel WHERE ID_imovel = ?";
+    $stmt = $conexao->prepare($sql);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-$resultado_anuncio = mysqli_query($conexao, $resultado);
-
+    if ($result->num_rows > 0) {
+        $imovel = $result->fetch_assoc();
+    } else {
+        die("Imóvel não encontrado.");
+    }
+} else {
+    die("ID inválido.");
+}
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultados Encontrados</title>
+    <title>Reserva do Imóvel</title>
     <link rel="shortcut icon" href="logoHostfy.png">
-    <link rel="stylesheet" href="estilo.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="estilo.css">
     <style>
-
         #main-content {
             justify-content: center;
             align-items: center;
@@ -38,48 +40,9 @@ $resultado_anuncio = mysqli_query($conexao, $resultado);
             background-color: #FEF6EE;
 
         }
-
-        .anuncio-container {
-        display: flex;
-        flex-wrap: wrap; /* Permite que os anúncios sejam quebrados em novas linhas */
-        gap: 20px; /* Espaçamento entre os anúncios */
-        justify-content: space-evenly; /* Espaçamento uniforme entre os anúncios */
-}
- 
-.anuncio-imagem {
-    width: 100%;
-    /* height: auto; */
-    border-radius: 10px;
-    height: 200px; /* Altura padrão definida */
-    object-fit: cover; /* Garante que a imagem preencha o espaço sem distorção */
-}
-
-        .rights {
-        padding: 10px 0;
-        text-align: center;
-        align-items: center;
-        font-size: 14px;
-        font-weight: 500;
-        color: #9b9b9b;
-        overflow: auto;
-        }
-        ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        #footer {
-        position: sticky;
-        bottom: 0;
-        width: 100%;
-        height: 2.5rem;            /* altura do rodapé */
-        }
     </style>
-
 </head>
 <body>
-
 <header>
         <!-- Botão do ícone de menu -->
         <button class="menu-icon" id="menu-toggle">
@@ -111,7 +74,6 @@ $resultado_anuncio = mysqli_query($conexao, $resultado);
 
     <!-- Menu lateral (sidebar) -->
     <div class="sidebar" id="sidebar">
-        <a href="index.php">Área inicial </a>
         <a href="imoveis.php" >Cadastre seu imóvel</a>
         <a href="imoveiscadastrados.php">Imóveis Cadastrados</a>
         <a href="quemsomos.php">Quem Somos</a>
@@ -123,30 +85,14 @@ $resultado_anuncio = mysqli_query($conexao, $resultado);
     <div class="overlay" id="overlay"></div>
 
     <div class="main-content" id="main-content">
-
-        <h1>Resultados Encontrados</h1>
-    <div class="anuncio-container">
-    <?php
-        if (mysqli_num_rows($resultado_anuncio) > 0) {
-            while ($rows_anuncio = mysqli_fetch_array($resultado_anuncio)) {
-                $id = $rows_anuncio['ID_imovel'];
-                $imagem = $rows_anuncio['imagens'];
-                $titulo = $rows_anuncio['Nome_imovel'] . " - " . $rows_anuncio['Cidade'];
-                $valor = $rows_anuncio ['Valor']; 
-                $tags = [$rows_anuncio['Bairro'], $rows_anuncio['UF']];
-
-                // Chama a função gerarAnuncio com os dados
-                echo gerarAnuncio($id, $imagem, $titulo, $valor, $tags);
-
-            }
-        } else {
-            echo "Nenhum resultado encontrado.";
-        }
-    ?>
-    </div>
-    </div>
-    
-    <script>
+    <img src="<?= htmlspecialchars($imovel['imagens']); ?>" width="300" height="200">
+    <h1>Imovel: <?= htmlspecialchars($imovel['Nome_imovel']); ?></h1>
+    <p><strong>Cidade:</strong> <?= htmlspecialchars($imovel['Cidade']); ?></p>
+    <p><strong>Descrição:</strong> <?= htmlspecialchars($imovel['Descrição']); ?></p>
+    <p><strong>Valor:</strong> R$ <?= number_format($imovel['Valor'], 2, ',', '.'); ?></p>
+    <a href="####?id=<?= $imovel['ID_imovel']; ?>">Reservar agora</a>
+</div> 
+<script>
         // Função para alternar o menu lateral
         const menuToggle = document.getElementById('menu-toggle');
         const sidebar = document.getElementById('sidebar');
@@ -189,7 +135,6 @@ $resultado_anuncio = mysqli_query($conexao, $resultado);
             echo '<script> deslogado() </script>';
         }
     ?>
-
 </body>
 <footer>
     <ul>

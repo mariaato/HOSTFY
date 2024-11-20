@@ -50,7 +50,7 @@ header {
     left: -250px; /* Inicialmente fora da tela */
     width: 250px;
     height: 100%;
-    background-color: #2b3a4e; /* Cor do menu lateral */
+    background-color: #1a1e36; /* Cor do menu lateral */
     padding-top: 60px;
     transition: 0.3s; /* Transição suave */
     z-index: 1000;
@@ -66,7 +66,7 @@ header {
 }
 
 .sidebar a:hover {
-    background-color: #4c5b72;
+    background-color: #395b8f;
 }
 
 /* Conteúdo principal */

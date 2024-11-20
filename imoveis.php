@@ -117,6 +117,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             width: 100%;
             background-color: #FEF6EE;
             padding-top: 500px;
+            margin-bottom:600px;
         }
     </style>
     
@@ -317,4 +318,8 @@ txtCep.addEventListener("blur", buscaCep);
         
 </script>
 </body>
+<footer><ul>
+            <p class="rights"><span>&copy;&nbsp;<span id="copyright-year"></span> .Todos os direitos reservados. <span> por Byanca Campos Furlan, Igor Miguel Raimundo, Maria Antonia dos Santos e Rithiely Schmitt.</a></span>
+    </ul>
+        </footer>
 </html>

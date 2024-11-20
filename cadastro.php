@@ -116,7 +116,7 @@ if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['nome']) ||
             height: 100%;
             width: 100%;
             background-color: #FEF6EE;
-
+            margin-bottom: 60px;
         }
     </style>
 
@@ -314,5 +314,9 @@ window.onload = function(){
     </script>
 
 </body>
-
+<footer>
+    <ul>
+        <p class="rights"><span>&copy;&nbsp;<span id="copyright-year"></span> .Todos os direitos reservados. <span> por Byanca Campos Furlan, Igor Miguel Raimundo, Maria Antonia dos Santos e Rithiely Schmitt.</a></span>
+    </ul>
+</footer>
 </html>

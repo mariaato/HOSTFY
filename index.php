@@ -109,13 +109,13 @@
         <!-- Mais conteúdo pode ser adicionado aqui -->
         <?php
             include("funçaoAnuncio.php");
-
+            $id = 1020;
             $imagem = "uploads/casa.jpg";
             $titulo = "Apartamento Ingleses";
             $avaliacao = 4.25;
             $tags = ["Churrasqueira", "Ar condicionado", "Pet Friendly"];
 
-            echo gerarAnuncio($imagem, $titulo, $avaliacao, $tags);
+            echo gerarAnuncio($id, $imagem, $titulo, $avaliacao, $tags);
         ?>
     </div> 
 
