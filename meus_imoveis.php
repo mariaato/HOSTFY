@@ -31,6 +31,7 @@ $sql = "
         imovel.id_categoria, 
         imovel.numero_pessoas, 
         imovel.id_checklist, 
+        checklist.nome_checklist,
         categoria.nome_categoria
     FROM imovel
     JOIN Categoria AS categoria ON imovel.id_categoria = categoria.id_categoria
@@ -70,7 +71,10 @@ $conexao->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meus Imóveis</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="logoHostfy.png">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="estilo.css"> 
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -168,8 +172,28 @@ $conexao->close();
     </script>
 </head>
 <body>
+<header>
+        <!-- Botão do ícone de menu -->
+        <button class="menu-icon" id="menu-toggle">
+            <i class='bx bx-menu'></i>
+        </button>
+        <img src="logoHostfy.png" alt="logo" class="logo" />
+        <p><?php if (isset($final)) {echo $final;} ?></p>
 
         <h1>Meus Imóveis</h1>
+    </header>
+
+    <!-- Menu lateral (sidebar) -->
+    <div class="sidebar" id="sidebar">
+        <a href="index.php">Área inicial </a>
+        <a href="quemsomos.php">Quem Somos</a>
+        <a href="duvidas.php">Dúvidas</a>
+    </div>
+
+    <!-- Overlay para quando o menu estiver aberto -->
+    <div class="overlay" id="overlay"></div>
+
+
         
         <?php foreach ($imoveis as $imovel): ?>
         <div class="container">
@@ -186,7 +210,7 @@ $conexao->close();
                 <p><strong>Descrição:</strong> <?php echo htmlspecialchars($imovel['descrição']); ?></p>
                 <p><strong>Número de Pessoas:</strong> <?php echo htmlspecialchars($imovel['numero_pessoas']); ?></p>
                 <p><strong>Categoria:</strong> <?php echo htmlspecialchars($imovel['nome_categoria']); ?></p>
-                <p><strong>Características:</strong> <?php echo htmlspecialchars($imovel['id_checklist']); ?></p>
+                <p><strong>Características:</strong> <?php echo htmlspecialchars($imovel['nome_checklist']); ?></p>
 
                 <button onclick="toggleForm('editar-<?php echo $imovel['id_imovel']; ?>')">Editar Imóvel</button>
                 <button onclick="if (confirm('Tem certeza que deseja deletar este imóvel?')) { window.location.href='?delete=<?php echo $imovel['id_imovel']; ?>'; }">Deletar Imóvel</button>
@@ -242,6 +266,34 @@ $conexao->close();
                         </div>
                         <div class="form-group">
                         <label>Características:</label>
+                        <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="1">
+                        <label class="form-check-label" for="garagem">Garagem</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="2">
+                        <label class="form-check-label" for="bicicleta">Bicicleta</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="3">
+                        <label class="form-check-label" for="pet_friendly">Pet Friendly</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="4">
+                        <label class="form-check-label" for="churrasqueira">Churrasqueira</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="5">
+                        <label class="form-check-label" for="piscina">Piscina</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="6">
+                        <label class="form-check-label" for="sauna">Sauna</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="7">
+                        <label class="form-check-label" for="quadra_poliesportiva">Quadra Poliesportiva</label>
+                    </div>
                         <input type="text" name="id_checklist" value="<?php echo htmlspecialchars($imovel['id_checklist']); ?>" required>
                         </div>
                         <input type="submit" value="Salvar Alterações">
@@ -251,5 +303,29 @@ $conexao->close();
         </div>
         <?php endforeach; ?>
     
+
+
+        <script>
+                   // Função para alternar o menu lateral
+         const menuToggle = document.getElementById('menu-toggle');
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('main-content');
+        const overlay = document.getElementById('overlay');
+
+        // Função de alternância para abrir/fechar o menu e o overlay
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('sidebar-active');
+            mainContent.classList.toggle('content-shift');
+            overlay.classList.toggle('overlay-active');
+        });
+
+        // Função para fechar o menu se clicar fora (no overlay)
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('sidebar-active');
+            mainContent.classList.remove('content-shift');
+            overlay.classList.remove('overlay-active');
+        });
+        
+        </script>
 </body>
 </html>

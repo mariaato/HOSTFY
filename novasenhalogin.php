@@ -127,7 +127,7 @@
 <div class="sidebar" id="sidebar">
     <a href="index.php">Área inicial </a>
     <a href="quemsomos.php">Quem Somos</a>
-    <a href="#">Dúvidas</a>
+    <a href="duvidas.php">Dúvidas</a>
 </div>
 
 <div class="overlay" id="overlay"></div>
