@@ -14,7 +14,7 @@ $resultado = "SELECT * FROM imovel WHERE
     Bairro LIKE '%$pesquisar%' OR 
     UF LIKE '%$pesquisar%' OR 
     Numero_pessoas LIKE '%$pesquisar%' 
-    LIMIT 5";
+    ";
 
 $resultado_anuncio = mysqli_query($conexao, $resultado);
 
@@ -144,7 +144,6 @@ $resultado_anuncio = mysqli_query($conexao, $resultado);
         }
     ?>
     </div>
-    </div>
     
     <script>
         // Função para alternar o menu lateral
@@ -196,4 +195,6 @@ $resultado_anuncio = mysqli_query($conexao, $resultado);
         <p class="rights"><span>&copy;&nbsp;<span id="copyright-year"></span> .Todos os direitos reservados. <span> por Byanca Campos Furlan, Igor Miguel Raimundo, Maria Antonia dos Santos e Rithiely Schmitt.</a></span>
     </ul>
 </footer>
+</div>
+
 </html>

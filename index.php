@@ -1,5 +1,7 @@
 <?php
     session_start();
+    include("conexao.php");
+    include("funçaoAnuncio.php");
 
     //cookies
     if(isset($_SESSION['id']) && !isset($_COOKIE['usuario'])) {
@@ -13,6 +15,12 @@
         $_SESSION['nome'] = $_COOKIE['usuario'];
         $_SESSION['id'] = $_COOKIE['id'];
     }
+
+    //anuncios
+    $anuncio = "SELECT * FROM imovel LIMIT 12" ;
+
+    $resultado_anuncio = mysqli_query($conexao, $anuncio);
+
 
 ?>
 <!DOCTYPE html>
@@ -32,6 +40,21 @@
             width: 100%;
             background-color: #FEF6EE;
 
+        }
+
+        .anuncio-container {
+        display: flex;
+        flex-wrap: wrap; /* Permite que os anúncios sejam quebrados em novas linhas */
+        gap: 20px; /* Espaçamento entre os anúncios */
+        justify-content: space-evenly; /* Espaçamento uniforme entre os anúncios */
+}
+ 
+        .anuncio-imagem {
+            width: 100%;
+            /* height: auto; */
+            border-radius: 10px;
+            height: 200px; /* Altura padrão definida */
+            object-fit: cover; /* Garante que a imagem preencha o espaço sem distorção */
         }
         .rights {
         padding: 10px 0;
@@ -103,21 +126,35 @@
 
     <!-- Conteúdo principal -->
         <!-- Conteúdo da página -->
-        <div class="main-content" id="main-content">
+<div class="main-content" id="main-content">
         <h1>Destaques</h1>
         <p>Aqui estão os imóveis em destaque para você.</p>
         <!-- Mais conteúdo pode ser adicionado aqui -->
-        <?php
-            include("funçaoAnuncio.php");
-            $id = 1020;
-            $imagem = "uploads/casa.jpg";
-            $titulo = "Apartamento Ingleses";
-            $avaliacao = 4.25;
-            $tags = ["Churrasqueira", "Ar condicionado", "Pet Friendly"];
 
-            echo gerarAnuncio($id, $imagem, $titulo, $avaliacao, $tags);
+
+        <h1>Nossos imóveis</h1>
+
+        <div class="anuncio-container">
+
+        <?php
+
+            if (mysqli_num_rows($resultado_anuncio) > 0) {
+                while ($rows_anuncio = mysqli_fetch_array($resultado_anuncio)) {
+                    $id = $rows_anuncio['ID_imovel'];
+                    $imagem = $rows_anuncio['imagens'];
+                    $titulo = $rows_anuncio['Nome_imovel'] . " - " . $rows_anuncio['Cidade'];
+                    $valor = $rows_anuncio ['Valor']; 
+                    $tags = [$rows_anuncio['Bairro'], $rows_anuncio['UF']];
+    
+                    // Chama a função gerarAnuncio com os dados
+                    echo gerarAnuncio($id, $imagem, $titulo, $valor, $tags);
+    
+                }
+            } else {
+                echo "Nenhum resultado encontrado.";
+            }
         ?>
-    </div> 
+    </div>
 
     <script>
         // Função para alternar o menu lateral
@@ -168,4 +205,6 @@
         <p class="rights"><span>&copy;&nbsp;<span id="copyright-year"></span> .Todos os direitos reservados. <span> por Byanca Campos Furlan, Igor Miguel Raimundo, Maria Antonia dos Santos e Rithiely Schmitt.</a></span>
     </ul>
 </footer>
+</div> 
+
 </html>
