@@ -113,7 +113,7 @@ $resultado_anuncio = mysqli_query($conexao, $resultado);
     <div class="sidebar" id="sidebar">
         <a href="index.php">Área inicial </a>
         <a href="imoveis.php" >Cadastre seu imóvel</a>
-        <a href="imoveiscadastrados.php">Imóveis Cadastrados</a>
+        <a href="meus_imoveis.php">Imóveis Cadastrados</a>
         <a href="quemsomos.php">Quem Somos</a>
         <a href="duvidas.php">Dúvidas</a>
         
