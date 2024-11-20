@@ -6,7 +6,7 @@ require 'conexao.php';
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $id = intval($_GET['id']); // Converte o ID para inteiro
 
-    // Busca os detalhes do imóvel no banco de dados, incluindo o id_proprietario
+    // Busca os detalhes do imóvel no banco de dados
     $sql = "SELECT ID_imovel, Nome_imovel, Valor, id_proprietario, imagens FROM imovel WHERE ID_imovel = ?";
     $stmt = $conexao->prepare($sql);
     $stmt->bind_param("i", $id);
@@ -20,6 +20,23 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     }
 } else {
     die("ID inválido.");
+}
+
+// Busca os dados do usuário logado
+$usuario = [];
+if (isset($_SESSION['id'])) {
+    $id_locador = $_SESSION['id'];
+    $sql_usuario = "SELECT CPF, telefone FROM usuario WHERE id = ?";
+    $stmt_usuario = $conexao->prepare($sql_usuario);
+    $stmt_usuario->bind_param("i", $id_locador);
+    $stmt_usuario->execute();
+    $result_usuario = $stmt_usuario->get_result();
+
+    if ($result_usuario->num_rows > 0) {
+        $usuario = $result_usuario->fetch_assoc();
+    } else {
+        die("Usuário não encontrado.");
+    }
 }
 
 // Resumo e inserção na tabela Locação
@@ -61,24 +78,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Inserção na tabela Locação
     if (isset($_POST['confirmar_reserva'])) {
         if (!isset($_SESSION['id'])) {
-            die("Você precisa estar logado para fazer uma reserva.");
+            echo "<p>Você precisa estar logado para fazer uma reserva. <a href='login.php'>Faça seu login aqui.</a></p>";
+            exit;
         }
 
-        $id_locador = $_SESSION['id'];
+        $cpf = $usuario['CPF'] ?? null;
+        $telefone = $usuario['telefone'] ?? null;
+
+        // Verifica se os dados do locador estão preenchidos
+        if (!$cpf || !$telefone) {
+            die("<p style='color:red;'>Erro: CPF ou telefone do locador não encontrado.</p>");
+        }
+
+        // Insere os dados na tabela locador
+        $locador_sql = "INSERT INTO locador (id_locador, CPF, telefone) VALUES (?, ?, ?)";
+        $stmt_locador = $conexao->prepare($locador_sql);
+        $stmt_locador->bind_param("iss", $id_locador, $cpf, $telefone);
+        $locador_success = $stmt_locador->execute();
+
+        if (!$locador_success) {
+            echo "<p style='color:red;'>Erro ao salvar os dados do locador: " . $stmt_locador->error . "</p>";
+            exit;
+        }
+
+        // Insere os dados na tabela locação
         $id_proprietario = $imovel['id_proprietario'];
-        $valor_total = $_POST['valor_total'];
+        $locacao_sql = "INSERT INTO `locação` (id_proprietario, id_locador, id_imovel, data_inicial, data_final, valor_total)
+                        VALUES (?, ?, ?, ?, ?, ?)";
+        $stmt_locacao = $conexao->prepare($locacao_sql);
+        $stmt_locacao->bind_param("iiissd", $id_proprietario, $id_locador, $id, $data_inicio, $data_fim, $valor_total);
 
-        $sql_insert = "
-            INSERT INTO Locação (id_proprietario, id_locador, ID_imovel, Data_inicial, Data_Final, Valor_total)
-            VALUES (?, ?, ?, ?, ?, ?)
-        ";
-        $stmt_insert = $conexao->prepare($sql_insert);
-        $stmt_insert->bind_param("iiissd", $id_proprietario, $id_locador, $id, $data_inicio, $data_fim, $valor_total);
-
-        if ($stmt_insert->execute()) {
-            $resumo_reserva = "<p style='color:green;'>Reserva confirmada com sucesso!</p>";
+        if ($stmt_locacao->execute()) {
+            echo "<p style='color:green;'>Reserva confirmada com sucesso!</p>";
         } else {
-            $resumo_reserva = "<p style='color:red;'>Erro ao confirmar a reserva: " . $stmt_insert->error . "</p>";
+            echo "<p style='color:red;'>Erro ao confirmar a reserva: " . $stmt_locacao->error . "</p>";
         }
     }
 }
