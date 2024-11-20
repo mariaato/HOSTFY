@@ -1,5 +1,7 @@
 <?php
     session_start();
+    include("conexao.php");
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -130,7 +132,7 @@
                             <i class='bx bx-search'></i>
                         </button>
                     </span>
-                </div>
+                </form>
                 <div id="deslogado">
                     <a href="login.php" class="menu__link">Login</a>
                     <a href="cadastro.php" class="menu__link">Cadastre-se</a>
@@ -138,9 +140,11 @@
         
                 </div>
                 <div id="logado">
+                <?php if(isset($_SESSION['id'])) {echo '<a  href="perfilhtml.php" class="menu__link">Perfil</a>';}?>
                     <a href="logout.php" class="menu__link">Sair</a>
                 </div>
-                </form>
+            </div>
+
                
          
     </header>
@@ -207,16 +211,9 @@
              </div>
            </div>
            <br>           
-           <br>
-           <br>
+</br>
+</br>
 
-          <header>
-            
-          </header>
-           <footer><ul>
-            <p class="rights"><span>&copy;&nbsp;<span id="copyright-year"></span> .Todos os direitos reservados. <span> por Byanca Campos Furlan, Igor Miguel Raimundo, Maria Antonia dos Santos e Rithiely Schmitt.</a></span>
-    </ul>
-        </footer>
         <script>
             // Função para alternar o menu lateral
             const menuToggle = document.getElementById('menu-toggle');
@@ -266,6 +263,11 @@
         ?> 
 
         </body>
+        <footer>
+            <ul>
+            <p class="rights"><span>&copy;&nbsp;<span id="copyright-year"></span> .Todos os direitos reservados. <span> por Byanca Campos Furlan, Igor Miguel Raimundo, Maria Antonia dos Santos e Rithiely Schmitt.</a></span>
+        </ul>
+        </footer>
         </html>
         
 
