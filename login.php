@@ -170,7 +170,7 @@ if (isset($_POST['email']) || isset($_POST['senha'])) {
 
         /* Estilo do container do formulário */
         .container {
-            background-color: #1E2A38;
+            background-color: #1a1e36;
             border-radius: 15px;
             padding: 30px;
             width: 350px;

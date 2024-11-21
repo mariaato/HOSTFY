@@ -111,6 +111,13 @@ $conexao->close();
     <link rel="shortcut icon" href="logoHostfy.png">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <style>
+
+#main-content {
+    justify-content: center;
+    align-items: center;
+    background-color: #FEF6EE;
+
+}
             header {
                 display: flex;
                 justify-content: center; /* Distribui os itens entre os extremos */
@@ -167,7 +174,7 @@ $conexao->close();
 
         .card {
             padding: 20px;
-            background-color: #1a1e36;
+            background-color: ##1a1e36;
             border: 1px solid #ddd;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -281,6 +288,7 @@ $conexao->close();
     </div>
 
     <div class="overlay" id="overlay"></div>
+    <div class="main-content" id="main-content">
 
 <div class="container">
 <div class="profile-data">
@@ -408,6 +416,7 @@ $conexao->close();
         <p class="rights"><span>&copy;&nbsp;<span id="copyright-year"></span> .Todos os direitos reservados. <span> por Byanca Campos Furlan, Igor Miguel Raimundo, Maria Antonia dos Santos e Rithiely Schmitt.</a></span>
     </ul>
 </footer>
+</div>
 </html>
 
 
