@@ -204,8 +204,10 @@
 
             <button type="submit" class="submit-btn">Alterar Senha</button>
         </form>
-        <img src="logoHostfy.png" alt="logo" class="logo">
-    </div>
+        <a href="index.php">
+            <img src="logoHostfy.png" alt="logo" class="logo" />
+        </a>
+        </div>
 </div>
 <script>
         // Função para alternar o menu lateral

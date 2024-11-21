@@ -261,7 +261,9 @@ $conexao->close();
             <button class="menu-icon" id="menu-toggle">
                 <i class='bx bx-menu'></i>
             </button>
+            <a href="index.php">
             <img src="logoHostfy.png" alt="logo" class="logo" />
+        </a>
             <h1>Seu </h1>
             <h1> Perfil</h1>
             <a href="logout.php" class="menu__link">Sair</a>

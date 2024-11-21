@@ -128,8 +128,10 @@ if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['nome']) ||
             <i class='bx bx-menu'></i>
         </button>
 
-        <img src="logoHostfy.png" alt="logo" class="logo" />
-        <h1>Bem-vindo ao HOSTFY</h1>
+        <a href="index.php">
+            <img src="logoHostfy.png" alt="logo" class="logo" />
+        </a>
+                <h1>Bem-vindo ao HOSTFY</h1>
 
         <a href="login.php" class="menu__link">Login</a>
         <p><?php if (isset($final)) {echo $final;} ?></p>

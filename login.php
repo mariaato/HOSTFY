@@ -288,8 +288,9 @@ if (isset($_POST['email']) || isset($_POST['senha'])) {
             <a href="novasenhalogin.php" class="forgot-password">Esqueceu sua senha?</a>
             <button type="submit" class="submit-btn">Entrar</button>
         </form>
-        <img src="logoHostfy.png" alt="logo" class="logo">
-    </div>
+        <a href="index.php">
+            <img src="logoHostfy.png" alt="logo" class="logo" />
+        </a>    </div>
 </div>
 
 <script>

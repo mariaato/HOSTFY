@@ -89,7 +89,9 @@
             <i class='bx bx-menu'></i>
         </button>
 
-        <img src="logoHostfy.png" alt="logo" class="logo" />
+        <a href="index.php">
+            <img src="logoHostfy.png" alt="logo" class="logo" />
+        </a>
 
         <!-- Campo de pesquisa -->
         <form method="post" action="pesquisar.php" class="search-form">

@@ -163,7 +163,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <button class="menu-icon" id="menu-toggle">
             <i class='bx bx-menu'></i>
         </button>
-        <img src="logoHostfy.png" alt="logo" class="logo" />
+        <a href="index.php">
+            <img src="logoHostfy.png" alt="logo" class="logo" />
+        </a>
         <p><?php if (isset($final)) {echo $final;} ?></p>
 
         <h1>Cadastro de Imóvel</h1>
