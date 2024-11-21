@@ -113,11 +113,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100%;
-            width: 100%;
             background-color: #FEF6EE;
-            padding-top: 700px;
-            margin-bottom:800px;
+            margin-top: -55px;
+            
         }
         .custum-file-upload {
             margin-top: 20px;
