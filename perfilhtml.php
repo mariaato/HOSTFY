@@ -174,7 +174,7 @@ $conexao->close();
 
         .card {
             padding: 20px;
-            background-color: ##1a1e36;
+            background-color: #1a1e36;
             border: 1px solid #ddd;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

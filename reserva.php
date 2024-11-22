@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['calcular_reserva'])) 
                     <p><strong>Valor da Diária:</strong> R$ " . number_format($valor_diaria, 2, ',', '.') . "</p>
                     <p><strong>Quantidade de Dias:</strong> $intervalo</p>
                     <p><strong>Valor Total:</strong> R$ " . number_format($valor_total, 2, ',', '.') . "</p>
-                    <form method='POST'>
+                    <form method='POST' class='calendario'>
                         <input type='hidden' name='data_inicio' value='$data_inicio'>
                         <input type='hidden' name='data_fim' value='$data_fim'>
                         <input type='hidden' name='valor_total' value='$valor_total'>
@@ -110,8 +110,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar_reserva']))
     $stmt_reserva->bind_param("iiissd", $id_proprietario, $id_locador, $id, $data_inicio, $data_fim, $valor_total);
 
     if ($stmt_reserva->execute()) {
-        echo "<p>Reserva confirmada com sucesso!</p>";
-    } else {
+        $final = "<div class='alert alert-success alert-dismissible fade show' role='alert'>
+        Reserva confirmada com sucesso! 
+        <a href='meus_imoveis.php' class='btn btn-primary btn-sm ml-2'>Veja seus imóveis</a>
+        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+            <span aria-hidden='true'>&times;</span>
+        </button>
+    </div>";    } else {
         echo "<p style='color:red;'>Erro ao confirmar a reserva.</p>";
     }
 }
@@ -124,25 +129,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar_reserva']))
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reserva do Imóvel</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.11.0/main.min.css">
+    <link rel="shortcut icon" href="logoHostfy.png">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="estilo.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f9f9f9;
-        }
+        #main-content {
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+            background-color: #FEF6EE;
 
-        .container {
-            max-width: 800px;
-            margin: auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .calendar {
             margin-top: 20px;
+        }
+        
+        .calendario{
+            justify-content: center;
+            align-items: center;
+            margin-left:600px;
+            border-radius: 10px;
+            padding: 15px;
+            width: 300px;
+
         }
 
         .fc .fc-day-disabled {
@@ -154,18 +167,82 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar_reserva']))
         .fc .fc-day:hover {
             cursor: pointer;
         }
+
+        .alert {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            width: auto;
+            min-width: 300px;
+            max-width: 500px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: slide-down 0.4s ease-out;
+        }
+
+        @keyframes slide-down {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+
+
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>Reserva do Imóvel: <?= htmlspecialchars($imovel['Nome_imovel']); ?></h1>
-    <img src="<?= htmlspecialchars($imovel['imagens']); ?>" width="100%" height="auto" alt="Imagem do Imóvel">
+<header>
+    <!-- Botão do ícone de menu -->
+    <button class="menu-icon" id="menu-toggle">
+        <i class='bx bx-menu'></i>
+    </button>
+
+    <a href="index.php">
+            <img src="logoHostfy.png" alt="logo" class="logo" />
+        </a>
+        <p><?php if (isset($final)) {echo $final;} ?></p>
+
+    <!-- Campo de pesquisa -->
+    <form method="post" action="pesquisar.php" class="search-form">
+        <input type="text" name="pesquisar" placeholder="Encontre seu lugar ideal..." class="search-input">
+        <span>
+            <button type="submit" class="search-button">
+                <i class='bx bx-search'></i>
+            </button>
+        </span>
+    </form>
+    <div id="deslogado">
+        <a href="login.php" class="menu__link">Login</a>
+        <a href="cadastro.php" class="menu__link">Cadastre-se</a>
+
+
+    </div>
+    <div id="logado">
+    <?php if(isset($_SESSION['id'])) {echo '<a  href="perfilhtml.php" class="menu__link">Perfil</a>';}?>
+        <a href="logout.php" class="menu__link">Sair</a>
+    </div>
+</header>
+
+ <!-- Menu lateral (sidebar) -->
+ <div class="sidebar" id="sidebar">
+        <a href="imoveis.php" >Cadastre seu imóvel</a>
+        <a href="meus_imoveis.php">Imóveis Cadastrados</a>
+        <a href="quemsomos.php">Quem Somos</a>
+        <a href="duvidas.php">Dúvidas</a>
+        
+    </div>
+
+    <!-- Overlay para quando o menu estiver aberto -->
+    <div class="overlay" id="overlay"></div>
+
+<div class="main-content" id="main-content">
+    <h1>Imóvel: <?= htmlspecialchars($imovel['Nome_imovel']); ?></h1>
+    <img src="<?= htmlspecialchars($imovel['imagens']); ?>" width="300" height="200">
     <p><strong>Cidade:</strong> <?= htmlspecialchars($imovel['Cidade']); ?></p>
     <p><strong>Descrição:</strong> <?= htmlspecialchars($imovel['Descrição']); ?></p>
     <p><strong>Valor:</strong> R$ <?= number_format($imovel['Valor'], 2, ',', '.'); ?></p>
 
     <h2>Selecione o período para a reserva</h2>
-    <form method="POST">
+    <form method="POST" class="calendario">
         <label for="data_inicio">Data de Início:</label>
         <input type="date" id="data_inicio" name="data_inicio" required>
         <br><br>
@@ -178,7 +255,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar_reserva']))
     <?= $resumo_reserva; ?>
 
     <div id="calendar" class="calendar"></div>
-</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.11.0/main.min.js"></script>
 <script>
@@ -209,7 +285,61 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar_reserva']))
         });
 
         calendar.render();
+        
     });
+
+
 </script>
+
+<script>
+        // Função para alternar o menu lateral
+        const menuToggle = document.getElementById('menu-toggle');
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('main-content');
+        const overlay = document.getElementById('overlay');
+
+        // Função de alternância para abrir/fechar o menu e o overlay
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('sidebar-active');
+            mainContent.classList.toggle('content-shift');
+            overlay.classList.toggle('overlay-active');
+        });
+
+        // Função para fechar o menu se clicar fora (no overlay)
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('sidebar-active');
+            mainContent.classList.remove('content-shift');
+            overlay.classList.remove('overlay-active');
+        });
+    </script>
+
+    <script>    
+        //fução para a index do usuario logado
+        function logado() {
+            document.getElementById('logado').style.display='';
+            document.getElementById('deslogado').style.display='none';
+        }
+        //função para o usuario deslogado
+        function deslogado() {
+            document.getElementById('logado').style.display='none';
+            document.getElementById('deslogado').style.display='';
+        }
+    </script>
+
+    <?php
+        //verifica o login e muda o index
+        if (isset($_SESSION['id'])) {
+            echo '<script> logado() </script>';
+        } else {
+            echo '<script> deslogado() </script>';
+        }
+    ?>
 </body>
+<footer>
+    <ul>
+        <p class="rights"><span>&copy;&nbsp;<span id="copyright-year"></span> .Todos os direitos reservados. <span> por Byanca Campos Furlan, Igor Miguel Raimundo, Maria Antonia dos Santos e Rithiely Schmitt.</a></span>
+    </ul>
+</footer>
+</div>
+
 </html>

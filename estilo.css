@@ -1,3 +1,13 @@
+@font-face {
+    font-family: 'MinhaFonte'; /* Nome da fonte, você pode escolher */
+    src: url('../') format('truetype'); /* Caminho para o arquivo e formato */
+    font-weight: normal; /* Opcional, defina o peso (normal, bold, etc.) */
+    font-style: normal; /* Opcional, defina o estilo (normal, italic, etc.) */
+}
+
+
+
+
 * {
     margin: 0;
     padding: 0;
