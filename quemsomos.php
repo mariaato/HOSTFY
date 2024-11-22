@@ -53,8 +53,8 @@
             box-shadow: 10px 4px 10px rgba(0, 0, 0, 0.1);
         }
         .img-perfil {
-        width: 300px;
-        height: 300px;
+        width: 220px;
+        height: 250px;
         border-radius: 15px;
         }
         .menu-icon {
@@ -194,19 +194,20 @@
                             <a href="https://www.linkedin.com/in/maria-antônia-dos-santos"target="_blank"rel="noopener">Linkedin</a>
                     </div>
                     <div class="equipe">
+                        <h2 class="texto">Desenvolvedor</h2>
+                        <img src="igor.jpeg" alt="Foto de Perfil" class="img-perfil" >
+                        <h2>Igor Miguel Raimundo</h2>
+                        <a href="mailto: igor.raimundo@aluno.fmpsc.edu.br"target="_blank">E-mail</a><br/>
+                        <a href=" https://www.linkedin.com/in/igor-miguel-raimundo-27b964286/"target="_blank"rel="noopener">Linkedin</a>
+                    </div>
+                    <div class="equipe">
                         <h2 class="texto">Desenvolvedora</h2>
                         <img src="rithiely.jpeg" alt="Foto de Perfil" class="img-perfil" >
                         <h2>Rithiely Schmitt</h2>
                         <a href="mailto: rithiely_ph@hotmail.com"target="_blank">E-mail</a><br/>
                         <a href="https://br.linkedin.com/in/rithiély-schmitt-100b92326/"target="_blank"rel="noopener">Linkedin</a>
                     </div>
-                    <div class="equipe">
-                        <h2 class="texto">Desenvolvedor</h2>
-                        <img src="ri.png" alt="Foto de Perfil" class="img-perfil" >
-                        <h2>Igor Miguel Raimundo</h2>
-                        <a href="mailto: ri@gmail.com"target="_blank">E-mail</a><br/>
-                        <a href="https://br.linkedin.com/in//"target="_blank"rel="noopener">Linkedin</a>
-                    </div>
+         
              </div>
              </div>
            </div>
