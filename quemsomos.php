@@ -195,7 +195,7 @@
                     </div>
                     <div class="equipe">
                         <h2 class="texto">Desenvolvedora</h2>
-                        <img src="ri.png" alt="Foto de Perfil" class="img-perfil" >
+                        <img src="rithiely.jpeg" alt="Foto de Perfil" class="img-perfil" >
                         <h2>Rithiely Schmitt</h2>
                         <a href="mailto: rithiely_ph@hotmail.com"target="_blank">E-mail</a><br/>
                         <a href="https://br.linkedin.com/in/rithiély-schmitt-100b92326/"target="_blank"rel="noopener">Linkedin</a>
