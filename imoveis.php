@@ -290,6 +290,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
         
     </div>
+    <footer><ul>
+            <p class="rights"><span>&copy;&nbsp;<span id="copyright-year"></span> .Todos os direitos reservados. <span> por Byanca Campos Furlan, Igor Miguel Raimundo, Maria Antonia dos Santos e Rithiely Schmitt.</a></span>
+    </ul>
+        </footer>
     <script>
     // Função buscaCEP
     function buscaCep(){
@@ -379,11 +383,11 @@ txtCep.addEventListener("blur", buscaCep);
             fileList.innerHTML = '<p>Nenhum arquivo selecionado.</p>';
         }
     });
+      // Define o ano atual
+      document.getElementById('copyright-year').textContent = new Date().getFullYear();
+
         
 </script>
 </body>
-<footer><ul>
-            <p class="rights"><span>&copy;&nbsp;<span id="copyright-year"></span> .Todos os direitos reservados. <span> por Byanca Campos Furlan, Igor Miguel Raimundo, Maria Antonia dos Santos e Rithiely Schmitt.</a></span>
-    </ul>
-        </footer>
+
 </html>

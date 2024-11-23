@@ -250,19 +250,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
         <footer><ul>
             <p class="rights"><span>&copy;&nbsp;<span id="copyright-year"></span> .Todos os direitos reservados. <span> por Byanca Campos Furlan, Igor Miguel Raimundo, Maria Antonia dos Santos e Rithiely Schmitt.</a></span>
     </ul>
@@ -330,16 +317,7 @@
         // Atualizar ano no rodapé
         document.getElementById('copyright-year').textContent = new Date().getFullYear();
 
-        // Função para exibir/desexibir botões de login/logout
-        function logado() {
-            document.getElementById('logado').style.display = '';
-            document.getElementById('deslogado').style.display = 'none';
-        }
-
-        function deslogado() {
-            document.getElementById('logado').style.display = 'none';
-            document.getElementById('deslogado').style.display = '';
-        }
+        // Função para exibir/desexibir botões de login/logou
 
         <?php
         // Verifica o login e ajusta a exibição

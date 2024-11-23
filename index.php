@@ -158,6 +158,11 @@
         ?>
     </div>
 
+    <footer>
+        <ul>
+        <p class="rights"><span>&copy;&nbsp;<span id="copyright-year"></span> .Todos os direitos reservados. <span> por Byanca Campos Furlan, Igor Miguel Raimundo, Maria Antonia dos Santos e Rithiely Schmitt.</a></span>
+        </ul>
+    </footer>
     <script>
         // Função para alternar o menu lateral
         const menuToggle = document.getElementById('menu-toggle');
@@ -191,6 +196,9 @@
             document.getElementById('logado').style.display='none';
             document.getElementById('deslogado').style.display='';
         }
+           // Define o ano atual
+    document.getElementById('copyright-year').textContent = new Date().getFullYear();
+
     </script>
 
     <?php
@@ -202,10 +210,5 @@
         }
     ?>
 </body>
-<footer>
-    <ul>
-        <p class="rights"><span>&copy;&nbsp;<span id="copyright-year"></span> .Todos os direitos reservados. <span> por Byanca Campos Furlan, Igor Miguel Raimundo, Maria Antonia dos Santos e Rithiely Schmitt.</a></span>
-    </ul>
-</footer>
 
 </html>

@@ -232,7 +232,11 @@ if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['nome']) ||
         </form>
     </div>
 
-
+    <footer>
+    <ul>
+        <p class="rights"><span>&copy;&nbsp;<span id="copyright-year"></span> .Todos os direitos reservados. <span> por Byanca Campos Furlan, Igor Miguel Raimundo, Maria Antonia dos Santos e Rithiely Schmitt.</a></span>
+    </ul>
+</footer>
     <script>
         // Função para validar senhas ao tentar enviar o formulário
         document.querySelector('form').addEventListener('submit', function(e) {
@@ -314,12 +318,11 @@ window.onload = function(){
             mainContent.classList.remove('content-shift');
             overlay.classList.remove('overlay-active');
         });
+          // Define o ano atual
+    document.getElementById('copyright-year').textContent = new Date().getFullYear();
+
     </script>
 
 </body>
-<footer>
-    <ul>
-        <p class="rights"><span>&copy;&nbsp;<span id="copyright-year"></span> .Todos os direitos reservados. <span> por Byanca Campos Furlan, Igor Miguel Raimundo, Maria Antonia dos Santos e Rithiely Schmitt.</a></span>
-    </ul>
-</footer>
+
 </html>

@@ -107,7 +107,9 @@ if (isset($_POST['email']) || isset($_POST['senha'])) {
     <title>Login</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-    <style>
+    <link rel="stylesheet" href="estilo.css"> 
+
+   <style>
         .error-message {
             color: red;
             margin-bottom: 10px;
@@ -129,9 +131,12 @@ if (isset($_POST['email']) || isset($_POST['senha'])) {
             font-family: Arial, sans-serif;
             background-color: #FEF6EE;
             height: 100vh;
-            display: flex;
+            margin: 0;
+            padding: 0;
             justify-content: center;
             align-items: center;
+            box-sizing: border-box;
+
         }
         .icon {
             background: none;
@@ -247,11 +252,17 @@ if (isset($_POST['email']) || isset($_POST['senha'])) {
             color:white;
 
         }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+    }
+    
         #footer {
-        position: sticky;
-        bottom: 0;
-        width: 100%;
-        height: 2.5rem;            /* altura do rodapé */
+            position: sticky;
+            bottom: 0;
+            width: 100%;
+            height: 2.5rem;            /* altura do rodapé */
         }
     </style>
 </head>
@@ -264,7 +275,7 @@ if (isset($_POST['email']) || isset($_POST['senha'])) {
 
 <div class="sidebar" id="sidebar">
     <a href="index.php">Área inicial </a>
-    <a href="quemsomos.html">Quem Somos</a>
+    <a href="quemsomos.php">Quem Somos</a>
     <a href="duvidas.php">Dúvidas</a>
 </div>
 
@@ -299,6 +310,11 @@ if (isset($_POST['email']) || isset($_POST['senha'])) {
         </a>    </div>
 </div>
 
+<footer>
+        <ul>
+        <p class="rights"><span>&copy;&nbsp;<span id="copyright-year"></span> .Todos os direitos reservados. <span> por Byanca Campos Furlan, Igor Miguel Raimundo, Maria Antonia dos Santos e Rithiely Schmitt.</a></span>
+        </ul>
+    </footer>
 <script>
     const menuToggle = document.getElementById('menu-toggle');
     const sidebar = document.getElementById('sidebar');
@@ -316,11 +332,10 @@ if (isset($_POST['email']) || isset($_POST['senha'])) {
         mainContent.classList.remove('content-shift');
         overlay.classList.remove('overlay-active');
     });
+    // Define o ano atual
+    document.getElementById('copyright-year').textContent = new Date().getFullYear();
+
 </script>
 </body>
-<footer>
-    <ul>
-        <p class="rights"><span>&copy;&nbsp;<span id="copyright-year"></span> .Todos os direitos reservados. <span> por Byanca Campos Furlan, Igor Miguel Raimundo, Maria Antonia dos Santos e Rithiely Schmitt.</a></span>
-    </ul>
-</footer>
+    
 </html>

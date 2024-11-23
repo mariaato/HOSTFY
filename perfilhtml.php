@@ -385,7 +385,11 @@ $conexao->close();
     <button onclick="window.location.href='meus_imoveis.php'" class="submit-btn">Meus Imóveis</button>
     </div>
 
-
+    <footer>
+    <ul>
+        <p class="rights"><span>&copy;&nbsp;<span id="copyright-year"></span> .Todos os direitos reservados. <span> por Byanca Campos Furlan, Igor Miguel Raimundo, Maria Antonia dos Santos e Rithiely Schmitt.</a></span>
+    </ul>
+</footer>
     <script>
     const menuToggle = document.getElementById('menu-toggle');
     const sidebar = document.getElementById('sidebar');
@@ -408,14 +412,13 @@ $conexao->close();
             const form = document.getElementById(id);
             form.style.display = form.style.display === 'none' ? 'block' : 'none';
         }
+         // Define o ano atual
+    document.getElementById('copyright-year').textContent = new Date().getFullYear();
+
     </script>
 </body>
 
-<footer>
-    <ul>
-        <p class="rights"><span>&copy;&nbsp;<span id="copyright-year"></span> .Todos os direitos reservados. <span> por Byanca Campos Furlan, Igor Miguel Raimundo, Maria Antonia dos Santos e Rithiely Schmitt.</a></span>
-    </ul>
-</footer>
+
 </div>
 </html>
 

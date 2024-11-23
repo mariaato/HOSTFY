@@ -339,7 +339,11 @@ $conexao->close();
         </div>
         <?php endforeach; ?>
     
-
+        <footer>
+        <ul>
+        <p class="rights"><span>&copy;&nbsp;<span id="copyright-year"></span> .Todos os direitos reservados. <span> por Byanca Campos Furlan, Igor Miguel Raimundo, Maria Antonia dos Santos e Rithiely Schmitt.</a></span>
+        </ul>
+    </footer>
 
         <script>
                    // Função para alternar o menu lateral
@@ -364,9 +368,5 @@ $conexao->close();
         
         </script>
 </body>
-<footer>
-            <ul>
-            <p class="rights"><span>&copy;&nbsp;<span id="copyright-year"></span> .Todos os direitos reservados. <span> por Byanca Campos Furlan, Igor Miguel Raimundo, Maria Antonia dos Santos e Rithiely Schmitt.</a></span>
-        </ul>
-</footer>
+
 </html>
