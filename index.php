@@ -117,7 +117,7 @@
     <!-- Menu lateral (sidebar) -->
     <div class="sidebar" id="sidebar">
         <a href="imoveis.php" >Cadastre seu imóvel</a>
-        <a href="imoveiscadastrados.php">Imóveis Cadastrados</a>
+        <a href="meus_imoveis.php">Imóveis Cadastrados</a>
         <a href="quemsomos.php">Quem Somos</a>
         <a href="duvidas.php">Dúvidas</a>
         
@@ -207,6 +207,5 @@
         <p class="rights"><span>&copy;&nbsp;<span id="copyright-year"></span> .Todos os direitos reservados. <span> por Byanca Campos Furlan, Igor Miguel Raimundo, Maria Antonia dos Santos e Rithiely Schmitt.</a></span>
     </ul>
 </footer>
-</div> 
 
 </html>

@@ -76,13 +76,23 @@ $conexao->close();
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="estilo.css"> 
     <style>
+         header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #FEF6EE;
+        padding: 15px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+         }
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
             background-color: #FEF6EE;
-            display: flex;
+            box-sizing: border-box;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            height: 100vh;
         }
         .container {
             background-color: #1E2A38;
@@ -116,7 +126,6 @@ $conexao->close();
             margin-top: 10px;
         }
         button {
-            width: 100%;
             padding: 10px;
             border: none;
             background-color: #C56126;
@@ -162,7 +171,32 @@ $conexao->close();
         input[type="submit"]:hover {
             background-color: #45a049;
         }
-
+        #footer {
+        position: sticky;
+        bottom: 0;
+        width: 100%;
+        height: 2.5rem;            /* altura do rodapé */
+        }
+        .a {
+            text-decoration: none;  
+        }
+        .section1 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-flow: wrap;
+            width: 100vw;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .menu-icon {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 30px;
+            color: #333;
+         }
+         
     </style>
     <script>
         function toggleForm(id) {
@@ -174,14 +208,15 @@ $conexao->close();
 <body>
 <header>
         <!-- Botão do ícone de menu -->
-        <button class="menu-icon" id="menu-toggle">
+        <div class="section1">
+        <button class="menu-icon" id="menu-toggle"aria-label="Abrir Menu">
             <i class='bx bx-menu'></i>
         </button>
         <img src="logoHostfy.png" alt="logo" class="logo" />
-        <p><?php if (isset($final)) {echo $final;} ?></p>
-
-        <h1>Meus Imóveis</h1>
-    </header>
+        </div>
+           
+        </header>
+        
 
     <!-- Menu lateral (sidebar) -->
     <div class="sidebar" id="sidebar">
@@ -193,9 +228,10 @@ $conexao->close();
     <!-- Overlay para quando o menu estiver aberto -->
     <div class="overlay" id="overlay"></div>
 
+    <p><?php if (isset($final)) {echo $final;} ?></p>
 
-        
-        <?php foreach ($imoveis as $imovel): ?>
+    <h1>Meus Imóveis</h1>
+    <?php foreach ($imoveis as $imovel): ?>
         <div class="container">
             <div class="imovel">
                 <p><strong>ID do Imóvel:</strong> <?php echo htmlspecialchars($imovel['id_imovel']); ?></p>
@@ -328,4 +364,9 @@ $conexao->close();
         
         </script>
 </body>
+<footer>
+            <ul>
+            <p class="rights"><span>&copy;&nbsp;<span id="copyright-year"></span> .Todos os direitos reservados. <span> por Byanca Campos Furlan, Igor Miguel Raimundo, Maria Antonia dos Santos e Rithiely Schmitt.</a></span>
+        </ul>
+</footer>
 </html>

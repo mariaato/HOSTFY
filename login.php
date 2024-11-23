@@ -247,6 +247,12 @@ if (isset($_POST['email']) || isset($_POST['senha'])) {
             color:white;
 
         }
+        #footer {
+        position: sticky;
+        bottom: 0;
+        width: 100%;
+        height: 2.5rem;            /* altura do rodapé */
+        }
     </style>
 </head>
 <body>
@@ -312,4 +318,9 @@ if (isset($_POST['email']) || isset($_POST['senha'])) {
     });
 </script>
 </body>
+<footer>
+    <ul>
+        <p class="rights"><span>&copy;&nbsp;<span id="copyright-year"></span> .Todos os direitos reservados. <span> por Byanca Campos Furlan, Igor Miguel Raimundo, Maria Antonia dos Santos e Rithiely Schmitt.</a></span>
+    </ul>
+</footer>
 </html>
