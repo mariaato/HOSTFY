@@ -1,8 +1,5 @@
 <?php
 
-//O sistema deve permitir que um usuário administrador tenha acesso a fazer exclusão de anúncios e até mesmo usuários. 
-//O administrador poderá gerar relatórios de dados do sistema, utilizando filtros como período, número de locações, número de anúncios, local, etc.
-
 session_start();
 
 //cookies
@@ -32,12 +29,7 @@ if (isset($_POST['excluir_imovel'])) {
 //exclue o usuario
 if (isset($_POST['excluir_usuario'])) {
     //exclui todos os imoveis dele
-    $excluir = $conexao->prepare("DELETE imovel FROM imovel INNER JOIN proprietario ON imovel.ID_proprietario=proprietario.ID_proprietario INNER JOIN usuario ON proprietario.CPF=usuario.cpf WHERE usuario.id=?");
-    $excluir->bind_param('i', $_POST['excluir_usuario']);
-    $excluir->execute();
-
-    //exclue ele dos proprietarios
-    $excluir = $conexao->prepare("DELETE proprietario FROM proprietario INNER JOIN usuario ON proprietario.CPF=usuario.cpf WHERE usuario.id=?");
+    $excluir = $conexao->prepare("DELETE imovel FROM imovel INNER JOIN usuario ON imovel.id_proprietario=usuario.id WHERE usuario.id=?");
     $excluir->bind_param('i', $_POST['excluir_usuario']);
     $excluir->execute();
 
@@ -74,8 +66,18 @@ if (isset($_POST['barra_pesquisa']) || isset($_POST['botao_pesquisa']) || isset(
     $pesquisa->bind_param('s', $_POST['barra_pesquisa']);
     $pesquisa->execute();
     $pesquisa = $pesquisa->get_result();
+    $processo = 'pesquisa';
 }
 
+//verifica por um relatorio
+if (isset($_POST['data_rel'])) {
+    $data = explode('-', $_POST['data_rel']);
+    $rel = $conexao->prepare("SELECT * FROM locação WHERE MONTH(Data_inicial) = ? AND YEAR(Data_inicial) = ?");
+    $rel->bind_param('ss', $data[1], $data[0]);
+    $rel->execute();
+    $rel = $rel->get_result();
+    $processo = 'relatorio';
+}
 
 $usuario = $conexao->prepare("SELECT * FROM usuario;");
 $usuario->execute();
@@ -133,6 +135,12 @@ $imovel = $imovel->get_result();
             border: black 2px solid;
             padding: 10px;
         }
+
+        .relatorio {
+            display: inline-block;
+            border: black 2px solid;
+            padding: 10px;
+        }
         </style>
 </head>
 <body>
@@ -163,12 +171,13 @@ $imovel = $imovel->get_result();
             <button onclick="usuarios()">Usuários</button>
             <button onclick="imoveis()">Anúncios</button>
             <button onclick="pesquisa()">Pesquisa</button>
+            <button onclick="relatorio()">Relatório</button>
         </div>
 
         <div id="usuarios" style="display: none;">
             <button onclick="voltar()">voltar</button>  
             <br> 
-
+            <p>Número de usuarios: <?php echo mysqli_num_rows($usuario) ?></p>
             <?php foreach ($usuario as $usuarios) { ?>
                 <?php 
                     //impede de mostrar o admin
@@ -220,12 +229,12 @@ $imovel = $imovel->get_result();
         <div id="imoveis" style="display: none;">
             <button onclick="voltar()">voltar</button>
             <br>
-            
+            <p>Número de imóveis: <?php echo mysqli_num_rows($imovel) ?></p>
             <?php foreach ($imovel as $imoveis) { ?>
                 <div class="anuncio">  
                     <?php 
                         //cpf do proprietario
-                        $proprietario = $conexao->prepare("SELECT cpf FROM proprietario WHERE ID_proprietario=?");
+                        $proprietario = $conexao->prepare("SELECT cpf FROM usuario WHERE id=?");
                         $proprietario->bind_param('i', $imoveis['ID_proprietario']);
                         $proprietario->execute();
                         $proprietario = $proprietario->get_result();
@@ -388,7 +397,7 @@ $imovel = $imovel->get_result();
                     <div class="anuncio">  
                         <?php 
                             //cpf do proprietario
-                            $proprietario = $conexao->prepare("SELECT cpf FROM proprietario WHERE ID_proprietario=?");
+                            $proprietario = $conexao->prepare("SELECT cpf FROM usuario WHERE id=?");
                             $proprietario->bind_param('i', $imoveis['ID_proprietario']);
                             $proprietario->execute();
                             $proprietario = $proprietario->get_result();
@@ -462,6 +471,34 @@ $imovel = $imovel->get_result();
                         }
                     ?>
                 <?php } ?>
+            </div>
+        </div>
+
+        <div id="relatorio" style="display: none;">
+            <button onclick="voltar()">voltar</button>
+            <br>
+            <?php
+                $NL = $conexao->prepare("SELECT * FROM locador;");
+                $NL->execute();
+                $NL = $NL->get_result();
+                $NP = $conexao->prepare("SELECT DISTINCT id FROM usuario INNER JOIN imovel WHERE usuario.id=imovel.ID_proprietario");
+                $NP->execute();
+                $NP = $NP->get_result();
+            ?>
+            <div class="relatorio">
+                <p>Número de Usuarios: <?php echo mysqli_num_rows($usuario) ?></p>
+                <p>Número de Imóveis: <?php echo mysqli_num_rows($imovel) ?></p>
+                <p>Número de Proprietários: <?php echo mysqli_num_rows($NP) ?></p>
+                <p>Número de Locadores: <?php echo mysqli_num_rows($NL) ?></p>
+                <form action="admin.php" method="post">
+                    <input type="month" id="data_rel" name="data_rel" required>
+                    <br>
+                    <button type="submit">Gerar relatorio desse período</button>
+                </form>
+                <div id="rel_periodo" style="display: none;">
+                    <p>Imóveis alugados no mês <?php if (isset($data[1])) {echo $data[1];} ?> de <?php if(isset($data[0])) {echo $data[0];}?>:</p>
+                    <?php if(isset($rel)) { echo mysqli_num_rows($rel);} ?>
+                </div>
             </div>
         </div>
 
@@ -640,60 +677,55 @@ $imovel = $imovel->get_result();
             document.getElementById('permitido').style.display='';
             document.getElementById('negado').style.display='none';
         }
-
         function negado() {
             document.getElementById('permitido').style.display='none';
             document.getElementById('negado').style.display='';
         }
-
         function usuarios() {
             document.getElementById('opções').style.display='none'
             document.getElementById('usuarios').style.display=''
         }
-
         function imoveis() {
             document.getElementById('opções').style.display='none'
             document.getElementById('imoveis').style.display=''
         }
-
+        function relatorio() {
+            document.getElementById('opções').style.display='none'
+            document.getElementById('relatorio').style.display=''
+        }
         function voltar() {
             document.getElementById('opções').style.display=''
             document.getElementById('usuarios').style.display='none'
             document.getElementById('imoveis').style.display='none'
             document.getElementById('pesquisa').style.display='none'
+            document.getElementById('relatorio').style.display='none'
         }
-
         function pesquisa() {
             document.getElementById('opções').style.display='none'
             document.getElementById('pesquisa').style.display=''
         }
-
         function p_usuario() {
             document.getElementById('listas_usuario').style.display=''
             document.getElementById('listas_imovel').style.display='none'
             document.getElementById('tabela').value='usuario'
         }
-
         function p_imovel() {
             document.getElementById('listas_usuario').style.display='none'
             document.getElementById('listas_imovel').style.display=''
             document.getElementById('tabela').value='imovel'
         }
-
         function nome_u() {
             const pesquisa = document.getElementById('barra_pesquisa');
             pesquisa.setAttribute('list', 'nome_u');
             document.getElementById('botao_pesquisa').value='nome'
             document.getElementById('botao_pesquisa').style.display=''
         }
-
         function cpf_u() {
             const pesquisa = document.getElementById('barra_pesquisa');
             pesquisa.setAttribute('list', 'cpf_u');
             document.getElementById('botao_pesquisa').value='cpf'
             document.getElementById('botao_pesquisa').style.display=''
         }
-
         function endereco_u() {
             const pesquisa = document.getElementById('barra_pesquisa');
             pesquisa.setAttribute('list', 'endereco_u');
@@ -766,7 +798,6 @@ $imovel = $imovel->get_result();
             document.getElementById('botao_pesquisa').value='UF'
             document.getElementById('botao_pesquisa').style.display=''
         }
-
         function pesquisa_feita(){
             document.getElementById('pesquisa').style.display=''
             document.getElementById('opções').style.display='none'
@@ -781,6 +812,9 @@ $imovel = $imovel->get_result();
             document.getElementById('pesquisa_usuario').style.display='none'
             document.getElementById('pesquisa_imovel').style.display=''
         }
+        function mostrar_rel() {
+            document.getElementById('rel_periodo').style.display=''
+        } 
 
     </script>
 
@@ -793,13 +827,17 @@ $imovel = $imovel->get_result();
             echo '<script>negado()</script>';
         }
 
-        if (isset($_POST['barra_pesquisa']) || isset($_POST['botao_pesquisa']) || isset($_POST['tabela'])) {
+        if (isset($processo) && $processo == 'pesquisa') {
             echo '<script>pesquisa_feita()</script>';
+            $processo = '';
             if ($tabela == 'usuario') {
                 echo '<script>pesquisa_usuario()</script>';
             } else {
                 echo '<script>pesquisa_imovel()</script>';
             }
+        } elseif (isset($processo) && $processo == 'relatorio') {
+            echo '<script>relatorio()</script>';
+            echo '<script>mostrar_rel()</script>';
         }
     ?>
 

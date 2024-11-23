@@ -6,7 +6,10 @@ function gerarAnuncio($id, $imagem, $titulo, $avaliacao, $tags) {
     $html .= '<a href="reserva.php?id=' . $id . '" class="anuncio-link">';
 
     // Adiciona a imagem do imóvel
-    $html .= '<img src="' . $imagem . '" alt="' . $titulo . '" class="anuncio-imagem">';
+    //explode separa a string de imagens em um array
+    $imagem = explode(", ", $imagem);
+    //apenas a primeira está sendo enviada para o anuncio, se quiser utilizar das outras apenas alterar o indice de $imagem[?]
+    $html .= '<img src="' . $imagem[0] . '" alt="' . $titulo . '" class="anuncio-imagem">';
     
     // Adiciona o título do imóvel
     $html .= '<h3 class="anuncio-titulo">' . $titulo . '</h3>';
