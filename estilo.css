@@ -5,21 +5,18 @@
     font-style: normal; /* Opcional, defina o estilo (normal, italic, etc.) */
 }
 
-
-
-
 * {
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
 }
 .filled {
     background-color: #fef6ee; 
 }
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
+     margin: 0;
     padding: 0;
     background-color: #FEF6EE;
     box-sizing: border-box;

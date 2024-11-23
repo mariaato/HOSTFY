@@ -43,6 +43,23 @@ while ($row = $result_datas->fetch_assoc()) {
 // Envia as datas indisponíveis para o JavaScript
 $datas_indisponiveis_json = json_encode($datas_indisponiveis);
 
+// Busca os dados do usuário logado
+$usuario = [];
+if (isset($_SESSION['id'])) {
+    $id_locador = $_SESSION['id'];
+    $sql_usuario = "SELECT CPF, telefone FROM usuario WHERE id = ?";
+    $stmt_usuario = $conexao->prepare($sql_usuario);
+    $stmt_usuario->bind_param("i", $id_locador);
+    $stmt_usuario->execute();
+    $result_usuario = $stmt_usuario->get_result();
+
+    if ($result_usuario->num_rows > 0) {
+        $usuario = $result_usuario->fetch_assoc();
+    } else {
+        die("Usuário não encontrado.");
+    }
+}
+
 // Resumo e cálculo da reserva
 $resumo_reserva = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['calcular_reserva'])) {
@@ -90,6 +107,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['calcular_reserva'])) 
                 ";
             }
         }
+    }
+}
+
+// Inserção na tabela Locador
+if (isset($_POST['confirmar_reserva'])) {
+    if (!isset($_SESSION['id'])) {
+        echo "<p>Você precisa estar logado para fazer uma reserva. <a href='login.php'>Faça seu login aqui.</a></p>";
+        exit;
+    }
+
+    $id_locador = $_SESSION['id']; // ID do locador (usuário logado)
+    $cpf = $usuario['CPF'] ?? null;
+    $telefone = $usuario['telefone'] ?? null;
+
+    if (!$cpf || !$telefone) {
+        die("<p style='color:red;'>Erro: CPF ou telefone do locador não encontrado.</p>");
+    }
+
+    // Verifica se o locador já existe
+    $verificar_locador_sql = "SELECT COUNT(*) FROM locador WHERE id_locador = ?";
+    $stmt_verificar = $conexao->prepare($verificar_locador_sql);
+    $stmt_verificar->bind_param("i", $id_locador);
+    $stmt_verificar->execute();
+    $stmt_verificar->bind_result($locador_existe);
+    $stmt_verificar->fetch();
+    $stmt_verificar->close(); // Fecha o statement para liberar a conexão
+
+    if ($locador_existe == 0) {
+        // Insere o locador apenas se não existir
+        $locador_sql = "INSERT INTO locador (id_locador, CPF, telefone) VALUES (?, ?, ?)";
+        $stmt_locador = $conexao->prepare($locador_sql);
+        $stmt_locador->bind_param("iss", $id_locador, $cpf, $telefone);
+
+        if (!$stmt_locador->execute()) {
+            echo "<p style='color:red;'>Erro ao salvar os dados do locador: " . $stmt_locador->error . "</p>";
+            exit;
+        }
+        $stmt_locador->close(); // Fecha o statement para evitar problemas
     }
 }
 
