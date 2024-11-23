@@ -190,15 +190,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar_reserva']))
     <link rel="stylesheet" href="estilo.css">
     <style>
         #main-content {
-            text-align: center;
+            /* text-align: center;
             justify-content: center;
-            align-items: center;
+            align-items: center; */
             height: 100%;
             width: 100%;
             background-color: #FEF6EE;
+            padding-left: 50px;
+            padding-right: 50px;
+
 
         }
 
+        .imovel{
+            margin: left -100px;;
+        }
+
+        .imagem{
+            width: 100%;
+            object-fit: cover; /* Garante que a imagem preencha o espaço sem distorção */
+            border-radius: 50px;
+
+        }
+
+        .reserva{
+            padding-right:60px;
+        }
         .calendar {
             margin-top: 20px;
         }
@@ -290,13 +307,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar_reserva']))
     <div class="overlay" id="overlay"></div>
 
 <div class="main-content" id="main-content">
-    <h1>Imóvel: <?= htmlspecialchars($imovel['Nome_imovel']); ?></h1>
-    <img src="<?= htmlspecialchars($imovel['imagens']); ?>" width="300" height="200">
-    <p><strong>Cidade:</strong> <?= htmlspecialchars($imovel['Cidade']); ?></p>
+    <div class="imovel">
+        <h1><?= htmlspecialchars($imovel['Nome_imovel']); ?></h1>
+    </div>
+    <div class="imagem">
+        <img src="<?= htmlspecialchars($imovel['imagens']); ?>" >
+    </div>
+    <p><?= htmlspecialchars($imovel['Cidade']); ?> - <?= htmlspecialchars($imovel['UF']); ?></p>
+
+
     <p><strong>Descrição:</strong> <?= htmlspecialchars($imovel['Descrição']); ?></p>
     <p><strong>Valor:</strong> R$ <?= number_format($imovel['Valor'], 2, ',', '.'); ?></p>
-
-    <h2>Selecione o período para a reserva</h2>
+<div class="reserva">
+    <p>Selecione o período para a reserva<p>
     <form method="POST" class="calendario">
         <label for="data_inicio">Data de Início:</label>
         <input type="date" id="data_inicio" name="data_inicio" required>
@@ -310,7 +333,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar_reserva']))
     <?= $resumo_reserva; ?>
 
     <div id="calendar" class="calendar"></div>
-
+</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.11.0/main.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {

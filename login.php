@@ -68,7 +68,7 @@ if (isset($_POST['email']) || isset($_POST['senha'])) {
                     header("Location: admin.php");
                     exit;
                 } elseif ($usuario['banido'] == 1) {
-                    $error_message = "<br>Este usuário está banido.";
+                    $error_message = "<br>Usuário banido.";
                 } else {
                     $_SESSION['id'] = $usuario['id'];
                     $_SESSION['nome'] = $usuario['nome'];
