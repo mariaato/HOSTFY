@@ -167,14 +167,15 @@ if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['nome']) ||
                     <input type="date" name="data_nascimento" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label for="endereco">Endereço</label>
-                    <input id = "endereco" type="text" name="endereco" class="form-control" placeholder="Digite seu endereço" required>
+                    <label for="txtCep">CEP</label>
+                    <input id = "txtCep" type="text" name="cep" class="form-control" placeholder="Digite seu CEP" required>
                 </div>
             </div>
             <div class="form-row">
+               
                 <div class="form-group">
-                    <label for="txtCep">CEP</label>
-                    <input id = "txtCep" type="text" name="cep" class="form-control" placeholder="Digite seu CEP" required>
+                    <label for="endereco">Endereço</label>
+                    <input id = "endereco" type="text" name="endereco" class="form-control" placeholder="Digite seu endereço" required>
                 </div>
                 <div class="form-group">
                     <label for="bairro">Bairro</label>

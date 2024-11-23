@@ -7,8 +7,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $id = intval($_GET['id']); // Converte o ID para inteiro
 
     // Busca os detalhes do imóvel no banco de dados
-    $sql = "SELECT ID_imovel, CEP, Nome_imovel, Rua, Bairro, Cidade, UF, Valor, Descrição, id_proprietario, imagens 
-            FROM imovel WHERE ID_imovel = ?";
+    $sql = "SELECT ID_imovel, CEP, Nome_imovel, Rua, Bairro, Cidade, UF, Valor, Descrição, id_proprietario, imagens, categoria.nome_categoria
+            FROM imovel JOIN Categoria AS categoria ON imovel.id_categoria = categoria.id_categoria WHERE ID_imovel = ?";
     $stmt = $conexao->prepare($sql);
     $stmt->bind_param("i", $id);
     $stmt->execute();
@@ -91,10 +91,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['calcular_reserva'])) 
             if ($datas_conflito) {
                 $resumo_reserva = "<p style='color:red;'>Uma ou mais datas selecionadas estão indisponíveis. Tente outro período.</p>";
             } else {
+                $data_inicio_formatada = date("d-m-Y", strtotime($data_inicio));
+                $data_fim_formatada = date("d-m-Y", strtotime($data_fim));
+
+                // Exibindo as datas formatadas
+              
                 $resumo_reserva = "
                     <h2>Resumo da Reserva</h2>
-                    <p><strong>Data de Início:</strong> " . htmlspecialchars($data_inicio) . "</p>
-                    <p><strong>Data de Fim:</strong> " . htmlspecialchars($data_fim) . "</p>
+                    <p><strong>Data de Início:</strong> " . htmlspecialchars($data_inicio_formatada) . "</p>
+                    <p><strong>Data de Fim:</strong> " . htmlspecialchars($data_fim_formatada) . "</p>
                     <p><strong>Valor da Diária:</strong> R$ " . number_format($valor_diaria, 2, ',', '.') . "</p>
                     <p><strong>Quantidade de Dias:</strong> $intervalo</p>
                     <p><strong>Valor Total:</strong> R$ " . number_format($valor_total, 2, ',', '.') . "</p>
@@ -102,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['calcular_reserva'])) 
                         <input type='hidden' name='data_inicio' value='$data_inicio'>
                         <input type='hidden' name='data_fim' value='$data_fim'>
                         <input type='hidden' name='valor_total' value='$valor_total'>
-                        <button type='submit' name='confirmar_reserva'>Confirmar Reserva</button>
+                        <button type='submit' name='confirmar_reserva' class='submit-btn'>Confirmar Reserva</button>
                     </form>
                 ";
             }
@@ -167,7 +172,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar_reserva']))
     if ($stmt_reserva->execute()) {
         $final = "<div class='alert alert-success alert-dismissible fade show' role='alert'>
         Reserva confirmada com sucesso! 
-        <a href='meus_imoveis.php' class='btn btn-primary btn-sm ml-2'>Veja seus imóveis</a>
+        <a href='####' class='btn btn-primary btn-sm ml-2'>Veja suas reservas</a>
         <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
             <span aria-hidden='true'>&times;</span>
         </button>
@@ -187,48 +192,126 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar_reserva']))
     <link rel="shortcut icon" href="logoHostfy.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-    <link rel="stylesheet" href="estilo.css">
+    <link rel="stylesheet" href="estilo.css?v=1.0">
     <style>
-        #main-content {
-            /* text-align: center;
-            justify-content: center;
-            align-items: center; */
-            height: 100%;
+
+       form {
+        background-color: none;
+
+       }
+       
+
+        .main-content {
+            display: flex;
+            /* /* align-items: flex-start;  */
+            /* justify-content: space-between;   */
+            flex-wrap: wrap; /* Permite que os itens se ajustem em telas menores */
+            gap: 20px; /* Adiciona espaço entre os itens */
+            margin-top: 10px;
+            margin-left: 120px;
+            margin-right: 120px; /* Margem à direita */
+            
+            
+
+        }
+
+        .imovel {
+            flex: 1; /* Ocupará o espaço restante */
+            margin-right: 100px; /* Espaço entre as seções */
+            margin-bottom: 20px; /* Adiciona espaço abaixo da seção */
+        
+        }
+
+        .imovel img {
+            width: 750px; /* Faz a imagem ocupar toda a largura disponível */
+            height: 550px; /* Mantém a proporção da imagem */
+            height: auto; /* Mantém a proporção da imagem */
+            max-width: 100%; /* Faz a imagem ocupar o espaço disponível */
+            border-radius:15px; /* Cantos arredondados para a imagem */
+            margin-top: 10px; /* Espaço entre o título e a imagem */
+        }
+
+        
+
+        .reserva {
+            
+            flex: 0 0 35%; /* Define uma largura fixa para a div de reserva */
+            max-width: 400px; /* Limita a largura máxima */
+            margin-left: auto; /* Empurra a div para a direita */
+            margin-top:50px;
+            
+        }
+
+        .informação{
+            display: flex;
+            font-size: 25px;
+
+        }
+
+        .informação .valor {
+            display: flex;
+            margin-left: 350px;
+
+
+        }
+        .informação .diaria {
+            display: flex;
+            font-size: 16px; /* Diminui o tamanho do texto */
+            color: #888; /* Deixa o texto mais claro */
+            margin-left: 1px; /* Adiciona um pequeno espaço entre o valor e a palavra "diária" */
+            font-weight: normal; /* Remove o negrito */
+        }
+
+        .calendario {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            background-color: #1a1e36;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             width: 100%;
-            background-color: #FEF6EE;
-            padding-left: 50px;
-            padding-right: 50px;
-
-
+            max-width: 400px;
+            margin: 0 auto;
         }
 
-        .imovel{
-            margin: left -100px;;
+        .calendario label {
+            font-weight: bold;
+            color: #555;
         }
 
-        .imagem{
+        .calendario input[type="date"] {
             width: 100%;
-            object-fit: cover; /* Garante que a imagem preencha o espaço sem distorção */
-            border-radius: 50px;
-
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
 
-        .reserva{
-            padding-right:60px;
+      
+        
+        .submit-btn {
+            background-color: #D97C41;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #c96f36;
         }
         .calendar {
-            margin-top: 20px;
+            margin: 20px auto;
+            width: 100%;
+            max-width: 800px;
         }
-        
-        .calendario{
-            justify-content: center;
-            align-items: center;
-            margin-left:600px;
-            border-radius: 10px;
-            padding: 15px;
-            width: 300px;
 
-        }
 
         .fc .fc-day-disabled {
             background-color: #f8d7da;
@@ -257,11 +340,99 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar_reserva']))
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* From Uiverse.io by SelfMadeSystem */ 
+        .rating {
+        display: flex;
+        flex-direction: row-reverse;
+        gap: 0.3rem;
+        margin-top:-40px;
+        -left:500px;
+        --stroke: #666;
+        --fill: #ffc73a;
+        }
+
+        .rating input {
+        appearance: unset;
+        }
+
+        .rating label {
+        cursor: pointer;
+        }
+
+        .rating svg {
+        width: 2rem;
+        height: 2rem;
+        overflow: visible;
+        fill: transparent;
+        stroke: var(--stroke);
+        stroke-linejoin: bevel;
+        stroke-dasharray: 12;
+        animation: idle 4s linear infinite;
+        transition: stroke 0.2s, fill 0.5s;
+        }
+
+        @keyframes idle {
+        from {
+            stroke-dashoffset: 24;
+        }
+        }
+
+        .rating label:hover svg {
+        stroke: var(--fill);
+        }
+
+        .rating input:checked ~ label svg {
+        transition: 0s;
+        animation: idle 4s linear infinite, yippee 0.75s backwards;
+        fill: var(--fill);
+        stroke: var(--fill);
+        stroke-opacity: 0;
+        stroke-dasharray: 0;
+        stroke-linejoin: miter;
+        stroke-width: 8px;
+        }
+
+        @keyframes yippee {
+        0% {
+            transform: scale(1);
+            fill: var(--fill);
+            fill-opacity: 0;
+            stroke-opacity: 1;
+            stroke: var(--stroke);
+            stroke-dasharray: 10;
+            stroke-width: 1px;
+            stroke-linejoin: bevel;
+        }
+
+        30% {
+            transform: scale(0);
+            fill: var(--fill);
+            fill-opacity: 0;
+            stroke-opacity: 1;
+            stroke: var(--stroke);
+            stroke-dasharray: 10;
+            stroke-width: 1px;
+            stroke-linejoin: bevel;
+        }
+
+        30.1% {
+            stroke: var(--fill);
+            stroke-dasharray: 0;
+            stroke-linejoin: miter;
+            stroke-width: 8px;
+        }
+
+        60% {
+            transform: scale(1.2);
+            fill: var(--fill);
+        }
+        }
 
 
     </style>
 </head>
 <body>
+    
 <header>
     <!-- Botão do ícone de menu -->
     <button class="menu-icon" id="menu-toggle">
@@ -307,33 +478,66 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar_reserva']))
     <div class="overlay" id="overlay"></div>
 
 <div class="main-content" id="main-content">
-    <div class="imovel">
-        <h1><?= htmlspecialchars($imovel['Nome_imovel']); ?></h1>
+<div class="imovel">
+    <h1><?= htmlspecialchars($imovel['Nome_imovel']); ?></h1>
+<div class="rating">
+  <input type="radio" id="star-1" name="star-radio" value="star-1">
+  <label for="star-1">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
+  </label>
+  <input type="radio" id="star-2" name="star-radio" value="star-1">
+  <label for="star-2">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
+  </label>
+  <input type="radio" id="star-3" name="star-radio" value="star-1">
+  <label for="star-3">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
+  </label>
+  <input type="radio" id="star-4" name="star-radio" value="star-1">
+  <label for="star-4">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
+  </label>
+  <input type="radio" id="star-5" name="star-radio" value="star-1">
+  <label for="star-5">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
+  </label>
+</div>
+    <img src="<?= htmlspecialchars($imovel['imagens']); ?>" alt="Imagem do Imóvel">
+    <div class="informação">
+        <p><strong><?= htmlspecialchars($imovel['Cidade']); ?> - <?= htmlspecialchars($imovel['UF']); ?></strong></p>
+        <span class="valor">R$ <?= number_format($imovel['Valor'], 2, ',', '.'); ?></span>
+        <span class="diaria">diária</span>
     </div>
-    <div class="imagem">
-        <img src="<?= htmlspecialchars($imovel['imagens']); ?>" >
-    </div>
-    <p><?= htmlspecialchars($imovel['Cidade']); ?> - <?= htmlspecialchars($imovel['UF']); ?></p>
-
+    <p><strong>Categoria:</strong> <?php echo htmlspecialchars($imovel['nome_categoria']); ?></p>
+    <p><strong>Endereço:</strong> <?= htmlspecialchars($imovel['Rua']); ?>, <?= htmlspecialchars($imovel['Bairro']); ?>, <?= htmlspecialchars($imovel['Cidade']); ?> - <?= htmlspecialchars($imovel['UF']); ?></p>
 
     <p><strong>Descrição:</strong> <?= htmlspecialchars($imovel['Descrição']); ?></p>
-    <p><strong>Valor:</strong> R$ <?= number_format($imovel['Valor'], 2, ',', '.'); ?></p>
-<div class="reserva">
-    <p>Selecione o período para a reserva<p>
+
+
+
+</div>
+
+
+    <div class="reserva">
+    <h3>Selecione o período para a reserva</h3>
     <form method="POST" class="calendario">
         <label for="data_inicio">Data de Início:</label>
         <input type="date" id="data_inicio" name="data_inicio" required>
-        <br><br>
         <label for="data_fim">Data de Fim:</label>
         <input type="date" id="data_fim" name="data_fim" required>
-        <br><br>
-        <button type="submit" name="calcular_reserva">Calcular Valor</button>
+        <button type="submit" name="calcular_reserva" class="submit-btn">Calcular Valor</button>
+
     </form>
 
     <?= $resumo_reserva; ?>
 
     <div id="calendar" class="calendar"></div>
+    </div>
+
+
 </div>
+    
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.11.0/main.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
