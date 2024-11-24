@@ -141,11 +141,11 @@ header {
 }
 
 a {
-    text-decoration: none;  
+    text-decoration: none !important;  
 }
 
 .menu__link {
-    color: #000000;
+    color: #000000 !important;
     line-height: 2;
     position: relative;
     margin-left: 90px; 

@@ -15,7 +15,9 @@ if (isset($_SESSION['id'])) {
 } else {
     echo "<br>";
     echo "<style> *{ background-color:#FEF6EE;  color: #C56126; align-items: center; justify-content: center; } .logo {
-    width: 120px; position: fixed; left: 50px; top: 35px;} a{text-decoration: none; color: #5b2c12</style><div style=' background-color: #fff3f3; border: 1px solid orange; padding: 15px; border-radius: 8px; text-align: center; '> <img src='logoHostfy.png' alt='logo' class='logo'/><h1>Você precisa estar logado para cadastrar um imóvel.</h1><p> Faça seu login <a href='login.php'>aqui</a>.</div>";
+    width: 120px; position: fixed; left: 50px; top: 35px;} a{text-decoration: none; color: #5b2c12</style><div style=' background-color: #fff3f3; border: 1px solid orange; padding: 15px; border-radius: 8px; text-align: center; '>  <a href='index.php'>
+            <img src='logoHostfy.png' alt='logo' class='logo' />
+        </a><h1>Você precisa estar logado para cadastrar um imóvel.</h1><p> Faça seu login <a href='login.php'>aqui</a>.</div>";
     exit;
 }
 
