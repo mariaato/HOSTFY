@@ -1,24 +1,55 @@
 <?php
-    session_start();
-
+session_start();
 include("conexao.php");
 include("funçaoAnuncio.php");
 
-$pesquisar = $_POST['pesquisar'];
-$resultado = "SELECT * FROM imovel WHERE 
-    Nome_imovel LIKE '%$pesquisar%' OR 
-    Valor LIKE '%$pesquisar%' OR 
-    Cidade LIKE '%$pesquisar%' OR 
-    Descrição LIKE '%$pesquisar%' OR
-    Rua LIKE '%$pesquisar%' OR
-    Bairro LIKE '%$pesquisar%' OR 
-    UF LIKE '%$pesquisar%' OR 
-    Numero_pessoas LIKE '%$pesquisar%' 
-    ";
+// Recuperar a pesquisa inicial
+$pesquisar = $_POST['pesquisar'] ?? '';
 
-$resultado_anuncio = mysqli_query($conexao, $resultado);
+// Recuperar os valores dos filtros adicionais
+$valor_min = $_GET['valor_min'] ?? null;
+$valor_max = $_GET['valor_max'] ?? null;
+$numero_pessoas = $_GET['numero_pessoas'] ?? null;
 
+// Iniciar a query base
+$query = "SELECT * FROM imovel WHERE 
+    (Nome_imovel LIKE ? OR 
+    Valor LIKE ? OR 
+    Cidade LIKE ? OR 
+    Descrição LIKE ? OR
+    Rua LIKE ? OR
+    Bairro LIKE ? OR 
+    UF LIKE ? OR 
+    Numero_pessoas LIKE ?)";
+
+// Parâmetros e tipos
+$params = ["%$pesquisar%", "%$pesquisar%", "%$pesquisar%", "%$pesquisar%", "%$pesquisar%", "%$pesquisar%", "%$pesquisar%", "%$pesquisar%"];
+$types = "ssssssss";
+
+// Adicionar filtros adicionais, se presentes
+if (!empty($valor_min)) {
+    $query .= " AND Valor >= ?";
+    $params[] = $valor_min;
+    $types .= "d";
+}
+if (!empty($valor_max)) {
+    $query .= " AND Valor <= ?";
+    $params[] = $valor_max;
+    $types .= "d";
+}
+if (!empty($numero_pessoas)) {
+    $query .= " AND Numero_pessoas = ?";
+    $params[] = $numero_pessoas;
+    $types .= "i";
+}
+
+// Preparar a consulta
+$stmt = $conexao->prepare($query);
+$stmt->bind_param($types, ...$params);
+$stmt->execute();
+$resultado_anuncio = $stmt->get_result();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,11 +57,13 @@ $resultado_anuncio = mysqli_query($conexao, $resultado);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resultados Encontrados</title>
     <link rel="shortcut icon" href="logoHostfy.png">
-    <link rel="stylesheet" href="estilo.css">
+    <link rel="stylesheet" href="estilo.css?v=1.0">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <style>
 
+
         #main-content {
+
             justify-content: center;
             align-items: center;
             height: 100%;
@@ -38,6 +71,42 @@ $resultado_anuncio = mysqli_query($conexao, $resultado);
             background-color: #FEF6EE;
 
         }
+        .linha{
+            display: flex;
+            align-items: center;
+
+
+        }
+
+        h1{
+            margin-left:50px;
+        }
+
+        form {
+            margin-top:10px;
+            margin-left:300px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            box-shadow: none;
+            background: none; /* Remove qualquer imagem ou cor de fundo */
+            background-color: none; /* Deixa o fundo transparente */
+            border: none; /* Remove borda se necessário */
+            padding: 0; /* Ajusta o espaçamento interno */
+        }
+
+        form input[type="range"],form input[type="number"] {
+            flex: 1;
+            max-width: 150px; /* Limita o tamanho máximo dos inputs */
+}
+        form label{
+            color:#1a1e36;
+            font-size: 13px;
+
+
+        }
+
 
         .anuncio-container {
         display: flex;
@@ -45,14 +114,14 @@ $resultado_anuncio = mysqli_query($conexao, $resultado);
         gap: 20px; /* Espaçamento entre os anúncios */
         justify-content: space-evenly; /* Espaçamento uniforme entre os anúncios */
 }
- 
-.anuncio-imagem {
-    width: 100%;
-    /* height: auto; */
-    border-radius: 10px;
-    height: 200px; /* Altura padrão definida */
-    object-fit: cover; /* Garante que a imagem preencha o espaço sem distorção */
-}
+        
+        .anuncio-imagem {
+            width: 100%;
+            /* height: auto; */
+            border-radius: 10px;
+            height: 200px; /* Altura padrão definida */
+            object-fit: cover; /* Garante que a imagem preencha o espaço sem distorção */
+        }
 
         .rights {
         padding: 10px 0;
@@ -75,6 +144,24 @@ $resultado_anuncio = mysqli_query($conexao, $resultado);
         width: 100%;
         height: 2.5rem;            /* altura do rodapé */
         }
+
+        .submit-btn {
+            background-color: #D97C41;
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 12px;
+            width: 100%;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #c96f36;
+        }
+
+
     </style>
 
 </head>
@@ -125,9 +212,57 @@ $resultado_anuncio = mysqli_query($conexao, $resultado);
     <div class="overlay" id="overlay"></div>
 
     <div class="main-content" id="main-content">
-
+<div class="linha">
         <h1>Resultados Encontrados</h1>
-    <div class="anuncio-container">
+        <!-- FILTROS -->
+        <form method="GET" action="pesquisar.php" class="filtro">
+            <!-- Campo de pesquisa (oculto) -->
+            <input type="hidden" name="pesquisar" value="<?= htmlspecialchars($pesquisar) ?>">
+
+            <!-- Input para Valor Mínimo -->
+            <label for="valor_min">Valor Mínimo:</label>
+            <input 
+                type="range" 
+                name="valor_min" 
+                id="valor_min" 
+                step="1.00" 
+                min="0" 
+                max="2000" 
+                value="<?= htmlspecialchars($_GET['valor_min'] ?? '0') ?>" 
+                oninput="updateRangeValue('valor_min', this.value)"
+            >
+            <span id="valor_min_display"><?= htmlspecialchars($_GET['valor_min'] ?? '0') ?></span>
+
+            <!-- Input para Valor Máximo -->
+            <label for="valor_max">Valor Máximo:</label>
+            <input 
+                type="range" 
+                name="valor_max" 
+                id="valor_max" 
+                step="1.00" 
+                min="0" 
+                max="10000" 
+                value="<?= htmlspecialchars($_GET['valor_max'] ?? '1000') ?>" 
+                oninput="updateRangeValue('valor_max', this.value)"
+            >
+            <span id="valor_max_display"><?= htmlspecialchars($_GET['valor_max'] ?? '1000') ?></span>
+
+            <!-- Input para Número de Pessoas -->
+            <label for="numero_pessoas">Hóspedes:</label>
+            <input 
+                type="number" 
+                name="numero_pessoas" 
+                id="numero_pessoas" 
+                min="1" 
+                value="<?= htmlspecialchars($_GET['numero_pessoas'] ?? '1') ?>"
+            >
+
+            <!-- Botão de Submissão -->
+            <button type="submit" class="submit-btn">Filtrar</button>
+        </form>
+</div>
+
+            <div class="anuncio-container">
     <?php
         if (mysqli_num_rows($resultado_anuncio) > 0) {
             while ($rows_anuncio = mysqli_fetch_array($resultado_anuncio)) {
@@ -199,5 +334,10 @@ $resultado_anuncio = mysqli_query($conexao, $resultado);
         }
     ?>
 
+<script>
+    function updateRangeValue(id, value) {
+        document.getElementById(`${id}_display`).textContent = value;
+    }
+</script>
 </body>
 </html>

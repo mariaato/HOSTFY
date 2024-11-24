@@ -192,7 +192,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar_reserva']))
     <link rel="shortcut icon" href="logoHostfy.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-    <link rel="stylesheet" href="estilo.css?v=1.0">
+    <link rel="stylesheet" href="estilo.css">
     <style>
 
        form {

@@ -6,6 +6,7 @@
 }
 
 * {
+    color:#1a1e36;
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -168,14 +169,14 @@ a {
 }
 
 .card-header {
-    background-color: #C56126; /* Laranja */
+    background-color: #D97C41; /* Laranja */
     color: white; /* Texto branco */
     
 }
 
 .btn-primary {
-    background-color: #C56126; /* Laranja */
-    border-color: #C56126; /* Laranja */
+    background-color: #D97C41; /* Laranja */
+    border-color: #D97C41; /* Laranja */
 }
 
 .btn-primary:hover {
@@ -184,7 +185,7 @@ a {
 }
 
 .card {
-    border: 1px solid #C56126; /* Borda laranja ao redor do card */
+    border: 1px solid #D97C41; /* Borda laranja ao redor do card */
 }
 
 .anuncio-card {
@@ -217,7 +218,7 @@ a {
 .anuncio-avaliacao {
     margin-top: 5px;
     font-size: 16px;
-    color: #f9a825;
+    color: #D97C41;
 }
 
 .anuncio-tags {
@@ -226,7 +227,7 @@ a {
 
 .tag {
     display: inline-block;
-    background-color: #ff7043;
+    background-color: #D97C41;
     color: white;
     padding: 5px 10px;
     border-radius: 20px;
@@ -346,5 +347,3 @@ height: 2.5rem;            /* altura do rodapé */
     from { opacity: 0; transform: translateY(-20px); }
     to { opacity: 1; transform: translateY(0); }
 }
-
-
