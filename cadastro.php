@@ -103,6 +103,35 @@ if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['nome']) ||
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="estilo.css"> 
     <style>
+        a {
+            text-decoration: none !important;
+        }
+
+        header .menu__link {
+            color: #000000 !important;
+            line-height: 2;
+            position: relative;
+            margin-left: 90px;
+        }
+
+        header .menu__link::before {
+            content: '';
+            width: 0;
+            height: 2px;
+            border-radius: 2px;
+            background-color: #000000;
+            position: absolute;
+            bottom: -.25rem;
+            right: 0;
+            transition: right .4s, width .4s, left .4s;
+        }
+
+        header .menu__link:hover::before {
+            width: 100%;
+            left: 0;
+        }
+
+
         h1 {
             font-size: 24px;
             font-weight: bold;
@@ -118,6 +147,7 @@ if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['nome']) ||
             background-color: #FEF6EE;
             margin-bottom: 60px;
         }
+        
     </style>
 
 </head>
