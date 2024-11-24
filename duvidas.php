@@ -14,7 +14,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #FEF6EE;
+            background-color: ##fef6ee;
         }
 
         .texto1 h2 {
@@ -72,7 +72,7 @@
             width: 100vw;
             padding: 10px;
             box-sizing: border-box;
-            background-color: #FFF5E6;
+            background-color: #fef6ee;
 
         }
         .equipe-box { 
