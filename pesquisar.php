@@ -57,11 +57,9 @@ $resultado_anuncio = $stmt->get_result();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resultados Encontrados</title>
     <link rel="shortcut icon" href="logoHostfy.png">
-    <link rel="stylesheet" href="estilo.css?v=1.0">
+    <link rel="stylesheet" href="estilo.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <style>
-
-
         #main-content {
 
             justify-content: center;
@@ -78,10 +76,7 @@ $resultado_anuncio = $stmt->get_result();
 
         }
 
-        h1{
-            margin-left:50px;
-        }
-
+    
         form {
             margin-top:10px;
             margin-left:300px;
@@ -106,61 +101,6 @@ $resultado_anuncio = $stmt->get_result();
 
 
         }
-
-
-        .anuncio-container {
-        display: flex;
-        flex-wrap: wrap; /* Permite que os anúncios sejam quebrados em novas linhas */
-        gap: 20px; /* Espaçamento entre os anúncios */
-        justify-content: space-evenly; /* Espaçamento uniforme entre os anúncios */
-}
-        
-        .anuncio-imagem {
-            width: 100%;
-            /* height: auto; */
-            border-radius: 10px;
-            height: 200px; /* Altura padrão definida */
-            object-fit: cover; /* Garante que a imagem preencha o espaço sem distorção */
-        }
-
-        .rights {
-        padding: 10px 0;
-        text-align: center;
-        align-items: center;
-        font-size: 14px;
-        font-weight: 500;
-        color: #9b9b9b;
-        overflow: auto;
-        }
-        ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        #footer {
-        position: sticky;
-        bottom: 0;
-        width: 100%;
-        height: 2.5rem;            /* altura do rodapé */
-        }
-
-        .submit-btn {
-            background-color: #D97C41;
-            color: white;
-            border: none;
-            padding: 8px;
-            border-radius: 12px;
-            width: 100%;
-            font-size: 12px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .submit-btn:hover {
-            background-color: #c96f36;
-        }
-
 
     </style>
 

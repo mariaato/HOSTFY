@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOSTFY</title>
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?">
     <style>
          body {
             font-family: Arial, sans-serif;
@@ -97,22 +97,7 @@
         height: 300px;
         border-radius: 15px;
         }
-        .menu-icon {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 30px;
-            color: #333;
-         }
-        .search-form {
-            display: flex;
-            align-items: center;
-            background-color: #C56126; /* Cor de fundo semelhante à imagem */
-            border-radius: 25px; /* Bordas arredondadas */
-            padding: 10px 20px; /* Espaçamento interno */
-            width: 100%; /* Ajuste conforme necessário */
-            max-width: 600px; /* Largura máxima */
-        }
+    
         .texto {
             font-size: 20px;
             color: #2b3a4e; /* Cor do menu lateral */
@@ -131,28 +116,7 @@
             text-align: center;
             padding: 20px;  
         }
-        .rights {
-            padding: 10px 0;
-            text-align: center;
-            align-items: center;
-            font-size: 14px;
-            font-weight: 500;
-            color: #9b9b9b;
-           
-            overflow: auto;
-}
-        ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
         
-#footer {
-  position: sticky;
-  bottom: 0;
-  width: 100%;
-  height: 2.5rem;            /* altura do rodapé */
-}
 
     </style>
 </head>
