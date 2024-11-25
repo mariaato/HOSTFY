@@ -373,12 +373,18 @@ $conexao->close();
             <?php
         if ($senha_alterada) {
             echo "<p class='mensagem-sucesso'>Senha alterada com sucesso!</p>";
+            echo "<script>window.location.href = 'perfilhtml.php';</script>"; // Redireciona após a exclusão
+
         }
         if ($telefone_alterado) {
             echo "<p class='mensagem-sucesso'>Telefone alterado com sucesso!</p>";
+            echo "<script>window.location.href = 'perfilhtml.php';</script>"; // Redireciona após a exclusão
+
         }
         if ($endereco_alterado) {
             echo "<p class='mensagem-sucesso'>Endereço alterado com sucesso!</p>";
+            echo "<script>window.location.href = 'perfilhtml.php';</script>"; // Redireciona após a exclusão
+
         }
         ?>
                 
