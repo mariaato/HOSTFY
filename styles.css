@@ -299,3 +299,59 @@ bottom: 0;
 width: 100%;
 height: 2.5rem;            /* altura do rodapé */
 }
+
+/* Estilo do container do formulário */
+.container {
+    background-color: #1a1e36;
+    border-radius: 15px;
+    padding: 30px;
+    width: 350px;
+    text-align: center;
+}
+
+.container h1 {
+    font-family: 'Logo';
+
+    color: white;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+        /* Estilo dos ícones dentro dos inputs */
+        .form-group {
+            margin-bottom: 2px;
+            position: relative;
+        }
+
+        /* Posição dos ícones dentro do input */
+        .form-group i {
+            position: absolute;
+            top: 65%;
+            left: 10px;
+            transform: translateY(-50%);
+            color: #666;
+            font-size: 20px;
+        }
+
+        /* Estilo dos inputs */
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            padding-left: 40px; /* Espaço para o ícone */
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .form-group input::placeholder {
+            color: #999;
+        }
+
+        .forgot-password {
+            color: #ccc;
+            font-size: 14px;
+            display: block;
+            margin-bottom: 20px;
+            text-align: left;
+        }

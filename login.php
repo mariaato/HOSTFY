@@ -105,7 +105,7 @@ if (isset($_POST['email']) || isset($_POST['senha'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
 
    <style>
@@ -115,11 +115,6 @@ if (isset($_POST['email']) || isset($_POST['senha'])) {
             font-size: 14px;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
         .header {
             position: absolute;
             top: 20px;
@@ -172,61 +167,6 @@ if (isset($_POST['email']) || isset($_POST['senha'])) {
             background-color: #FEF6EE;
         }
 
-        /* Estilo do container do formulário */
-        .container {
-            background-color: #1a1e36;
-            border-radius: 15px;
-            padding: 30px;
-            width: 350px;
-            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
-            text-align: center;
-        }
-
-        .container h1 {
-            color: white;
-            margin-bottom: 20px;
-            font-size: 24px;
-        }
-
-        /* Estilo dos ícones dentro dos inputs */
-        .form-group {
-            margin-bottom: 2px;
-            position: relative;
-        }
-
-        /* Posição dos ícones dentro do input */
-        .form-group i {
-            position: absolute;
-            top: 65%;
-            left: 10px;
-            transform: translateY(-50%);
-            color: #666;
-            font-size: 20px;
-        }
-
-        /* Estilo dos inputs */
-        .form-group input {
-            width: 100%;
-            padding: 12px;
-            padding-left: 40px; /* Espaço para o ícone */
-            border-radius: 8px;
-            border: none;
-            outline: none;
-            font-size: 14px;
-        }
-
-        .form-group input::placeholder {
-            color: #999;
-        }
-
-        .forgot-password {
-            color: #ccc;
-            font-size: 14px;
-            display: block;
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
         .submit-btn {
             background-color: #D97C41;
             color: white;
@@ -243,35 +183,11 @@ if (isset($_POST['email']) || isset($_POST['senha'])) {
             background-color: #c96f36;
         }
 
-        .logo {
-            width: 120px;
-        }
-
         label {
             color:white;
 
         }
-        .rights {
-        padding: 10px 0;
-        text-align: center;
-        align-items: center;
-        font-size: 14px;
-        font-weight: 500;
-        color: #9b9b9b;
-        overflow: auto;
-        }
-        ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
         
-        #footer {
-        position: sticky;
-        bottom: 0;
-        width: 100%;
-        height: 2.5rem;            /* altura do rodapé */
-        }
        
     </style>
 </head>
