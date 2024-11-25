@@ -56,7 +56,7 @@ if (isset($_GET['delete'])) {
     mysqli_stmt_bind_param($stmt_delete, "ii", $id_imovel_delete, $id_proprietario);
     if (mysqli_stmt_execute($stmt_delete)) {
         echo "<script>alert('Imóvel excluído com sucesso!');</script>";
-        echo "<script>window.location.href = 'perfilhtml.php';</script>"; // Redireciona após a exclusão
+        echo "<script>window.location.href = 'meus_imoveis.php';</script>"; // Redireciona após a exclusão
     } else {
         echo "<script>alert('Erro ao excluir o imóvel: " . mysqli_error($conexao) . "');</script>";
     }
@@ -214,7 +214,8 @@ $conexao->close();
         </button>
         <img src="logoHostfy.png" alt="logo" class="logo" />
         </div>
-           
+        <h1>Meus Imóveis</h1>
+
         </header>
         
 
@@ -230,7 +231,6 @@ $conexao->close();
 
     <p><?php if (isset($final)) {echo $final;} ?></p>
 
-    <h1>Meus Imóveis</h1>
     <?php foreach ($imoveis as $imovel): ?>
         <div class="container">
             <div class="imovel">

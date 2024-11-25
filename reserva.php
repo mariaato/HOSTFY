@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['calcular_reserva'])) 
     if ($data_inicio && $data_fim) {
         $inicio = new DateTime($data_inicio);
         $fim = new DateTime($data_fim);
-        $intervalo = $inicio->diff($fim)->days + 1;
+        $intervalo = $inicio->diff($fim)->days;
 
         if ($intervalo < 1) {
             $resumo_reserva = "<p style='color:red;'>Período inválido. A data de fim deve ser igual ou maior que a data de início.</p>";
@@ -172,10 +172,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar_reserva']))
     if ($stmt_reserva->execute()) {
         $final = "<div class='alert alert-success alert-dismissible fade show' role='alert'>
         Reserva confirmada com sucesso! 
-        <a href='####' class='btn btn-primary btn-sm ml-2'>Veja suas reservas</a>
-        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-            <span aria-hidden='true'>&times;</span>
-        </button>
+        
     </div>";    } else {
         echo "<p style='color:red;'>Erro ao confirmar a reserva.</p>";
     }
