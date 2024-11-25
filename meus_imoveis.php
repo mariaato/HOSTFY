@@ -293,8 +293,22 @@ $conexao->close();
                         <input type="text" name="descricao" value="<?php echo htmlspecialchars($imovel['descrição']); ?>" required>
                         </div>
                         <div class="form-group">
-                        <label>Categoria:</label>
-                        <input type="text" name="id_categoria" value="<?php echo htmlspecialchars($imovel['id_categoria']); ?>" required>
+                        <label>Categoria do Imóvel:</label>
+                        <div class="form-check">
+                        <input type="radio" class="form-check-input" name="id_categoria" value="1" 
+                            <?php echo ($imovel['id_categoria'] == 1) ? 'checked' : ''; ?> required>
+                        <label class="form-check-label" for="casa">Casa</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" name="id_categoria" value="2"
+                                <?php echo ($imovel['id_categoria'] == 2) ? 'checked' : ''; ?>>
+                            <label class="form-check-label" for="apartamento">Apartamento</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" name="id_categoria" value="3"
+                                <?php echo ($imovel['id_categoria'] == 3) ? 'checked' : ''; ?>>
+                            <label class="form-check-label" for="sitio">Sítio</label>
+                        </div>
                         </div>
                         <div class="form-group">
                         <label>Número de Pessoas:</label>
