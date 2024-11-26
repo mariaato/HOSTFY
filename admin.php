@@ -96,7 +96,10 @@ $imovel = $imovel->get_result();
     <title>Admin</title>
     <link rel="shortcut icon" href="logoHostfy.png">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+
     <style> 
+    
         .body_error{ 
             background-color:#FEF6EE;  
             color: #C56126;
@@ -116,14 +119,17 @@ $imovel = $imovel->get_result();
             }
         
         header {
+            font-size: 20px;
             display: flex;
-            justify-content: space-between;
+            justify-content:center;
             align-items: center;
             background-color: #FEF6EE;
             padding: 15px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
         }
-
+.pesquisa{
+    justify-content:center;
+    align-items: center;
+}
         .anuncio {
             display: inline-block;
             border: black 2px solid;
@@ -140,7 +146,23 @@ $imovel = $imovel->get_result();
             display: inline-block;
             border: black 2px solid;
             padding: 10px;
-        }
+        } 
+.submit-btn {
+    background-color: #D97C41;
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 12px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 10px;
+}
+
+.submit-btn:hover {
+    background-color: #c96f36;
+}
+
         </style>
 </head>
 <body>
@@ -153,8 +175,9 @@ $imovel = $imovel->get_result();
                 <i class='bx bx-menu'></i>
             </button>
 
+            <a href="admin.php">
             <img src="logoHostfy.png" alt="logo" class="logo" />
-
+</a>
             <!-- Campo de pesquisa -->
             <form method="post" action="pesquisar.php" class="search-form">
                 <input type="text" name="pesquisar" class="search-input">
@@ -168,14 +191,14 @@ $imovel = $imovel->get_result();
         </header>  
         <p><?php if(isset($resultado)) { echo $resultado;} ?></p>
         <div id="opções">
-            <button onclick="usuarios()">Usuários</button>
-            <button onclick="imoveis()">Anúncios</button>
-            <button onclick="pesquisa()">Pesquisa</button>
-            <button onclick="relatorio()">Relatório</button>
+            <button onclick="usuarios()" class="submit-btn">Usuários</button>
+            <button onclick="imoveis()" class="submit-btn">Anúncios</button>
+            <button onclick="pesquisa()" class="submit-btn">Pesquisa</button>
+            <button onclick="relatorio()" class="submit-btn">Relatório</button>
         </div>
 
         <div id="usuarios" style="display: none;">
-            <button onclick="voltar()">voltar</button>  
+            <button onclick="voltar()" class="submit-btn">voltar</button>  
             <br> 
             <p>Número de usuarios: <?php echo mysqli_num_rows($usuario) ?></p>
             <?php foreach ($usuario as $usuarios) { ?>
@@ -203,11 +226,11 @@ $imovel = $imovel->get_result();
                             </p>
                             <form action="admin.php" method="post">
                                 <?php if ($usuarios['banido'] == 1) {?>
-                                    <button value="<?php echo $usuarios['id']; ?>" name="desbanir">Desbanir</button>
+                                    <button value="<?php echo $usuarios['id']; ?>" name="desbanir" class="submit-btn">Desbanir</button>
                                 <?php } elseif ($usuarios['banido'] == 0) { ?>
-                                    <button name="banir" value="<?php echo $usuarios['id']; ?>">Banir</button>
+                                    <button name="banir" value="<?php echo $usuarios['id']; ?>" class="submit-btn">Banir</button>
                                 <?php } ?>
-                                <button value="<?php echo $usuarios['id'];?>" name="excluir_usuario">Excluir</button>
+                                <button value="<?php echo $usuarios['id'];?>" name="excluir_usuario" class="submit-btn">Excluir</button>
                             </form>
                         </div>
                         <?php 
@@ -227,7 +250,7 @@ $imovel = $imovel->get_result();
         </div>
 
         <div id="imoveis" style="display: none;">
-            <button onclick="voltar()">voltar</button>
+            <button onclick="voltar()" class="submit-btn">voltar</button>
             <br>
             <p>Número de imóveis: <?php echo mysqli_num_rows($imovel) ?></p>
             <?php foreach ($imovel as $imoveis) { ?>
@@ -292,7 +315,7 @@ $imovel = $imovel->get_result();
                     ?>
                     <img src="<?php echo $imgs[0]; ?>" style="height: 250px; Width: 250px;">
                     <form action="admin.php" method="post">
-                        <button value="<?php echo $imoveis['ID_imovel'];?>" name="excluir_imovel">Excluir</button>
+                        <button value="<?php echo $imoveis['ID_imovel'];?>" name="excluir_imovel" class="submit-btn">Excluir</button>
                     </form>
                 </div>
                 <?php 
@@ -310,18 +333,19 @@ $imovel = $imovel->get_result();
             <?php } ?>
         </div>
 
-        <div id="pesquisa" style="display: none;">
-            <button onclick="voltar()">voltar</button>
+        <div id="pesquisa" class="pesquisa" style="display: none;" >
+            <button onclick="voltar()" class="submit-btn">voltar</button>
+            <div id="tipo">
+                <button onclick="p_usuario()" class="">Usuário</button>
+                <button onclick="p_imovel()" class="">Imóvel</button>
+            </div>
             <form action="admin.php" method="post">
                 <input list="" type="text" id="barra_pesquisa" name="barra_pesquisa" required >
-                <button style="display: none;" type="submit" name="botao_pesquisa" id="botao_pesquisa">Enviar</button>
+                <button style="display: none;" type="submit" name="botao_pesquisa" id="botao_pesquisa" class="submit-btn">Enviar</button>
                 <input id="tabela" name="tabela" style="display: none;">
             </form>
             
-            <div id="tipo">
-                <button onclick="p_usuario()">Usuário</button>
-                <button onclick="p_imovel()">Imóvel</button>
-            </div>
+           
 
             <div id="listas_usuario" style="display: none;">
                 <button onclick="nome_u()">Nome</button>
@@ -455,7 +479,7 @@ $imovel = $imovel->get_result();
                         ?>
                         <img src="<?php echo $imgs[0]; ?>" style="height: 250px; Width: 250px;">
                         <form action="admin.php" method="post">
-                            <button value="<?php echo $imoveis['ID_imovel'];?>" name="excluir_imovel">Excluir</button>
+                            <button value="<?php echo $imoveis['ID_imovel'];?>" name="excluir_imovel" class="submit-btn">Excluir</button>
                         </form>
                     </div>
                     <?php 
@@ -475,7 +499,7 @@ $imovel = $imovel->get_result();
         </div>
 
         <div id="relatorio" style="display: none;">
-            <button onclick="voltar()">voltar</button>
+            <button onclick="voltar()" class="submit-btn">voltar</button>
             <br>
             <?php
                 $NL = $conexao->prepare("SELECT * FROM locador;");
@@ -493,7 +517,7 @@ $imovel = $imovel->get_result();
                 <form action="admin.php" method="post">
                     <input type="month" id="data_rel" name="data_rel" required>
                     <br>
-                    <button type="submit">Gerar relatorio desse período</button>
+                    <button type="submit" class="submit-btn">Gerar relatorio desse período</button>
                 </form>
                 <div id="rel_periodo" style="display: none;">
                     <p>Imóveis alugados no mês <?php if (isset($data[1])) {echo $data[1];} ?> de <?php if(isset($data[0])) {echo $data[0];}?>:</p>
