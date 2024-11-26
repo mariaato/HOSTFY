@@ -99,7 +99,16 @@ $imovel = $imovel->get_result();
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
 
     <style> 
-    
+     #main-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+            background-color: #FEF6EE;
+            margin-bottom: 60px;
+        }
+        
         .body_error{ 
             background-color:#FEF6EE;  
             color: #C56126;
@@ -126,10 +135,7 @@ $imovel = $imovel->get_result();
             background-color: #FEF6EE;
             padding: 15px;
         }
-.pesquisa{
-    justify-content:center;
-    align-items: center;
-}
+
         .anuncio {
             display: inline-block;
             border: black 2px solid;
@@ -147,21 +153,21 @@ $imovel = $imovel->get_result();
             border: black 2px solid;
             padding: 10px;
         } 
-.submit-btn {
-    background-color: #D97C41;
-    color: white;
-    border: none;
-    padding: 8px;
-    border-radius: 12px;
-    font-size: 20px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin: 10px;
-}
+        .submit-btn {
+            background-color: #D97C41;
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 12px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 10px;
+        }
 
-.submit-btn:hover {
-    background-color: #c96f36;
-}
+        .submit-btn:hover {
+            background-color: #c96f36;
+        }
 
         </style>
 </head>
@@ -175,20 +181,30 @@ $imovel = $imovel->get_result();
                 <i class='bx bx-menu'></i>
             </button>
 
-            <a href="admin.php">
+        <a href="admin.php">
             <img src="logoHostfy.png" alt="logo" class="logo" />
-</a>
-            <!-- Campo de pesquisa -->
-            <form method="post" action="pesquisar.php" class="search-form">
-                <input type="text" name="pesquisar" class="search-input">
-                <span>
-                    <button type="submit" class="search-button">
-                        <i class='bx bx-search'></i>
-                    </button>
-                </span>
-            </form>
-            <a href="logout.php" class="menu__link">Sair</a>
-        </header>  
+        </a>
+        <a href="logout.php" class="menu__link">Sair</a>
+
+</header>  
+
+<div class="sidebar" id="sidebar">
+
+            <a href='admin.php'>Área Admin</a>
+            <a href="index.php">Área inicial </a>
+            <a href="perfilhtml.php">Perfil</a>
+            <a href="imoveis.php">Cadastre seu imóvel</a>
+            <a href="meus_imoveis.php">Imóveis Cadastrados</a>
+            <a href="quemsomos.php">Quem Somos</a>
+            <a href="duvidas.php">Dúvidas</a>
+                
+    </div>
+
+    <!-- Overlay para quando o menu estiver aberto -->
+    <div class="overlay" id="overlay"></div>
+
+<div class="main-content" id="main-content">
+
         <p><?php if(isset($resultado)) { echo $resultado;} ?></p>
         <div id="opções">
             <button onclick="usuarios()" class="submit-btn">Usuários</button>
@@ -866,6 +882,27 @@ $imovel = $imovel->get_result();
     ?>
 
     <?php mysqli_close($conexao);?>
-
+</div>
 </body>
+<script>
+        // Função para alternar o menu lateral
+        const menuToggle = document.getElementById('menu-toggle');
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('main-content');
+        const overlay = document.getElementById('overlay');
+
+        // Função de alternância para abrir/fechar o menu e o overlay
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('sidebar-active');
+            mainContent.classList.toggle('content-shift');
+            overlay.classList.toggle('overlay-active');
+        });
+
+        // Função para fechar o menu se clicar fora (no overlay)
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('sidebar-active');
+            mainContent.classList.remove('content-shift');
+            overlay.classList.remove('overlay-active');
+        });
+    </script>
 </html>

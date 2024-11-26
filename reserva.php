@@ -465,6 +465,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar_reserva']))
 
  <!-- Menu lateral (sidebar) -->
  <div class="sidebar" id="sidebar">
+        <a href="index.php">Área inicial </a>
         <a href="imoveis.php" >Cadastre seu imóvel</a>
         <a href="meus_imoveis.php">Imóveis Cadastrados</a>
         <a href="quemsomos.php">Quem Somos</a>

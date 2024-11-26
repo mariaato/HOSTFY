@@ -17,11 +17,17 @@
     }
 
     //anuncios
-    $anuncio = "SELECT * FROM imovel LIMIT 12" ;
+    $anuncio = "SELECT * FROM imovel" ;
 
     $resultado_anuncio = mysqli_query($conexao, $anuncio);
+ 
+    //verificação menu do admin
+    $usuario_admin = false;
 
-
+    // Verifica se há alguém logado antes de conferir se é administrador
+    if (isset($_SESSION['id']) && $_SESSION['id'] === '0') {
+        $usuario_admin = true;
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -80,10 +86,18 @@
 
     <!-- Menu lateral (sidebar) -->
     <div class="sidebar" id="sidebar">
-        <a href="imoveis.php" >Cadastre seu imóvel</a>
-        <a href="meus_imoveis.php">Imóveis Cadastrados</a>
-        <a href="quemsomos.php">Quem Somos</a>
-        <a href="duvidas.php">Dúvidas</a>
+            <?php 
+            if ($usuario_admin): ?>
+                <a href='admin.php'>Área Admin</a>
+            <?php else: ?>
+
+            <a href="imoveis.php">Cadastre seu imóvel</a>
+            <a href="meus_imoveis.php">Imóveis Cadastrados</a>
+            <a href="quemsomos.php">Quem Somos</a>
+            <a href="duvidas.php">Dúvidas</a>
+        
+    
+        <?php endif; ?>
         
     </div>
 
