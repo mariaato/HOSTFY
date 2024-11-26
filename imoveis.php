@@ -240,6 +240,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input type="radio" class="form-check-input" name="categoria" value="3">
                         <label class="form-check-label" for="sitio">Sítio</label>
                     </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="categoria" value="4">
+                        <label class="form-check-label" for="sitio">Hotel</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="categoria" value="5">
+                        <label class="form-check-label" for="sitio">Cabana</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="categoria" value="6">
+                        <label class="form-check-label" for="sitio">Resort</label>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Características do Imóvel</label>
