@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOSTFY</title>
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-    <link rel="stylesheet" href="styles.css?">
+    <link rel="stylesheet" href="styles.css">
     <style>
          body {
             font-family: Arial, sans-serif;
@@ -121,35 +121,35 @@
     </style>
 </head>
     <body>
-        <header>
-            <!-- Botão do ícone de menu -->
-             <div class="section1">
-                <button class="menu-icon" id="menu-toggle"aria-label="Abrir Menu">
-                    <i class='bx bx-menu'></i>
+    <header>
+        <!-- Botão do ícone de menu -->
+        <button class="menu-icon" id="menu-toggle">
+            <i class='bx bx-menu'></i>
+        </button>
+
+        <a href="index.php">
+            <img src="logoHostfy.png" alt="logo" class="logo" />
+        </a>
+
+        <!-- Campo de pesquisa -->
+        <form method="post" action="pesquisar.php" class="search-form">
+            <input type="text" name="pesquisar" placeholder="Encontre seu lugar ideal..." class="search-input">
+            <span>
+                <button type="submit" class="search-button">
+                    <i class='bx bx-search'></i>
                 </button>
-                <a href="index.php">
-                    <img src="logoHostfy.png" alt="logo" class="logo" />
-                </a>                <!-- Campo de pesquisa -->
-                <form method="post" action="pesquisar.php" class="search-form">
-                    <input type="text" name="pesquisar" placeholder="Encontre seu lugar ideal..." class="search-input">
-                    <span>
-                        <button type="submit" class="search-button"aria-label="Abrir Menu">
-                            <i class='bx bx-search'></i>
-                        </button>
-                    </span>
-                </div>
-                <div id="deslogado">
-                    <a href="login.php" class="menu__link">Login</a>
-                    <a href="cadastro.php" class="menu__link">Cadastre-se</a>
-        
-        
-                </div>
-                <div id="logado">
-                    <a href="logout.php" class="menu__link">Sair</a>
-                </div>
-                </form>
-               
-         
+            </span>
+        </form>
+        <div id="deslogado">
+            <a href="login.php" class="menu__link">Login</a>
+            <a href="cadastro.php" class="menu__link">Cadastre-se</a>
+
+
+        </div>
+        <div id="logado">
+        <?php if(isset($_SESSION['id'])) {echo '<a  href="perfilhtml.php" class="menu__link">Perfil</a>';}?>
+            <a href="logout.php" class="menu__link">Sair</a>
+        </div>
     </header>
     
             

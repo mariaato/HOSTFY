@@ -11,10 +11,10 @@
     <title>HOSTFY</title>
     <link rel="shortcut icon" href="logoHostfy.png">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?">
     <style>
        .a {
-            text-decoration: none;  
+            text-decoration: none; 
         }
         .section {
         display: flex;
@@ -25,6 +25,7 @@
         height: 50vh;
         padding: 20px;
         box-sizing: border-box;
+        margin-bottom:90px;
         }
         .section1 {
             display: flex;
@@ -83,7 +84,7 @@
             padding: 20px;  
         }
         .texto1 {
-            font-size: 15px;
+            font-size: 20px;
             color: #2b3a4e; /* Cor do menu lateral */
             justify-content: center;
             width: 100%;
@@ -214,12 +215,12 @@
            </div>
            <br>           
 </br>
-</br>  <footer>
+</br>  
+<footer>
             <ul>
             <p class="rights"><span>&copy;&nbsp;<span id="copyright-year"></span> .Todos os direitos reservados. <span> por Byanca Campos Furlan, Igor Miguel Raimundo, Maria Antonia dos Santos e Rithiely Schmitt.</a></span>
         </ul>
         </footer>
-
         <script>
             // Função para alternar o menu lateral
             const menuToggle = document.getElementById('menu-toggle');

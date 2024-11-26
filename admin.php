@@ -95,7 +95,7 @@ $imovel = $imovel->get_result();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin</title>
     <link rel="shortcut icon" href="logoHostfy.png">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
 
     <style> 
@@ -154,7 +154,7 @@ $imovel = $imovel->get_result();
             padding: 10px;
         } 
         .submit-btn {
-            background-color: #D97C41;
+            background-color: #D97C41 ;
             color: white;
             border: none;
             padding: 8px;
@@ -168,7 +168,6 @@ $imovel = $imovel->get_result();
         .submit-btn:hover {
             background-color: #c96f36;
         }
-
         </style>
 </head>
 <body>
