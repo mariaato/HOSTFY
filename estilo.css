@@ -128,6 +128,7 @@ header {
 .search-form {
     display: flex;
     align-items: center;
+    justify-content: center;
     background-color: #C56126; 
     border-radius: 25px; 
     padding: 10px 20px; /* Espaçamento interno */
@@ -148,6 +149,9 @@ header {
 
 
 .search-button {
+    display: flex; /* Torna o botão um container flexível */
+    justify-content: center; /* Centraliza o ícone horizontalmente */
+    align-items: center; 
     background: none; /* Remove fundo */
     border: none; /* Remove borda */
     cursor: pointer; /* Muda o cursor para indicar que é clicável */
@@ -207,7 +211,7 @@ a {
 }
 
 .anuncio-card {
-    background-color: #fef6ee;
+    background-color: #fef6ee !important;
     border-radius: 10px;
     padding: 15px;
     width: 300px;

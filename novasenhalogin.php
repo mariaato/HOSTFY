@@ -163,7 +163,9 @@
                 if ($sql_query->num_rows == 1) {
                     $sql_update = "UPDATE usuario SET senha = '$nova_senha' WHERE email = '$email'";
                     if ($conexao->query($sql_update)) {
-                        echo "Senha alterada com sucesso!";
+                        echo "Senha alterada com sucesso!"; 
+                        // header("Location: login.php");
+
                     } else {
                         echo "Erro ao alterar a senha: " . $conexao->error;
                     }
