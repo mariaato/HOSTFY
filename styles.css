@@ -88,7 +88,7 @@ header {
 }
 
 .sidebar a {
-    font-family: 'Logo'; /* Nome da fonte, você pode escolher */
+    font-family: 'Logo' ; /* Nome da fonte, você pode escolher */
     padding: 15px 25px;
     text-decoration: none;
     font-size: 16px;
@@ -162,7 +162,7 @@ header {
 }
 
 a {
-    text-decoration: none;  
+    text-decoration: none !important;  
 }
 
 .menu__link {
@@ -370,4 +370,23 @@ height: 2.5rem;            /* altura do rodapé */
             display: block;
             margin-bottom: 20px;
             text-align: left;
+        }
+
+
+
+        .alert {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            width: auto;
+            min-width: 300px;
+            max-width: 500px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: slide-down 0.4s ease-out;
+        }
+        
+        @keyframes slide-down {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }

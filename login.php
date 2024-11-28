@@ -113,7 +113,7 @@ if (isset($_POST['email']) || isset($_POST['senha'])) {
         .error-message {
             color: red;
             margin-bottom: 10px;
-            font-size: 14px;
+            font-size: 18px;
         }
 
         .header {

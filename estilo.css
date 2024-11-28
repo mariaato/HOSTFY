@@ -357,7 +357,7 @@ label {
 .error-message {
     color: red;
     margin-bottom: 10px;
-    font-size: 14px;
+    font-size: 18px;
 }
 
 .rights {
@@ -400,8 +400,3 @@ height: 2.5rem;            /* altura do rodapé */
     to { opacity: 1; transform: translateY(0); }
 }
 
-.error-message {
-    color: red;
-    margin-bottom: 10px;
-    font-size: 14px;
-}
