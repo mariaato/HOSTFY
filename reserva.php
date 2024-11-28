@@ -118,7 +118,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['calcular_reserva'])) 
 // Inserção na tabela Locador
 if (isset($_POST['confirmar_reserva'])) {
     if (!isset($_SESSION['id'])) {
-        echo "<p>Você precisa estar logado para fazer uma reserva. <a href='login.php'>Faça seu login aqui.</a></p>";
+        echo "<br>";
+        echo "<style> *{ background-color:#FEF6EE;  color: #C56126; align-items: center; justify-content: center; } .logo {
+        width: 120px; position: fixed; left: 50px; top: 35px;} a{text-decoration: none; color: #5b2c12</style><div style=' background-color: #fff3f3; border: 1px solid orange; padding: 15px; border-radius: 8px; text-align: center; '>  <a href='index.php'>
+                <img src='logoHostfy.png' alt='logo' class='logo' />
+            </a><h1>Você precisa estar logado para fazer uma reserva.</h1>Faça seu login  <a href='login.php'>aqui.</a></div>";
         exit;
     }
 
@@ -200,6 +204,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar_reserva']))
 
        form {
         background-color: none;
+        color: white;
 
        }
        
@@ -282,7 +287,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar_reserva']))
 
         .calendario label {
             font-weight: bold;
-            color: #555;
+            color: white;
         }
 
         .calendario input[type="date"] {
