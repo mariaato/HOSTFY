@@ -185,6 +185,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar_reserva']))
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reserva do Imóvel</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.11.0/main.min.css">
     <link rel="shortcut icon" href="logoHostfy.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
@@ -287,8 +292,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar_reserva']))
             border-radius: 5px;
         }
 
-      
-        
         .submit-btn {
             background-color: #D97C41;
             color: white;
@@ -479,33 +482,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar_reserva']))
 <div class="main-content" id="main-content">
 <div class="imovel">
     <h1><?= htmlspecialchars($imovel['Nome_imovel']); ?></h1>
-<div class="rating">
-  <input type="radio" id="star-1" name="star-radio" value="star-1">
-  <label for="star-1">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
-  </label>
-  <input type="radio" id="star-2" name="star-radio" value="star-1">
-  <label for="star-2">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
-  </label>
-  <input type="radio" id="star-3" name="star-radio" value="star-1">
-  <label for="star-3">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
-  </label>
-  <input type="radio" id="star-4" name="star-radio" value="star-1">
-  <label for="star-4">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
-  </label>
-  <input type="radio" id="star-5" name="star-radio" value="star-1">
-  <label for="star-5">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
-  </label>
+        <div class="rating">
+        <input type="radio" id="star-1" name="star-radio" value="star-1">
+        <label for="star-1">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
+        </label>
+        <input type="radio" id="star-2" name="star-radio" value="star-1">
+        <label for="star-2">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
+        </label>
+        <input type="radio" id="star-3" name="star-radio" value="star-1">
+        <label for="star-3">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
+        </label>
+        <input type="radio" id="star-4" name="star-radio" value="star-1">
+        <label for="star-4">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
+        </label>
+        <input type="radio" id="star-5" name="star-radio" value="star-1">
+        <label for="star-5">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
+        </label>
+        </div>
+<div id="carouselImovel" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        <?php
+        $imagens = explode(',', $imovel['imagens']); // Supondo que as imagens sejam armazenadas separadas por vírgulas
+        foreach ($imagens as $index => $imagem) {
+            $active = $index === 0 ? 'active' : ''; // A primeira imagem será ativa
+            echo "
+            <div class='carousel-item $active'>
+                <img src='$imagem' class='d-block w-100' alt='Imagem do Imóvel'>
+            </div>
+            ";
+        }
+        ?>
+    </div>
+    <a class="carousel-control-prev" href="#carouselImovel" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Anterior</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselImovel" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Próximo</span>
+    </a>
 </div>
-<?php
-    //separa as imagens em um array
-    $imgs = explode(", ", $imovel['imagens']);
-?>
-    <img src="<?php echo $imgs[0]; ?>" >
 
     <div class="informação">
         <p><strong><?= htmlspecialchars($imovel['Cidade']); ?> - <?= htmlspecialchars($imovel['UF']); ?></strong></p>
