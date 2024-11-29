@@ -110,9 +110,6 @@
     <!-- Conteúdo principal -->
         <!-- Conteúdo da página -->
 <div class="main-content" id="main-content">
-        <h1>Destaques</h1>
-        <p>Aqui estão os imóveis em destaque para você.</p>
-        <!-- Mais conteúdo pode ser adicionado aqui -->
 
 
         <h1>Nossos imóveis</h1>
