@@ -20,6 +20,14 @@ include 'conexao.php';
 
 //exclue o imovel
 if (isset($_POST['excluir_imovel'])) {
+    $excluir = $conexao->prepare("DELETE FROM imovel_checklist WHERE id_imovel=?");
+    $excluir->bind_param('i', $_POST['excluir_imovel']);
+    $excluir->execute();
+
+    $excluir = $conexao->prepare("DELETE FROM locação WHERE id_imovel=?");
+    $excluir->bind_param('i', $_POST['excluir_imovel']);
+    $excluir->execute();
+    
     $excluir = $conexao->prepare("DELETE FROM imovel WHERE ID_imovel=?");
     $excluir->bind_param('i', $_POST['excluir_imovel']);
     $excluir->execute();
@@ -28,8 +36,26 @@ if (isset($_POST['excluir_imovel'])) {
 
 //exclue o usuario
 if (isset($_POST['excluir_usuario'])) {
+    $imoveis_checklists = $conexao->prepare("SELECT * FROM imovel WHERE ID_proprietario=?");
+    $imoveis_checklists->bind_param('i', $_POST['excluir_usuario']);
+    $imoveis_checklists->execute();
+    $imoveis_c_resultado = $imoveis_checklists->get_result();
+    foreach ($imoveis_c_resultado as $i) {
+        $excluir = $conexao->prepare("DELETE imovel_checklist FROM imovel_checklist WHERE id_imovel=?");
+        $excluir->bind_param('i', $i['ID_imovel']);
+        $excluir->execute();
+
+        $excluir = $conexao->prepare("DELETE FROM locação WHERE id_imovel=?");
+        $excluir->bind_param('i', $i['ID_imovel']);
+        $excluir->execute();
+    }
+
     //exclui todos os imoveis dele
     $excluir = $conexao->prepare("DELETE imovel FROM imovel INNER JOIN usuario ON imovel.id_proprietario=usuario.id WHERE usuario.id=?");
+    $excluir->bind_param('i', $_POST['excluir_usuario']);
+    $excluir->execute();
+
+    $excluir = $conexao->prepare("DELETE FROM locador WHERE id_locador=?");
     $excluir->bind_param('i', $_POST['excluir_usuario']);
     $excluir->execute();
 
@@ -86,6 +112,14 @@ $usuario = $usuario->get_result();
 $imovel = $conexao->prepare("SELECT * FROM imovel;");
 $imovel->execute();
 $imovel = $imovel->get_result();
+
+$checklist = $conexao->prepare("SELECT * FROM checklist;");
+$checklist->execute();
+$checklist = $checklist->get_result();
+
+$categoria = $conexao->prepare("SELECT * FROM categoria;");
+$categoria->execute();
+$categoria = $categoria->get_result();
 
 ?>
 <!DOCTYPE html>
@@ -215,7 +249,7 @@ $imovel = $imovel->get_result();
         <div id="usuarios" style="display: none;">
             <button onclick="voltar()" class="submit-btn">voltar</button>  
             <br> 
-            <p>Número de usuarios: <?php echo mysqli_num_rows($usuario) ?></p>
+            <p>Número de usuarios: <?php echo mysqli_num_rows($usuario)-1 ?></p>
             <?php foreach ($usuario as $usuarios) { ?>
                 <?php 
                     //impede de mostrar o admin
@@ -277,10 +311,22 @@ $imovel = $imovel->get_result();
                         $proprietario->execute();
                         $proprietario = $proprietario->get_result();
                         $proprietario = $proprietario->fetch_assoc();
+
+                        $pesquisa_checklist = $conexao->prepare("SELECT * FROM checklist INNER JOIN imovel_checklist ON checklist.id_checklist=imovel_checklist.id_checklist WHERE imovel_checklist.id_imovel=?");
+                        $pesquisa_checklist->bind_param('i', $imoveis['ID_imovel']);
+                        $pesquisa_checklist->execute();
+                        $resultado_checklist = $pesquisa_checklist->get_result();
+                        $lista_checklist = [];
+                        $ids = [];
+                        while ($linha = $resultado_checklist->fetch_assoc()) {
+                            $lista_checklist[] = $linha['nome_checklist'];
+                            $ids[] = $linha['id_checklist']; 
+                        }
+                        $imovel_checklist = implode(', ', $lista_checklist);
                     ?>
                     <p>Proprietário: <?php echo $proprietario['cpf'];?></p>
                     <p>CEP: <?php echo $imoveis['CEP'];?></p>
-                    <p>Nome do Imóvel<?php echo $imoveis['Nome_imovel'];?></p>
+                    <p>Nome do Imóvel: <?php echo $imoveis['Nome_imovel'];?></p>
                     <p>N° de pessoas: <?php echo $imoveis['Numero_pessoas'];?></p>
                     <p>Rua: <?php echo $imoveis['Rua'];?></p>
                     <p>N°: <?php echo $imoveis['Numero'];?></p>
@@ -289,41 +335,19 @@ $imovel = $imovel->get_result();
                     <p>Estado: <?php echo $imoveis['UF'];?></p>
                     <p>Categoria: 
                         <?php 
-                            if ($imoveis['id_categoria'] == 1) {
-                                echo 'Casa';
-                            } elseif ($imoveis['id_categoria'] == 2) {
-                                echo 'Apartamento';
-                            } elseif ($imoveis['id_categoria'] == 3) {
-                                echo 'Sítio';
+                            foreach ($categoria as $c) {
+                                if ($c['id_categoria'] == $imoveis['id_categoria']) {
+                                    echo $c['nome_categoria'];
+                                }
                             }
                         ?>
                     </p>
                     <p>Características: 
                         <?php 
-                          if ($imoveis['id_checklist'] == 1) {
-                            echo 'Garagem ';
-                          }
-                          if ($imoveis['id_checklist'] == 2) {
-                            echo 'Bicicleta ';
-                          }
-                          if ($imoveis['id_checklist'] == 3) {
-                            echo 'Pet Friendly ';
-                          }
-                          if ($imoveis['id_checklist'] == 4) {
-                            echo 'Churrasqueira ';
-                          }
-                          if ($imoveis['id_checklist'] == 5) {
-                            echo 'Piscina ';
-                          }
-                          if ($imoveis['id_checklist'] == 6) {
-                            echo 'Sauna ';
-                          }
-                          if ($imoveis['id_checklist'] == 7) {
-                            echo 'Quadra Poliesportiva';
-                          }
+                            echo $imovel_checklist . '.';
                         ?>    
                     </p>
-                    <p><?php echo $imoveis['Descrição'];?></p>
+                    <p>Descrição: <?php echo $imoveis['Descrição'];?></p>
                     <?php
                         //separa as imagens em um array
                         $imgs = explode(", ", $imoveis['imagens']);
@@ -434,81 +458,71 @@ $imovel = $imovel->get_result();
             <div id="pesquisa_imovel" style="display: none;">
                 <?php foreach ($pesquisa as $imoveis) { ?>
                     <div class="anuncio">  
-                        <?php 
-                            //cpf do proprietario
-                            $proprietario = $conexao->prepare("SELECT cpf FROM usuario WHERE id=?");
-                            $proprietario->bind_param('i', $imoveis['ID_proprietario']);
-                            $proprietario->execute();
-                            $proprietario = $proprietario->get_result();
-                            $proprietario = $proprietario->fetch_assoc();
-                        ?>
-                        <p>Proprietário: <?php echo $proprietario['cpf'];?></p>
-                        <p>CEP: <?php echo $imoveis['CEP'];?></p>
-                        <p>Nome do Imóvel<?php echo $imoveis['Nome_imovel'];?></p>
-                        <p>N° de pessoas: <?php echo $imoveis['Numero_pessoas'];?></p>
-                        <p>Rua: <?php echo $imoveis['Rua'];?></p>
-                        <p>N°: <?php echo $imoveis['Numero'];?></p>
-                        <p>Bairro: <?php echo $imoveis['Bairro'];?></p>
-                        <p>Cidade: <?php echo $imoveis['Cidade'];?></p>
-                        <p>Estado: <?php echo $imoveis['UF'];?></p>
-                        <p>Categoria: 
-                            <?php 
-                                if ($imoveis['id_categoria'] == 1) {
-                                    echo 'Casa';
-                                } elseif ($imoveis['id_categoria'] == 2) {
-                                    echo 'Apartamento';
-                                } elseif ($imoveis['id_categoria'] == 3) {
-                                    echo 'Sítio';
-                                }
-                            ?>
-                        </p>
-                        <p>Características: 
-                            <?php 
-                            if ($imoveis['id_checklist'] == 1) {
-                                echo 'Garagem ';
-                            }
-                            if ($imoveis['id_checklist'] == 2) {
-                                echo 'Bicicleta ';
-                            }
-                            if ($imoveis['id_checklist'] == 3) {
-                                echo 'Pet Friendly ';
-                            }
-                            if ($imoveis['id_checklist'] == 4) {
-                                echo 'Churrasqueira ';
-                            }
-                            if ($imoveis['id_checklist'] == 5) {
-                                echo 'Piscina ';
-                            }
-                            if ($imoveis['id_checklist'] == 6) {
-                                echo 'Sauna ';
-                            }
-                            if ($imoveis['id_checklist'] == 7) {
-                                echo 'Quadra Poliesportiva';
-                            }
-                            ?>    
-                        </p>
-                        <p><?php echo $imoveis['Descrição'];?></p>
-                        <?php
-                            //separa as imagens em um array
-                            $imgs = explode(", ", $imoveis['imagens']);
-                        ?>
-                        <img src="<?php echo $imgs[0]; ?>" style="height: 250px; Width: 250px;">
-                        <form action="admin.php" method="post">
-                            <button value="<?php echo $imoveis['ID_imovel'];?>" name="excluir_imovel" class="submit-btn">Excluir</button>
-                        </form>
-                    </div>
                     <?php 
-                        //pula uma linha, controla quantos imoveis aparecem lado a lado
-                        if (!isset($i)) {
-                            $i = 0;
+                        //cpf do proprietario
+                        $proprietario = $conexao->prepare("SELECT cpf FROM usuario WHERE id=?");
+                        $proprietario->bind_param('i', $imoveis['ID_proprietario']);
+                        $proprietario->execute();
+                        $proprietario = $proprietario->get_result();
+                        $proprietario = $proprietario->fetch_assoc();
+
+                        $pesquisa_checklist = $conexao->prepare("SELECT * FROM checklist INNER JOIN imovel_checklist ON checklist.id_checklist=imovel_checklist.id_checklist WHERE imovel_checklist.id_imovel=?");
+                        $pesquisa_checklist->bind_param('i', $imoveis['ID_imovel']);
+                        $pesquisa_checklist->execute();
+                        $resultado_checklist = $pesquisa_checklist->get_result();
+                        $lista_checklist = [];
+                        $ids = [];
+                        while ($linha = $resultado_checklist->fetch_assoc()) {
+                            $lista_checklist[] = $linha['nome_checklist'];
+                            $ids[] = $linha['id_checklist']; 
                         }
-                        $i++;
-                        //apenas alterar a comparação para aumentar ou diminuir
-                        if ($i == 2) {
-                            echo '<br>';
-                            $i = 0;
-                        }
+                        $imovel_checklist = implode(', ', $lista_checklist);
                     ?>
+                    <p>Proprietário: <?php echo $proprietario['cpf'];?></p>
+                    <p>CEP: <?php echo $imoveis['CEP'];?></p>
+                    <p>Nome do Imóvel: <?php echo $imoveis['Nome_imovel'];?></p>
+                    <p>N° de pessoas: <?php echo $imoveis['Numero_pessoas'];?></p>
+                    <p>Rua: <?php echo $imoveis['Rua'];?></p>
+                    <p>N°: <?php echo $imoveis['Numero'];?></p>
+                    <p>Bairro: <?php echo $imoveis['Bairro'];?></p>
+                    <p>Cidade: <?php echo $imoveis['Cidade'];?></p>
+                    <p>Estado: <?php echo $imoveis['UF'];?></p>
+                    <p>Categoria: 
+                        <?php 
+                            foreach ($categoria as $c) {
+                                if ($c['id_categoria'] == $imoveis['id_categoria']) {
+                                    echo $c['nome_categoria'];
+                                }
+                            }
+                        ?>
+                    </p>
+                    <p>Características: 
+                        <?php 
+                            echo $imovel_checklist . '.';
+                        ?>    
+                    </p>
+                    <p>Descrição: <?php echo $imoveis['Descrição'];?></p>
+                    <?php
+                        //separa as imagens em um array
+                        $imgs = explode(", ", $imoveis['imagens']);
+                    ?>
+                    <img src="<?php echo $imgs[0]; ?>" style="height: 250px; Width: 250px;">
+                    <form action="admin.php" method="post">
+                        <button value="<?php echo $imoveis['ID_imovel'];?>" name="excluir_imovel" class="submit-btn">Excluir</button>
+                    </form>
+                </div>
+                <?php 
+                    //pula uma linha, controla quantos imoveis aparecem lado a lado
+                    if (!isset($i)) {
+                        $i = 0;
+                    }
+                    $i++;
+                    //apenas alterar a comparação para aumentar ou diminuir
+                    if ($i == 2) {
+                        echo '<br>';
+                        $i = 0;
+                    }
+                ?>
                 <?php } ?>
             </div>
         </div>

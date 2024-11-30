@@ -8,11 +8,28 @@ if (!isset($_SESSION['id'])) {
 
 include("conexao.php");
 
+$pesquisa = $conexao->prepare("SELECT * FROM checklist");
+$pesquisa->execute();
+$checklists = $pesquisa->get_result();
+
+$pesquisa = $conexao->prepare("SELECT * FROM categoria");
+$pesquisa->execute();
+$categorias = $pesquisa->get_result();
+
 // checa se algum imóvel foi alterado e atualiza o banco
 if (isset($_POST['id_imovel'])) {
-    $ps = $conexao->prepare("UPDATE imovel SET nome_imovel=?, numero=?, rua=?, bairro=?, uf=?, cidade=?, cep=?, valor=?, descrição=?, id_categoria=?, numero_pessoas=?, id_checklist=?  WHERE id_imovel = ?");
-    $ps->bind_param("sisssssdsiiii", $_POST['nome_imovel'],  $_POST['numero'], $_POST['rua'], $_POST['bairro'], $_POST['uf'], $_POST['cidade'], $_POST['cep'], $_POST['valor'], $_POST['descricao'], $_POST['id_categoria'], $_POST['numero_pessoas'], $_POST['id_checklist'], $_POST['id_imovel']);
+    $ps = $conexao->prepare("UPDATE imovel SET nome_imovel=?, numero=?, rua=?, bairro=?, uf=?, cidade=?, cep=?, valor=?, descrição=?, numero_pessoas=?, id_categoria=?  WHERE id_imovel = ?");
+    $ps->bind_param("sisssssdsiii", $_POST['nome_imovel'],  $_POST['numero'], $_POST['rua'], $_POST['bairro'], $_POST['uf'], $_POST['cidade'], $_POST['cep'], $_POST['valor'], $_POST['descricao'], $_POST['numero_pessoas'], $_POST['id_categoria'], $_POST['id_imovel']);
     $ps->execute();
+
+    $deletar_antigas_caracteristicas = $conexao->prepare("DELETE FROM imovel_checklist WHERE id_imovel=?");
+    $deletar_antigas_caracteristicas->bind_param("i", $_POST['id_imovel']);
+    $deletar_antigas_caracteristicas->execute();
+    foreach ($_POST['check'] as $c) { 
+    $adicionar_novas_caracteristicas = $conexao->prepare("INSERT INTO imovel_checklist (id_imovel, id_checklist) VALUES (?,?)");
+    $adicionar_novas_caracteristicas->bind_param('ii', $_POST['id_imovel'], $c);
+    $adicionar_novas_caracteristicas->execute();
+    }
 }
 
 // Seleciona os imóveis do usuário logado com a categoria
@@ -29,13 +46,11 @@ $sql = "
         imovel.valor, 
         imovel.descrição, 
         imovel.id_categoria, 
-        imovel.numero_pessoas, 
-        imovel.id_checklist, 
-        checklist.nome_checklist,
+        imovel.numero_pessoas,
+        imovel.imagens,
         categoria.nome_categoria
     FROM imovel
     JOIN Categoria AS categoria ON imovel.id_categoria = categoria.id_categoria
-    JOIN Checklist AS checklist ON imovel.id_checklist = checklist.id_checklist
     WHERE imovel.id_proprietario = ?
 ";
 $stmt = $conexao->prepare($sql);
@@ -49,8 +64,12 @@ while ($row = $result->fetch_assoc()) {
 
 if (isset($_GET['delete'])) {
     $id_proprietario = $_SESSION['id'];
-
     $id_imovel_delete = $_GET['delete'];
+
+    $deletar_locacao = $conexao->prepare("DELETE FROM locação WHERE id_imovel=?;");
+    $deletar_locacao->bind_param('i', $id_imovel_delete);
+    $deletar_locacao->execute();
+
     $sql_delete = "DELETE FROM imovel WHERE id_imovel = ? AND id_proprietario = ?";
     $stmt_delete = mysqli_prepare($conexao, $sql_delete);
     mysqli_stmt_bind_param($stmt_delete, "ii", $id_imovel_delete, $id_proprietario);
@@ -61,7 +80,6 @@ if (isset($_GET['delete'])) {
         echo "<script>alert('Erro ao excluir o imóvel: " . mysqli_error($conexao) . "');</script>";
     }
 }
-$conexao->close();
 
 ?>
 
@@ -233,7 +251,19 @@ $conexao->close();
 
     <p><?php if (isset($final)) {echo $final;} ?></p>
 
-    <?php foreach ($imoveis as $imovel): ?>
+    <?php foreach ($imoveis as $imovel): 
+            $p_checklist = $conexao->prepare("SELECT * FROM checklist INNER JOIN imovel_checklist ON checklist.id_checklist=imovel_checklist.id_checklist WHERE imovel_checklist.id_imovel=?");
+            $p_checklist->bind_param('i', $imovel['id_imovel']);
+            $p_checklist->execute();
+            $imovel_checklist = $p_checklist->get_result();
+            $caracteristica = [];
+            $id_caracteristica = [];
+            while ($linha = $imovel_checklist->fetch_assoc()) {
+                $caracteristica[] = $linha['nome_checklist'];
+                $id_caracteristica[] = $linha['id_checklist'];
+            }
+            $caracteristicas = implode(', ', $caracteristica);    
+    ?>
         <div class="container">
             <div class="imovel">
                 <p><strong>ID do Imóvel:</strong> <?php echo htmlspecialchars($imovel['id_imovel']); ?></p>
@@ -248,7 +278,7 @@ $conexao->close();
                 <p><strong>Descrição:</strong> <?php echo htmlspecialchars($imovel['descrição']); ?></p>
                 <p><strong>Número de Pessoas:</strong> <?php echo htmlspecialchars($imovel['numero_pessoas']); ?></p>
                 <p><strong>Categoria:</strong> <?php echo htmlspecialchars($imovel['nome_categoria']); ?></p>
-                <p><strong>Características:</strong> <?php echo htmlspecialchars($imovel['nome_checklist']); ?></p>
+                <p><strong>Características:</strong> <?php echo $caracteristicas . "."; ?></p>
 
                 <button onclick="toggleForm('editar-<?php echo $imovel['id_imovel']; ?>')">Editar Imóvel</button>
                 <button onclick="if (confirm('Tem certeza que deseja deletar este imóvel?')) { window.location.href='?delete=<?php echo $imovel['id_imovel']; ?>'; }">Deletar Imóvel</button>
@@ -296,58 +326,36 @@ $conexao->close();
                         </div>
                         <div class="form-group">
                         <label>Categoria do Imóvel:</label>
-                        <div class="form-check">
-                        <input type="radio" class="form-check-input" name="id_categoria" value="1" 
-                            <?php echo ($imovel['id_categoria'] == 1) ? 'checked' : ''; ?> required>
-                        <label class="form-check-label" for="casa">Casa</label>
-                        </div>
-                        <div class="form-check">
-                            <input type="radio" class="form-check-input" name="id_categoria" value="2"
-                                <?php echo ($imovel['id_categoria'] == 2) ? 'checked' : ''; ?>>
-                            <label class="form-check-label" for="apartamento">Apartamento</label>
-                        </div>
-                        <div class="form-check">
-                            <input type="radio" class="form-check-input" name="id_categoria" value="3"
-                                <?php echo ($imovel['id_categoria'] == 3) ? 'checked' : ''; ?>>
-                            <label class="form-check-label" for="sitio">Sítio</label>
-                        </div>
+
+                        <?php foreach ($categorias as $categoria) { 
+                            var_dump($categoria['id_categoria']); ?>
+                                <div class="form-check">
+                                <input type="radio" class="form-check-input" name="id_categoria" value="<?php echo $categoria['id_categoria']; ?>" 
+                                    <?php echo ($imovel['id_categoria'] == $categoria['id_categoria']) ? 'checked' : ''; ?> required>
+                                <label class="form-check-label"><?php echo $categoria['nome_categoria']; ?></label>
+                            </div>
+                        <?php } ?>
+
                         </div>
                         <div class="form-group">
                         <label>Número de Pessoas:</label>
                         <input type="text" name="numero_pessoas" value="<?php echo htmlspecialchars($imovel['numero_pessoas']); ?>" required>
                         </div>
                         <div class="form-group">
-                        <label>Características:</label>
-                        <div class="form-check">
-                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="1">
-                        <label class="form-check-label" for="garagem">Garagem</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="2">
-                        <label class="form-check-label" for="bicicleta">Bicicleta</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="3">
-                        <label class="form-check-label" for="pet_friendly">Pet Friendly</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="4">
-                        <label class="form-check-label" for="churrasqueira">Churrasqueira</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="5">
-                        <label class="form-check-label" for="piscina">Piscina</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="6">
-                        <label class="form-check-label" for="sauna">Sauna</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" name="caracteristicas[]" value="7">
-                        <label class="form-check-label" for="quadra_poliesportiva">Quadra Poliesportiva</label>
-                    </div>
-                        <input type="text" name="id_checklist" value="<?php echo htmlspecialchars($imovel['id_checklist']); ?>" required>
-                        </div>
+                            <label>Características:</label>
+
+                            <?php 
+                                $ids_imovel = array_map('intval', $id_caracteristica);
+                                foreach ($checklists as $checklist) { 
+                            ?>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" name="check[]" value="<?php echo $checklist['id_checklist']; ?>"
+                                    <?php echo in_array($checklist['id_checklist'], $ids_imovel) ? 'checked' : '';?> >
+                                    <label class="form-check-label"><?php echo $checklist['nome_checklist']; ?></label>
+                                </div>
+                            <?php } ?>    
+
+                            </div>
                         <input type="submit" value="Salvar Alterações">
                     </form>
                 </div>
@@ -383,6 +391,8 @@ $conexao->close();
         });
         
         </script>
-</body>
 
+    <?php $conexao->close(); ?>
+     
+</body>
 </html>

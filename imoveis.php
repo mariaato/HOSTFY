@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $descricao = $_POST['descricao'];
     $categoria = $_POST['categoria'];
     $numero_pessoas = $_POST['numero_pessoas'];
-    $id_checklist = isset($_POST['caracteristicas']) ? implode(", ", $_POST['caracteristicas']) : "";
+    $id_checklist = $_POST['caracteristicas'];
 
     //envio das imagens
     //ALTER TABLE `imovel` ADD `imagens` VARCHAR(1500) NOT NULL AFTER `Numero_pessoas`;
@@ -65,11 +65,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $destinos_bd = implode(", ", $destinos);
 
             // Insere os dados no banco de dados com o id_proprietario definido automaticamente
-            $sql = "INSERT INTO imovel (cep, nome_imovel, rua, numero, bairro, cidade, uf, id_proprietario, valor, descrição, id_categoria, numero_pessoas, id_checklist, imagens)
-            VALUES ('$cep', '$nome_imovel', '$endereco', '$numero', '$bairro', '$cidade', '$estado', '$id_proprietario', '$valor', '$descricao', '$categoria', '$numero_pessoas', '$id_checklist', '$destinos_bd')";
+            $sql = "INSERT INTO imovel (cep, nome_imovel, rua, numero, bairro, cidade, uf, id_proprietario, valor, descrição, id_categoria, numero_pessoas, imagens)
+            VALUES ('$cep', '$nome_imovel', '$endereco', '$numero', '$bairro', '$cidade', '$estado', '$id_proprietario', '$valor', '$descricao', '$categoria', '$numero_pessoas', '$destinos_bd')";
 
             if ($conexao->query($sql) === TRUE) {
-                
+
+                    $id_imovel = $conexao->insert_id;
+
+                    foreach ($id_checklist as $ids) {
+                        $checklist = $conexao->prepare("INSERT INTO imovel_checklist (id_imovel, id_checklist) VALUES (?,?)");
+                        $checklist->bind_param('ii', $id_imovel, $ids);
+                        $checklist->execute();
+                    }
                     $final = "<div class='alert alert-success alert-dismissible fade show' role='alert'>
                                         Imóvel cadastrado com sucesso! 
                                         <a href='meus_imoveis.php' class='btn btn-primary btn-sm ml-2'>Veja seus imóveis</a>
@@ -107,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           h1 {
             font-size: 24px;
             font-weight: bold;
-            color: #black;
+            color: black;
             margin: 0;
         }
 
