@@ -11,21 +11,25 @@ $valor_min = $_GET['valor_min'] ?? null;
 $valor_max = $_GET['valor_max'] ?? null;
 $numero_pessoas = $_GET['numero_pessoas'] ?? null;
 
-// Iniciar a query base
-$query = "SELECT * FROM imovel WHERE 
-    (Nome_imovel LIKE ? OR 
-    Valor LIKE ? OR 
-    Cidade LIKE ? OR 
-    Descrição LIKE ? OR
-    Rua LIKE ? OR
-    Bairro LIKE ? OR 
-    UF LIKE ? OR 
-    Numero_pessoas LIKE ?)";
-
+$query = "
+SELECT DISTINCT imovel.*
+FROM imovel
+LEFT JOIN imovel_checklist ON imovel.id_imovel = imovel_checklist.id_imovel
+LEFT JOIN checklist ON imovel_checklist.id_checklist = checklist.id_checklist
+WHERE 
+    (imovel.Nome_imovel LIKE ? OR 
+    imovel.Valor LIKE ? OR 
+    imovel.Cidade LIKE ? OR 
+    imovel.Descrição LIKE ? OR
+    imovel.Rua LIKE ? OR
+    imovel.Bairro LIKE ? OR 
+    imovel.UF LIKE ? OR 
+    imovel.Numero_pessoas LIKE ? OR
+    checklist.nome_checklist LIKE ?)"; 
 // Parâmetros e tipos
-$params = ["%$pesquisar%", "%$pesquisar%", "%$pesquisar%", "%$pesquisar%", "%$pesquisar%", "%$pesquisar%", "%$pesquisar%", "%$pesquisar%"];
-$types = "ssssssss";
 
+$params = ["%$pesquisar%", "%$pesquisar%", "%$pesquisar%", "%$pesquisar%", "%$pesquisar%", "%$pesquisar%", "%$pesquisar%", "%$pesquisar%", "%$pesquisar%"];
+$types = "sssssssss";
 // Adicionar filtros adicionais, se presentes
 if (!empty($valor_min)) {
     $query .= " AND Valor >= ?";
