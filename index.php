@@ -17,7 +17,24 @@
     }
 
     //anuncios
-    $anuncio = "SELECT * FROM imovel" ;
+    $anuncio =  "SELECT 
+        imovel.id_imovel, 
+        imovel.nome_imovel, 
+        imovel.numero, 
+        imovel.rua, 
+        imovel.bairro, 
+        imovel.cidade, 
+        imovel.uf, 
+        imovel.cep, 
+        imovel.valor, 
+        imovel.descrição, 
+        imovel.id_categoria, 
+        imovel.numero_pessoas,
+        imovel.imagens,
+        categoria.nome_categoria
+    FROM imovel
+    JOIN Categoria AS categoria ON imovel.id_categoria = categoria.id_categoria
+";
 
     $resultado_anuncio = mysqli_query($conexao, $anuncio);
  
@@ -120,11 +137,30 @@
 
             if (mysqli_num_rows($resultado_anuncio) > 0) {
                 while ($rows_anuncio = mysqli_fetch_array($resultado_anuncio)) {
-                    $id = $rows_anuncio['ID_imovel'];
+                    $id = $rows_anuncio['id_imovel'];
                     $imagem = $rows_anuncio['imagens'];
-                    $titulo = $rows_anuncio['Nome_imovel'] . " - " . $rows_anuncio['Cidade'];
-                    $valor = $rows_anuncio ['Valor']; 
-                    $tags = [$rows_anuncio['Bairro'], $rows_anuncio['UF']];
+                    $titulo = $rows_anuncio['nome_imovel'] . " - " . $rows_anuncio['cidade'];
+                    $valor = $rows_anuncio ['valor']; 
+
+                    $p_checklist = $conexao->prepare("SELECT * FROM checklist INNER JOIN imovel_checklist ON checklist.id_checklist=imovel_checklist.id_checklist WHERE imovel_checklist.id_imovel=?");
+                    $p_checklist->bind_param('i', $id);
+                    $p_checklist->execute();
+            
+                    // Obtém os resultados
+                    $imovel_checklist = $p_checklist->get_result();
+            
+                    $caracteristica = [];
+                    $id_caracteristica = [];
+                    if ($imovel_checklist->num_rows > 0) {
+                        while ($linha = $imovel_checklist->fetch_assoc()) {
+                            $caracteristica[] = $linha['nome_checklist'];
+                            $id_caracteristica[] = $linha['id_checklist'];
+                        }
+                    }
+            
+                    $tags = $caracteristica; // Mantém como array
+
+                    // $tags = [$rows_anuncio['categoria'], $rows_anuncio['UF']];
     
                     // Chama a função gerarAnuncio com os dados
                     echo gerarAnuncio($id, $imagem, $titulo, $valor, $tags);

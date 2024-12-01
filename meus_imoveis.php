@@ -98,14 +98,7 @@ if (isset($_GET['delete'])) {
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="estilo.css"> 
     <style>
-         header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #FEF6EE;
-        padding: 15px;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-         }
+    
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -125,9 +118,10 @@ if (isset($_GET['delete'])) {
             box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
         }
         h1 {
-            color: white;
             font-size: 24px;
-            margin-bottom: 20px;
+            font-weight: bold;
+            color: black;
+            margin: 0;
         }
         .imovel {
             background-color: #2E3B4E;
@@ -147,7 +141,7 @@ if (isset($_GET['delete'])) {
             color: #C56126;
             margin-top: 10px;
         }
-        button {
+        .botao{
             padding: 10px;
             border: none;
             background-color: #C56126;
@@ -156,7 +150,7 @@ if (isset($_GET['delete'])) {
             border-radius: 4px;
             margin-top: 10px;
         }
-        button:hover {
+        .botao:hover {
             background-color: #ff7043;
         }
         .imovel .editar-form {
@@ -168,7 +162,7 @@ if (isset($_GET['delete'])) {
         }
         label {
             font-weight: bold;
-            color: #333;
+            color: white;
             margin-bottom: 5px;
             display: block;
         }
@@ -211,13 +205,6 @@ if (isset($_GET['delete'])) {
             padding: 10px;
             box-sizing: border-box;
         }
-        .menu-icon {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 30px;
-            color: #333;
-         }
          
     </style>
     <script>
@@ -229,13 +216,14 @@ if (isset($_GET['delete'])) {
 </head>
 <body>
 <header>
-        <!-- Botão do ícone de menu -->
-        <div class="section1">
-        <button class="menu-icon" id="menu-toggle"aria-label="Abrir Menu">
+       <!-- Botão do ícone de menu -->
+       <button class="menu-icon" id="menu-toggle">
             <i class='bx bx-menu'></i>
         </button>
-        <img src="logoHostfy.png" alt="logo" class="logo" />
-        </div>
+        <a href="index.php">
+            <img src="logoHostfy.png" alt="logo" class="logo" />
+        </a>
+
         <h1>Meus Imóveis</h1>
 
         </header>
@@ -284,8 +272,8 @@ if (isset($_GET['delete'])) {
                 <p><strong>Categoria:</strong> <?php echo htmlspecialchars($imovel['nome_categoria']); ?></p>
                 <p><strong>Características:</strong> <?php echo $caracteristicas . "."; ?></p>
 
-                <button onclick="toggleForm('editar-<?php echo $imovel['id_imovel']; ?>')">Editar Imóvel</button>
-                <button onclick="if (confirm('Tem certeza que deseja deletar este imóvel?')) { window.location.href='?delete=<?php echo $imovel['id_imovel']; ?>'; }">Deletar Imóvel</button>
+                <button onclick="toggleForm('editar-<?php echo $imovel['id_imovel']; ?>')" class="botao">Editar Imóvel</button>
+                <button onclick="if (confirm('Tem certeza que deseja deletar este imóvel?')) { window.location.href='?delete=<?php echo $imovel['id_imovel']; ?>'; }" class="botao">Deletar Imóvel</button>
 
                 
                 <div id="editar-<?php echo $imovel['id_imovel']; ?>" class="editar-form">
@@ -360,11 +348,12 @@ if (isset($_GET['delete'])) {
                             <?php } ?>    
 
                             </div>
-                        <input type="submit" value="Salvar Alterações">
+                        <input type="submit" value="Salvar Alterações" class="btn btn-primary btn-block">
                     </form>
                 </div>
             </div>
         </div>
+        <br>
         <?php endforeach; ?>
     
         <footer>

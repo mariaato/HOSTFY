@@ -213,8 +213,25 @@ $resultado_anuncio = $stmt->get_result();
                 $imagem = $rows_anuncio['imagens'];
                 $titulo = $rows_anuncio['Nome_imovel'] . " - " . $rows_anuncio['Cidade'];
                 $valor = $rows_anuncio ['Valor']; 
-                $tags = [$rows_anuncio['Bairro'], $rows_anuncio['UF']];
 
+
+                $p_checklist = $conexao->prepare("SELECT * FROM checklist INNER JOIN imovel_checklist ON checklist.id_checklist=imovel_checklist.id_checklist WHERE imovel_checklist.id_imovel=?");
+                    $p_checklist->bind_param('i', $id);
+                    $p_checklist->execute();
+            
+                    // Obtém os resultados
+                    $imovel_checklist = $p_checklist->get_result();
+            
+                    $caracteristica = [];
+                    $id_caracteristica = [];
+                    if ($imovel_checklist->num_rows > 0) {
+                        while ($linha = $imovel_checklist->fetch_assoc()) {
+                            $caracteristica[] = $linha['nome_checklist'];
+                            $id_caracteristica[] = $linha['id_checklist'];
+                        }
+                    }
+            
+                    $tags = $caracteristica;
                 // Chama a função gerarAnuncio com os dados
                 echo gerarAnuncio($id, $imagem, $titulo, $valor, $tags);
 
