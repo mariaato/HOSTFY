@@ -70,6 +70,10 @@ if (isset($_GET['delete'])) {
     $deletar_locacao->bind_param('i', $id_imovel_delete);
     $deletar_locacao->execute();
 
+    $deletar_checklist = $conexao->prepare("DELETE FROM imovel_checklist WHERE id_imovel=?");
+    $deletar_checklist->bind_param("i", $id_imovel_delete);
+    $deletar_checklist->execute();
+
     $sql_delete = "DELETE FROM imovel WHERE id_imovel = ? AND id_proprietario = ?";
     $stmt_delete = mysqli_prepare($conexao, $sql_delete);
     mysqli_stmt_bind_param($stmt_delete, "ii", $id_imovel_delete, $id_proprietario);
