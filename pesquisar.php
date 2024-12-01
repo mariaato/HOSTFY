@@ -16,6 +16,7 @@ SELECT DISTINCT imovel.*
 FROM imovel
 LEFT JOIN imovel_checklist ON imovel.id_imovel = imovel_checklist.id_imovel
 LEFT JOIN checklist ON imovel_checklist.id_checklist = checklist.id_checklist
+LEFT JOIN categoria ON imovel.id_categoria = categoria.id_categoria
 WHERE 
     (imovel.Nome_imovel LIKE ? OR 
     imovel.Valor LIKE ? OR 
@@ -25,11 +26,12 @@ WHERE
     imovel.Bairro LIKE ? OR 
     imovel.UF LIKE ? OR 
     imovel.Numero_pessoas LIKE ? OR
-    checklist.nome_checklist LIKE ?)"; 
+    checklist.nome_checklist LIKE ? OR
+    categoria.nome_categoria LIKE ?)";
 // Parâmetros e tipos
 
-$params = ["%$pesquisar%", "%$pesquisar%", "%$pesquisar%", "%$pesquisar%", "%$pesquisar%", "%$pesquisar%", "%$pesquisar%", "%$pesquisar%", "%$pesquisar%"];
-$types = "sssssssss";
+$params = ["%$pesquisar%","%$pesquisar%", "%$pesquisar%", "%$pesquisar%", "%$pesquisar%", "%$pesquisar%", "%$pesquisar%", "%$pesquisar%", "%$pesquisar%", "%$pesquisar%"];
+$types = "ssssssssss";
 // Adicionar filtros adicionais, se presentes
 if (!empty($valor_min)) {
     $query .= " AND Valor >= ?";
